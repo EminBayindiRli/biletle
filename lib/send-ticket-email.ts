@@ -92,6 +92,8 @@ export async function sendTicketEmail(params: TicketEmailParams) {
 </html>
   `
 
+  console.log(`[sendTicketEmail] Gönderiliyor: ${to} - ${ticketNumber}`)
+
   const { data, error } = await resend.emails.send({
     from: 'Biletle <bilet@biletle.shop>',
     to,
@@ -100,12 +102,16 @@ export async function sendTicketEmail(params: TicketEmailParams) {
     attachments: [
       {
         filename: 'qr-bilet.png',
-        content: qrBuffer.toString('base64'),
-        contentType: 'image/png',
+        content: qrBuffer,
       },
     ],
   })
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error('[sendTicketEmail] Resend hatası:', JSON.stringify(error))
+    throw new Error(typeof error === 'object' ? JSON.stringify(error) : String(error))
+  }
+
+  console.log(`[sendTicketEmail] Başarılı: ${to} - id: ${(data as any)?.id}`)
   return data
 }
