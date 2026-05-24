@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import ApproveButton from '@/components/ApproveButton'
 import EventStatusButton from '@/components/EventStatusButton'
+import CancelButton from '@/components/CancelButton'
 
 export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -53,13 +54,19 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
             {event.location && <span>📍 {event.location}</span>}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {event.status === 'active' && (
             <a href={`/e/${event.slug}`} target="_blank"
               className="text-sm border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
               Sayfayı Gör ↗
             </a>
           )}
+          <Link
+            href={`/dashboard/events/${id}/edit`}
+            className="text-sm border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            ✏️ Düzenle
+          </Link>
           <EventStatusButton eventId={event.id} currentStatus={event.status} />
         </div>
       </div>
@@ -84,14 +91,24 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
 
       {/* Sipariş Listesi */}
       <div className="bg-white rounded-xl border border-gray-200">
-        <div className="flex items-center justify-between p-5 border-b border-gray-100">
+        <div className="flex items-center justify-between p-5 border-b border-gray-100 flex-wrap gap-2">
           <h2 className="font-semibold text-gray-900">Siparişler</h2>
-          {event.status === 'active' && (
-            <Link href={`/dashboard/events/${id}/checkin`}
-              className="text-sm bg-teal-600 text-white px-3 py-1.5 rounded-lg hover:bg-teal-700 transition-colors">
-              📱 Check-in Başlat
-            </Link>
-          )}
+          <div className="flex items-center gap-2">
+            {paid > 0 && (
+              <a
+                href={`/api/events/${id}/export`}
+                className="text-sm border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                📥 CSV İndir
+              </a>
+            )}
+            {event.status === 'active' && (
+              <Link href={`/dashboard/events/${id}/checkin`}
+                className="text-sm bg-teal-600 text-white px-3 py-1.5 rounded-lg hover:bg-teal-700 transition-colors">
+                📱 Check-in Başlat
+              </Link>
+            )}
+          </div>
         </div>
 
         {orderList.length === 0 ? (
@@ -119,7 +136,12 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
                   }`}>
                     {order.status === 'paid' ? 'Onaylı' : order.status === 'pending' ? 'Bekliyor' : 'İptal'}
                   </span>
-                  {order.status === 'pending' && <ApproveButton orderId={order.id} eventId={id} />}
+                  {order.status === 'pending' && (
+                    <>
+                      <ApproveButton orderId={order.id} eventId={id} />
+                      <CancelButton orderId={order.id} eventId={id} />
+                    </>
+                  )}
                 </div>
               </div>
             ))}

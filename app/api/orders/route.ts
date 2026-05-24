@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { approveOrder } from '@/lib/approve-order'
 import { z } from 'zod'
 
 const AttendeeSchema = z.object({
@@ -68,6 +69,16 @@ export async function POST(request: NextRequest) {
     .single()
 
   if (error) return NextResponse.json({ error: 'Sipariş oluşturulamadı.' }, { status: 500 })
+
+  // Ücretsiz etkinlik → otomatik onayla, Shopier'e gitme
+  if (total_amount === 0) {
+    try {
+      await approveOrder(order.id)
+    } catch (err) {
+      console.error('Otomatik onay hatası:', err)
+    }
+    return NextResponse.json({ order_id: order.id, total_amount: 0, auto_approved: true })
+  }
 
   return NextResponse.json({ order_id: order.id, total_amount: order.total_amount })
 }

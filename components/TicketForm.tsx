@@ -42,15 +42,16 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
       return
     }
 
-    setStep('redirect')
-
-    if (shopierLink) {
-      sessionStorage.setItem('biletle_order_id', data.order_id)
-      sessionStorage.setItem('biletle_buyer_email', email)
-      window.location.href = shopierLink
-    } else {
-      window.location.href = `/order/success?order_id=${data.order_id}`
+    // Ücretsiz etkinlik veya otomatik onay → direkt başarı sayfası
+    if (data.auto_approved || !shopierLink || ticketPrice === 0) {
+      window.location.href = `/order/success?order_id=${data.order_id}&free=1`
+      return
     }
+
+    setStep('redirect')
+    sessionStorage.setItem('biletle_order_id', data.order_id)
+    sessionStorage.setItem('biletle_buyer_email', email)
+    window.location.href = shopierLink
   }
 
   if (step === 'loading') {
@@ -113,7 +114,11 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
       {/* Fiyat */}
       <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center">
         <span className="text-sm text-gray-600">1 bilet</span>
-        <span className="font-bold text-gray-900 text-lg">{ticketPrice.toLocaleString('tr-TR')} TL</span>
+        {ticketPrice === 0 ? (
+          <span className="font-bold text-teal-600 text-lg">Ücretsiz</span>
+        ) : (
+          <span className="font-bold text-gray-900 text-lg">{ticketPrice.toLocaleString('tr-TR')} TL</span>
+        )}
       </div>
 
       {error && (
@@ -124,12 +129,14 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
         type="submit"
         className="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors text-sm"
       >
-        Devam Et → Ödeme Yap
+        {ticketPrice === 0 ? 'Ücretsiz Bilet Al →' : 'Devam Et → Ödeme Yap'}
       </button>
 
-      <p className="text-xs text-center text-gray-400">
-        Ödeme Shopier altyapısı ile güvenli şekilde işlenir.
-      </p>
+      {ticketPrice > 0 && (
+        <p className="text-xs text-center text-gray-400">
+          Ödeme Shopier altyapısı ile güvenli şekilde işlenir.
+        </p>
+      )}
     </form>
   )
 }
