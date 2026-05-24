@@ -14,6 +14,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .eq('user_id', user.id)
     .single()
 
+  // Hesap onayı bekliyor
+  if (org && !(org as any).is_approved) {
+    redirect('/pending-approval')
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <DashboardSidebar org={org} />

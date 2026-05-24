@@ -55,7 +55,7 @@ export default function RegisterPage() {
       }
     }
 
-    window.location.href = '/dashboard'
+    window.location.href = '/pending-approval'
   }
 
   return (
