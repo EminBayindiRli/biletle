@@ -9,7 +9,7 @@ export default async function AdminPage() {
 
   if (!user) redirect('/auth/login')
 
-  const adminEmail = process.env.ADMIN_EMAIL
+  const adminEmail = process.env.admin_email
   if (!adminEmail || user.email !== adminEmail) {
     redirect('/')
   }

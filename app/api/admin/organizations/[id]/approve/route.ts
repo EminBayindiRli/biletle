@@ -20,7 +20,7 @@ export async function PATCH(
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Yetkisiz.' }, { status: 401 })
 
-  const adminEmail = process.env.ADMIN_EMAIL
+  const adminEmail = process.env.admin_email
   if (!adminEmail || user.email !== adminEmail) {
     return NextResponse.json({ error: 'Bu işlem için yetkiniz yok.' }, { status: 403 })
   }
