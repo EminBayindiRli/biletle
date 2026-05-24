@@ -128,3 +128,37 @@
     @apply font-sans;
   }
 }
+
+/* QR tarama çizgisi animasyonu */
+@keyframes scan {
+  0%   { top: 0; }
+  50%  { top: calc(100% - 2px); }
+  100% { top: 0; }
+}
+
+.animate-scan {
+  position: absolute;
+  animation: scan 2s linear infinite;
+}
+
+/* html5-qrcode default UI'yı gizle */
+#qr-reader__dashboard_section_csr button,
+#qr-reader__dashboard_section_swaplink,
+#qr-reader__status_span,
+#qr-reader__camera_selection,
+#qr-reader__header_message,
+#qr-reader select,
+#qr-reader__filescan_input {
+  display: none !important;
+}
+
+#qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+#qr-reader {
+  border: none !important;
+  padding: 0 !important;
+}
