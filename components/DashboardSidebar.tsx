@@ -52,6 +52,19 @@ export default function DashboardSidebar({ org }: { org: Org | null }) {
         })}
       </nav>
 
+      {/* Admin linki — sadece admin e-postası için görünür */}
+      {org?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+        <div className="px-4 pb-2">
+          <Link
+            href="/admin"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-gray-400 hover:bg-gray-50 hover:text-gray-600 transition-colors"
+          >
+            <span>🔧</span>
+            Admin Panel
+          </Link>
+        </div>
+      )}
+
       {/* Logout */}
       <div className="p-4 border-t border-gray-100">
         <button
