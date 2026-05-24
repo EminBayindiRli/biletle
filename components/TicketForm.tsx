@@ -42,7 +42,6 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
       return
     }
 
-    // Ücretsiz etkinlik veya otomatik onay → direkt başarı sayfası
     if (data.auto_approved || !shopierLink || ticketPrice === 0) {
       window.location.href = `/order/success?order_id=${data.order_id}&free=1`
       return
@@ -56,87 +55,129 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
 
   if (step === 'loading') {
     return (
-      <div className="py-8 text-center">
-        <div className="animate-spin text-3xl mb-3">⏳</div>
-        <p className="text-gray-500 text-sm">Siparişiniz oluşturuluyor...</p>
+      <div style={{ padding: '32px', textAlign: 'center' }}>
+        <div style={{ fontSize: '32px', marginBottom: '12px' }}>⏳</div>
+        <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: 500 }}>Siparişiniz oluşturuluyor...</div>
       </div>
     )
   }
 
   if (step === 'redirect') {
     return (
-      <div className="py-8 text-center">
-        <div className="text-3xl mb-3">💳</div>
-        <p className="font-medium text-gray-800">Ödeme sayfasına yönlendiriliyorsunuz...</p>
-        <p className="text-sm text-gray-500 mt-1">Ödeme sonrası QR kodlu biletiniz e-postanıza gelecek.</p>
+      <div style={{ padding: '32px', textAlign: 'center' }}>
+        <div style={{ fontSize: '32px', marginBottom: '12px' }}>💳</div>
+        <div style={{ fontSize: '15px', fontWeight: 700, color: '#111827', marginBottom: '4px' }}>Ödeme sayfasına yönlendiriliyorsunuz...</div>
+        <div style={{ fontSize: '13px', color: '#9ca3af' }}>Ödeme sonrası QR kodlu biletiniz e-postanıza gelecek.</div>
       </div>
     )
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%', border: '1.5px solid #e5e7eb', borderRadius: '8px',
+    padding: '10px 12px', fontSize: '13px', fontFamily: 'Inter, -apple-system, sans-serif',
+    color: '#111827', outline: 'none', marginBottom: '12px',
+    background: '#f9fafb', boxSizing: 'border-box',
+    transition: 'all 0.15s',
+  }
+
+  const labelStyle: React.CSSProperties = {
+    display: 'block', fontSize: '11px', fontWeight: 700, color: '#6b7280',
+    marginBottom: '5px', letterSpacing: '0.5px',
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit}>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad *</label>
+        <label style={labelStyle}>AD SOYAD *</label>
         <input
           type="text"
           value={name}
           onChange={e => setName(e.target.value)}
           placeholder="Adınız Soyadınız"
           required
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          style={inputStyle}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">E-posta *</label>
+        <label style={labelStyle}>E-POSTA *</label>
         <input
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
           placeholder="ornek@gmail.com"
           required
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          style={inputStyle}
         />
-        <p className="text-xs text-gray-400 mt-1">Biletiniz bu adrese gönderilecek.</p>
+        <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '-8px', marginBottom: '12px' }}>
+          Biletiniz bu adrese gönderilecek.
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+        <label style={labelStyle}>TELEFON</label>
         <input
           type="tel"
           value={phone}
           onChange={e => setPhone(e.target.value)}
           placeholder="05xx xxx xx xx"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          style={inputStyle}
         />
       </div>
 
-      {/* Fiyat */}
-      <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center">
-        <span className="text-sm text-gray-600">1 bilet</span>
-        {ticketPrice === 0 ? (
-          <span className="font-bold text-teal-600 text-lg">Ücretsiz</span>
-        ) : (
-          <span className="font-bold text-gray-900 text-lg">{ticketPrice.toLocaleString('tr-TR')} TL</span>
-        )}
+      {/* Total row */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '12px 0', borderTop: '1.5px dashed #e5e7eb', borderBottom: '1.5px dashed #e5e7eb',
+        margin: '4px 0 14px',
+      }}>
+        <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: 500 }}>1 bilet toplamı</span>
+        <span style={{ fontSize: '20px', fontWeight: 800, color: '#111827', letterSpacing: '-0.5px' }}>
+          {ticketPrice === 0 ? <span style={{ color: '#10b981' }}>Ücretsiz</span> : `${ticketPrice.toLocaleString('tr-TR')} TL`}
+        </span>
       </div>
 
       {error && (
-        <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>
+        <div style={{
+          background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px',
+          padding: '10px 12px', fontSize: '13px', color: '#dc2626', marginBottom: '12px',
+        }}>
+          {error}
+        </div>
       )}
 
       <button
         type="submit"
-        className="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors text-sm"
+        style={{
+          width: '100%', padding: '14px', borderRadius: '8px', border: 'none',
+          background: '#4f46e5', color: 'white', fontSize: '14px', fontWeight: 700,
+          fontFamily: 'Inter, -apple-system, sans-serif', cursor: 'pointer',
+          boxShadow: '0 4px 16px rgba(79,70,229,0.35)',
+        }}
       >
-        {ticketPrice === 0 ? 'Ücretsiz Bilet Al →' : 'Devam Et → Ödeme Yap'}
+        {ticketPrice === 0 ? '🎫 Ücretsiz Bilet Al' : '🎫 Hemen Bilet Al'}
       </button>
 
-      {ticketPrice > 0 && (
-        <p className="text-xs text-center text-gray-400">
-          Ödeme Shopier altyapısı ile güvenli şekilde işlenir.
-        </p>
-      )}
+      {/* Payment & rules */}
+      <div style={{ marginTop: '12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
+          {['VISA', 'MC', 'TROY', '🍎 Pay'].map(p => (
+            <span key={p} style={{
+              fontSize: '10px', fontWeight: 700, color: '#6b7280',
+              background: '#f3f4f6', borderRadius: '4px', padding: '3px 8px',
+            }}>
+              {p}
+            </span>
+          ))}
+        </div>
+        <div style={{ paddingTop: '12px', borderTop: '1px solid #f3f4f6' }}>
+          {['🔒 Güvenli ödeme · Shopier', '📧 QR kod e-posta ile gönderilir', '↩️ İade yapılmaz'].map(r => (
+            <div key={r} style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '5px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {r}
+            </div>
+          ))}
+        </div>
+      </div>
     </form>
   )
 }

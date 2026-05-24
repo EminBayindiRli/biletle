@@ -7,6 +7,7 @@ type EventRow = {
   status: string
   sold_count: number
   starts_at: string
+  location: string | null
 }
 
 export default async function DashboardPage() {
@@ -22,10 +23,9 @@ export default async function DashboardPage() {
   const org = orgData as { id: string; name: string } | null
   const orgId: string = org?.id ?? ''
 
-  // Son 5 etkinliği çek
   const { data: eventsData } = await supabase
     .from('events')
-    .select('id, title, status, sold_count, starts_at')
+    .select('id, title, status, sold_count, starts_at, location')
     .eq('org_id', orgId)
     .order('created_at', { ascending: false })
     .limit(5)
@@ -34,101 +34,139 @@ export default async function DashboardPage() {
   const eventIds: string[] = events.map(e => e.id)
   const safeIds = eventIds.length > 0 ? eventIds : ['']
 
-  // 3 count sorgusunu paralel çalıştır
   const [
     { count: totalEvents },
     { count: pendingOrders },
     { count: totalTickets },
   ] = await Promise.all([
-    supabase
-      .from('events')
-      .select('*', { count: 'exact', head: true })
-      .eq('org_id', orgId),
-    supabase
-      .from('orders')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'pending')
-      .in('event_id', safeIds),
-    supabase
-      .from('tickets')
-      .select('*', { count: 'exact', head: true })
-      .in('event_id', safeIds),
+    supabase.from('events').select('*', { count: 'exact', head: true }).eq('org_id', orgId),
+    supabase.from('orders').select('*', { count: 'exact', head: true }).eq('status', 'pending').in('event_id', safeIds),
+    supabase.from('tickets').select('*', { count: 'exact', head: true }).in('event_id', safeIds),
   ])
 
   const stats = [
-    { label: 'Toplam Etkinlik', value: totalEvents ?? 0, icon: '🎭' },
-    { label: 'Satılan Bilet',   value: totalTickets ?? 0, icon: '🎫' },
-    { label: 'Bekleyen Onay',   value: pendingOrders ?? 0, icon: '⏳', highlight: (pendingOrders ?? 0) > 0 },
+    { label: 'Toplam Etkinlik', value: totalEvents ?? 0, icon: '🎪', color: '#eef2ff', iconColor: '#4f46e5' },
+    { label: 'Satılan Bilet', value: totalTickets ?? 0, icon: '🎫', color: '#ecfdf5', iconColor: '#059669' },
+    { label: 'Bekleyen Onay', value: pendingOrders ?? 0, icon: '⏳', color: (pendingOrders ?? 0) > 0 ? '#fffbeb' : '#f9fafb', iconColor: '#d97706', highlight: (pendingOrders ?? 0) > 0 },
   ]
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Merhaba, {org?.name} 👋</h1>
-        <p className="text-gray-500 mt-1">İşte platformunun genel durumu.</p>
-      </div>
-
-      {/* İstatistik Kartları */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {stats.map((stat) => (
-          <div key={stat.label} className={`rounded-xl border p-5 ${stat.highlight ? 'bg-amber-50 border-amber-300' : 'bg-white border-gray-200'}`}>
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-500">{stat.label}</p>
-              <span className="text-2xl">{stat.icon}</span>
-            </div>
-            <p className={`text-3xl font-bold mt-2 ${stat.highlight ? 'text-amber-700' : 'text-gray-900'}`}>{stat.value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Son Etkinlikler */}
-      <div className="bg-white rounded-xl border border-gray-200">
-        <div className="flex items-center justify-between p-5 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Son Etkinlikler</h2>
-          <Link href="/dashboard/events" className="text-sm text-indigo-600 hover:underline">
-            Tümünü gör →
-          </Link>
+      {/* Top bar */}
+      <div style={{
+        background: 'white', borderBottom: '1px solid #e5e7eb',
+        padding: '0 32px', height: '60px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        position: 'sticky', top: 0, zIndex: 10,
+      }}>
+        <div>
+          <span style={{ fontSize: '16px', fontWeight: 700, color: '#111827' }}>
+            Merhaba, {org?.name} 👋
+          </span>
         </div>
+        <Link href="/dashboard/events/new" style={{
+          padding: '8px 16px', borderRadius: '8px', border: 'none',
+          background: '#4f46e5', color: 'white', fontSize: '13px', fontWeight: 600,
+          textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px',
+        }}>
+          + Etkinlik Oluştur
+        </Link>
+      </div>
 
-        {events.length === 0 ? (
-          <div className="p-10 text-center">
-            <p className="text-gray-400 text-sm mb-4">Henüz etkinliğin yok.</p>
-            <Link
-              href="/dashboard/events/new"
-              className="inline-flex items-center gap-2 bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-            >
-              + İlk Etkinliğini Oluştur
-            </Link>
-          </div>
-        ) : (
-          <div className="divide-y divide-gray-50">
-            {events.map((event) => (
-              <div key={event.id} className="flex items-center justify-between p-4 hover:bg-gray-50">
-                <div>
-                  <p className="text-sm font-medium text-gray-900">{event.title}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    {new Date(event.starts_at).toLocaleDateString('tr-TR', {
-                      day: 'numeric', month: 'long', year: 'numeric',
-                    })}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-gray-500">{event.sold_count} bilet</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                    event.status === 'active' ? 'bg-teal-50 text-teal-700' :
-                    event.status === 'draft'  ? 'bg-gray-100 text-gray-600' :
-                    'bg-red-50 text-red-600'
-                  }`}>
-                    {event.status === 'active' ? 'Aktif' : event.status === 'draft' ? 'Taslak' : 'Bitti'}
-                  </span>
-                  <Link href={`/dashboard/events/${event.id}`} className="text-xs text-indigo-600 hover:underline">
-                    Detay →
-                  </Link>
+      <div style={{ padding: '28px 32px' }}>
+        {/* Stat cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '28px' }}>
+          {stats.map((stat) => (
+            <div key={stat.label} style={{
+              background: stat.highlight ? '#fffbeb' : 'white',
+              border: `1px solid ${stat.highlight ? '#fde68a' : '#e5e7eb'}`,
+              borderRadius: '16px', padding: '20px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <div style={{
+                  width: '40px', height: '40px', borderRadius: '10px',
+                  background: stat.color, display: 'flex', alignItems: 'center',
+                  justifyContent: 'center', fontSize: '18px',
+                }}>
+                  {stat.icon}
                 </div>
               </div>
-            ))}
+              <div style={{ fontSize: '28px', fontWeight: 800, color: stat.highlight ? '#92400e' : '#111827', letterSpacing: '-1.5px', lineHeight: 1 }}>
+                {stat.value}
+              </div>
+              <div style={{ fontSize: '12px', color: '#6b7280', fontWeight: 500, marginTop: '4px' }}>
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Recent events */}
+        <div style={{ background: 'white', border: '1px solid #e5e7eb', borderRadius: '16px', overflow: 'hidden' }}>
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '18px 20px', borderBottom: '1px solid #f3f4f6',
+          }}>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: '#111827' }}>Son Etkinlikler</span>
+            <Link href="/dashboard/events" style={{ fontSize: '12px', color: '#4f46e5', textDecoration: 'none', fontWeight: 500 }}>
+              Tümünü gör →
+            </Link>
           </div>
-        )}
+
+          {events.length === 0 ? (
+            <div style={{ padding: '48px', textAlign: 'center' }}>
+              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🎪</div>
+              <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '16px' }}>Henüz etkinliğin yok.</div>
+              <Link href="/dashboard/events/new" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '9px 16px', borderRadius: '8px', background: '#4f46e5',
+                color: 'white', fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+              }}>
+                + İlk Etkinliğini Oluştur
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {events.map((event, i) => (
+                <div key={event.id} style={{
+                  display: 'flex', alignItems: 'center', gap: '14px',
+                  padding: '14px 20px',
+                  borderBottom: i < events.length - 1 ? '1px solid #f9fafb' : 'none',
+                }}>
+                  <div style={{
+                    width: '40px', height: '40px', borderRadius: '10px',
+                    background: '#eef2ff', display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', fontSize: '18px', flexShrink: 0,
+                  }}>
+                    🎵
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#111827', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {event.title}
+                    </div>
+                    <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                      {new Date(event.starts_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      {event.location && ` · ${event.location}`}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                    <span style={{ fontSize: '12px', color: '#6b7280' }}>{event.sold_count} bilet</span>
+                    <span style={{
+                      fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '10px',
+                      background: event.status === 'active' ? '#ecfdf5' : event.status === 'draft' ? '#f3f4f6' : '#f9fafb',
+                      color: event.status === 'active' ? '#059669' : event.status === 'draft' ? '#6b7280' : '#9ca3af',
+                    }}>
+                      {event.status === 'active' ? 'Aktif' : event.status === 'draft' ? 'Taslak' : 'Bitti'}
+                    </span>
+                    <Link href={`/dashboard/events/${event.id}`} style={{ fontSize: '12px', color: '#4f46e5', textDecoration: 'none', fontWeight: 500 }}>
+                      Detay →
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

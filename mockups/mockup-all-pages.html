@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>biletle — Tüm Sayfa Mockupları</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --indigo: #4f46e5;
+  --indigo-dark: #3730a3;
+  --indigo-light: #818cf8;
+  --indigo-50: #eef2ff;
+  --indigo-100: #e0e7ff;
+  --green: #10b981;
+  --green-50: #ecfdf5;
+  --red: #ef4444;
+  --red-50: #fef2f2;
+  --amber: #f59e0b;
+  --amber-50: #fffbeb;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+}
+html { font-family: 'Inter', -apple-system, sans-serif; font-size: 14px; }
+body { background: #0a0a14; }
+
+/* ─── PAGE SWITCHER ─────────────────────────────────────────────────────────── */
+.switcher {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: rgba(10,10,20,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 16px; display: flex; align-items: center; gap: 4px;
+  overflow-x: auto; scrollbar-width: none; height: 48px;
+}
+.switcher::-webkit-scrollbar { display: none; }
+.sw-brand {
+  font-size: 15px; font-weight: 800; color: #818cf8;
+  margin-right: 12px; white-space: nowrap; letter-spacing: -0.5px;
+  padding-right: 16px; border-right: 1px solid rgba(255,255,255,0.1);
+}
+.sw-btn {
+  padding: 6px 12px; border-radius: 6px; border: none;
+  background: transparent; color: rgba(255,255,255,0.4);
+  font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+}
+.sw-btn:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.7); }
+.sw-btn.active { background: var(--indigo); color: white; }
+
+/* ─── PAGES ─────────────────────────────────────────────────────────────────── */
+.page { display: none; min-height: 100vh; padding-top: 48px; }
+.page.active { display: block; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 1 — LANDING
+══════════════════════════════════════════════════════════════════════════════ */
+#p-landing { background: #07071a; }
+
+.lnd-nav {
+  position: sticky; top: 48px; z-index: 100;
+  background: rgba(7,7,26,0.8); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 48px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.lnd-logo { font-size: 20px; font-weight: 900; color: white; letter-spacing: -1px; }
+.lnd-logo span { color: var(--indigo-light); }
+.lnd-nav-links { display: flex; align-items: center; gap: 32px; }
+.lnd-nav-links a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; font-weight: 500; }
+.lnd-nav-links a:hover { color: rgba(255,255,255,0.85); }
+.lnd-nav-cta { display: flex; gap: 10px; align-items: center; }
+.btn-ghost { padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: transparent; color: rgba(255,255,255,0.7); font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; }
+.btn-primary { padding: 8px 18px; border-radius: 8px; border: none; background: var(--indigo); color: white; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; }
+
+.lnd-hero {
+  position: relative; padding: 120px 48px 100px;
+  overflow: hidden;
+}
+.lnd-hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%, rgba(79,70,229,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 60%, rgba(99,102,241,0.12) 0%, transparent 60%);
+}
+.lnd-hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 70%);
+}
+.lnd-hero-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; text-align: center; }
+.lnd-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(79,70,229,0.15); border: 1px solid rgba(129,140,248,0.3);
+  color: var(--indigo-light); font-size: 12px; font-weight: 600;
+  padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+}
+.lnd-badge-dot { width: 6px; height: 6px; background: var(--indigo-light); border-radius: 50%; box-shadow: 0 0 8px var(--indigo-light); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.lnd-hero h1 {
+  font-size: 72px; font-weight: 900; line-height: 1; letter-spacing: -4px;
+  color: white; margin-bottom: 24px;
+}
+.lnd-hero h1 .accent { color: var(--indigo-light); }
+.lnd-hero-sub {
+  font-size: 18px; color: rgba(255,255,255,0.45); font-weight: 400; line-height: 1.6;
+  max-width: 560px; margin: 0 auto 40px;
+}
+.lnd-hero-btns { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
+.btn-hero-primary {
+  padding: 14px 28px; border-radius: 10px; border: none;
+  background: var(--indigo); color: white; font-size: 15px; font-family: 'Inter', sans-serif;
+  font-weight: 700; cursor: pointer;
+  box-shadow: 0 0 32px rgba(79,70,229,0.4);
+}
+.btn-hero-secondary {
+  padding: 14px 28px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7);
+  font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer;
+}
+.lnd-hero-stats {
+  display: flex; gap: 40px; justify-content: center; margin-top: 60px;
+}
+.lnd-stat { text-align: center; }
+.lnd-stat-num { font-size: 32px; font-weight: 900; color: white; letter-spacing: -2px; }
+.lnd-stat-label { font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 500; margin-top: 2px; }
+
+.lnd-section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
+.lnd-section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--indigo-light); margin-bottom: 12px; }
+.lnd-section-title { font-size: 40px; font-weight: 800; color: white; letter-spacing: -2px; margin-bottom: 16px; }
+.lnd-section-sub { font-size: 16px; color: rgba(255,255,255,0.4); max-width: 480px; line-height: 1.6; margin-bottom: 56px; }
+
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feature-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-lg); padding: 28px;
+  transition: all 0.2s;
+}
+.feature-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(129,140,248,0.2); }
+.feature-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(79,70,229,0.15); border: 1px solid rgba(79,70,229,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 16px;
+}
+.feature-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 8px; }
+.feature-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+.how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
+.how-steps::before {
+  content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(79,70,229,0.3) 20%, rgba(79,70,229,0.3) 80%, transparent);
+}
+.how-step { text-align: center; position: relative; z-index: 1; }
+.how-step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(79,70,229,0.15); border: 1px solid rgba(79,70,229,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: var(--indigo-light);
+  margin: 0 auto 16px;
+}
+.how-step-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px; }
+.how-step-desc { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pricing-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-xl); padding: 32px; position: relative;
+}
+.pricing-card.featured {
+  background: linear-gradient(135deg, rgba(79,70,229,0.2), rgba(99,102,241,0.1));
+  border-color: rgba(129,140,248,0.3);
+}
+.pricing-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--indigo); color: white; font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 12px; white-space: nowrap; letter-spacing: 0.5px;
+}
+.pricing-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+.pricing-price { font-size: 48px; font-weight: 900; color: white; letter-spacing: -3px; line-height: 1; }
+.pricing-price sub { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); vertical-align: baseline; margin-left: 4px; }
+.pricing-desc { font-size: 13px; color: rgba(255,255,255,0.35); margin: 12px 0 24px; line-height: 1.5; }
+.pricing-features { list-style: none; margin-bottom: 28px; }
+.pricing-features li { font-size: 13px; color: rgba(255,255,255,0.55); padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px; }
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-features li .check { color: var(--indigo-light); font-size: 14px; }
+.btn-pricing {
+  width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05); color: white; font-size: 13px;
+  font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer;
+}
+.btn-pricing.featured { background: var(--indigo); border-color: var(--indigo); }
+
+.lnd-footer {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 40px 48px; display: flex; justify-content: space-between; align-items: center;
+  max-width: 1200px; margin: 0 auto;
+}
+.lnd-footer-logo { font-size: 18px; font-weight: 900; color: white; letter-spacing: -1px; }
+.lnd-footer-links { display: flex; gap: 24px; }
+.lnd-footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; }
+.lnd-footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 2 — AUTH (Login + Register tabs)
+══════════════════════════════════════════════════════════════════════════════ */
+#p-auth {
+  background: #07071a;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 80px 24px;
+  position: relative; overflow: hidden;
+}
+#p-auth.active { display: flex; }
+#p-auth::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(79,70,229,0.18) 0%, transparent 70%);
+}
+
+.auth-box {
+  position: relative; z-index: 1; width: 100%; max-width: 420px;
+}
+.auth-brand { text-align: center; margin-bottom: 32px; }
+.auth-brand-logo { font-size: 28px; font-weight: 900; color: white; letter-spacing: -1.5px; }
+.auth-brand-tagline { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+.auth-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xl); overflow: hidden;
+  backdrop-filter: blur(20px);
+}
+.auth-tabs { display: flex; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.auth-tab {
+  flex: 1; padding: 14px; text-align: center; font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.35); cursor: pointer; transition: all 0.15s;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.auth-tab.active { color: white; border-bottom-color: var(--indigo); }
+.auth-form { padding: 28px; }
+.auth-form-group { margin-bottom: 16px; }
+.auth-label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 6px; letter-spacing: 0.5px; }
+.auth-input {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-sm); padding: 11px 14px;
+  color: white; font-size: 14px; font-family: 'Inter', sans-serif;
+  outline: none; transition: all 0.15s;
+}
+.auth-input::placeholder { color: rgba(255,255,255,0.2); }
+.auth-input:focus { border-color: rgba(79,70,229,0.5); background: rgba(79,70,229,0.06); }
+.auth-or { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+.auth-or::before, .auth-or::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+.auth-or span { font-size: 11px; color: rgba(255,255,255,0.25); }
+.btn-auth {
+  width: 100%; padding: 13px; border-radius: var(--radius-sm); border: none;
+  background: var(--indigo); color: white; font-size: 14px;
+  font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(79,70,229,0.3);
+  margin-top: 4px;
+}
+.auth-footer-text { text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 20px; }
+.auth-footer-text a { color: var(--indigo-light); text-decoration: none; }
+.auth-note {
+  background: rgba(79,70,229,0.08); border: 1px solid rgba(79,70,229,0.15);
+  border-radius: var(--radius-sm); padding: 12px; margin-top: 16px;
+  font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6;
+}
+.auth-note strong { color: rgba(255,255,255,0.65); }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 3 — DASHBOARD HOME
+══════════════════════════════════════════════════════════════════════════════ */
+#p-dashboard { background: var(--gray-50); }
+#p-dashboard.active { display: flex; }
+
+.db-layout { display: flex; min-height: calc(100vh - 48px); width: 100%; }
+
+/* Sidebar */
+.db-sidebar {
+  width: 240px; flex-shrink: 0;
+  background: white; border-right: 1px solid var(--gray-200);
+  display: flex; flex-direction: column;
+  position: sticky; top: 48px; height: calc(100vh - 48px); overflow-y: auto;
+}
+.db-sidebar-brand {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.db-sidebar-logo { font-size: 18px; font-weight: 900; color: var(--indigo); letter-spacing: -1px; }
+.db-sidebar-org { font-size: 12px; color: var(--gray-400); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.db-sidebar-nav { padding: 12px 8px; flex: 1; }
+.db-nav-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-400); padding: 8px 12px 4px; }
+.db-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; color: var(--gray-600);
+  cursor: pointer; transition: all 0.12s;
+  text-decoration: none; margin-bottom: 2px;
+}
+.db-nav-item:hover { background: var(--gray-100); color: var(--gray-900); }
+.db-nav-item.active { background: var(--indigo-50); color: var(--indigo); font-weight: 600; }
+.db-nav-item .icon { font-size: 15px; width: 20px; text-align: center; }
+.db-nav-item .badge {
+  margin-left: auto; background: var(--indigo); color: white;
+  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px;
+}
+.db-sidebar-bottom { padding: 12px 8px; border-top: 1px solid var(--gray-100); }
+.db-user-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--radius-sm); cursor: pointer; }
+.db-user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--indigo-100); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--indigo); flex-shrink: 0; }
+.db-user-name { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+.db-user-role { font-size: 11px; color: var(--gray-400); }
+
+/* Main area */
+.db-main { flex: 1; overflow-y: auto; }
+.db-topbar {
+  background: white; border-bottom: 1px solid var(--gray-200);
+  padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 48px; z-index: 10;
+}
+.db-topbar-title { font-size: 16px; font-weight: 700; color: var(--gray-900); }
+.db-topbar-right { display: flex; align-items: center; gap: 12px; }
+.btn-sm {
+  padding: 7px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+}
+.btn-sm-primary { background: var(--indigo); color: white; border: none; }
+.btn-sm-secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-200); }
+
+.db-content { padding: 32px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card {
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  padding: 20px; position: relative; overflow: hidden;
+}
+.stat-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+  margin-bottom: 14px;
+}
+.stat-card-value { font-size: 28px; font-weight: 800; color: var(--gray-900); letter-spacing: -1.5px; line-height: 1; }
+.stat-card-label { font-size: 12px; color: var(--gray-500); font-weight: 500; margin-top: 4px; }
+.stat-card-change { font-size: 11px; font-weight: 600; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+.stat-card-change.up { color: var(--green); }
+.stat-card-change.neutral { color: var(--gray-400); }
+
+.db-grid-2 { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+.card-box { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 24px; }
+.card-box-title { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+.card-box-title a { font-size: 12px; font-weight: 500; color: var(--indigo); text-decoration: none; }
+
+.event-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid var(--gray-100);
+}
+.event-row:last-child { border-bottom: none; }
+.event-row-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--indigo-50); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.event-row-info { flex: 1; min-width: 0; }
+.event-row-title { font-size: 13px; font-weight: 600; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.event-row-meta { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+.event-row-right { text-align: right; flex-shrink: 0; }
+.event-row-sales { font-size: 13px; font-weight: 700; color: var(--gray-900); }
+.event-row-status { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; margin-top: 4px; display: inline-block; }
+.status-active { background: var(--green-50); color: var(--green); }
+.status-upcoming { background: var(--indigo-50); color: var(--indigo); }
+.status-ended { background: var(--gray-100); color: var(--gray-500); }
+
+.quick-stat { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+.quick-stat:last-child { border-bottom: none; }
+.quick-stat-label { font-size: 12px; color: var(--gray-500); }
+.quick-stat-value { font-size: 14px; font-weight: 700; color: var(--gray-900); }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 4 — EVENT LIST
+══════════════════════════════════════════════════════════════════════════════ */
+#p-eventlist { background: var(--gray-50); }
+#p-eventlist.active { display: flex; }
+#p-eventlist .db-layout { display: flex; }
+
+.events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ev-card {
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  overflow: hidden; transition: all 0.15s;
+}
+.ev-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.ev-card-top {
+  height: 100px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.ev-card-top-g1 { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+.ev-card-top-g2 { background: linear-gradient(135deg, #0ea5e9, #6366f1); }
+.ev-card-top-g3 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+.ev-card-top-g4 { background: linear-gradient(135deg, #10b981, #06b6d4); }
+.ev-card-top-emoji { font-size: 36px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+.ev-card-status {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px;
+}
+.ev-status-active { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.25); }
+.ev-status-upcoming { background: rgba(79,70,229,0.15); color: var(--indigo-light); border: 1px solid rgba(79,70,229,0.2); }
+.ev-card-body { padding: 16px; }
+.ev-card-title { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.ev-card-meta { font-size: 11px; color: var(--gray-400); margin-bottom: 12px; }
+.ev-card-progress { height: 4px; background: var(--gray-100); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+.ev-card-progress-bar { height: 100%; background: var(--indigo); border-radius: 2px; }
+.ev-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-100); }
+.ev-card-sales { font-size: 13px; font-weight: 700; color: var(--gray-900); }
+.ev-card-revenue { font-size: 12px; color: var(--green); font-weight: 600; }
+
+.btn-new-event {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: var(--radius-sm); border: none;
+  background: var(--indigo); color: white; font-size: 13px;
+  font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 5 — EVENT DETAIL (dashboard)
+══════════════════════════════════════════════════════════════════════════════ */
+#p-eventdetail { background: var(--gray-50); }
+#p-eventdetail.active { display: flex; }
+
+.ev-detail-header {
+  background: white; border-bottom: 1px solid var(--gray-200);
+  padding: 24px 32px;
+}
+.ev-detail-breadcrumb { font-size: 12px; color: var(--gray-400); margin-bottom: 8px; }
+.ev-detail-breadcrumb a { color: var(--indigo); text-decoration: none; }
+.ev-detail-title { font-size: 24px; font-weight: 800; color: var(--gray-900); letter-spacing: -1px; margin-bottom: 6px; }
+.ev-detail-meta { display: flex; gap: 20px; }
+.ev-detail-meta-item { font-size: 12px; color: var(--gray-500); display: flex; align-items: center; gap: 5px; }
+.ev-detail-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+.ev-stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+.ev-stat-card {
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius);
+  padding: 16px; text-align: center;
+}
+.ev-stat-card-icon { font-size: 20px; margin-bottom: 8px; }
+.ev-stat-card-value { font-size: 24px; font-weight: 800; color: var(--gray-900); letter-spacing: -1px; }
+.ev-stat-card-label { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-top: 2px; }
+
+.orders-table { width: 100%; border-collapse: collapse; }
+.orders-table th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--gray-200); background: var(--gray-50); }
+.orders-table td { font-size: 13px; color: var(--gray-700); padding: 12px 14px; border-bottom: 1px solid var(--gray-100); }
+.orders-table tr:last-child td { border-bottom: none; }
+.orders-table tr:hover td { background: var(--gray-50); }
+.ticket-num { font-size: 11px; font-weight: 700; color: var(--indigo); font-family: monospace; letter-spacing: 1px; }
+.checkin-yes { color: var(--green); font-size: 11px; font-weight: 700; }
+.checkin-no { color: var(--gray-300); font-size: 11px; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 6 — PUBLIC EVENT PAGE
+══════════════════════════════════════════════════════════════════════════════ */
+#p-public { background: white; }
+
+.pub-nav {
+  background: white; border-bottom: 1px solid var(--gray-200);
+  padding: 0 48px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pub-nav-logo { font-size: 18px; font-weight: 900; color: var(--indigo); letter-spacing: -1px; }
+.pub-nav-back { font-size: 13px; color: var(--gray-500); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+
+.pub-hero {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+  padding: 56px 48px 48px; position: relative; overflow: hidden;
+}
+.pub-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.pub-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+.pub-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px); color: white; font-size: 11px; font-weight: 700;
+  padding: 5px 12px; border-radius: 20px; margin-bottom: 16px;
+}
+.pub-hero-badge-dot { width: 6px; height: 6px; background: #86efac; border-radius: 50%; box-shadow: 0 0 8px #86efac; animation: pulse 2s infinite; }
+.pub-hero h1 { font-size: 48px; font-weight: 900; color: white; letter-spacing: -2.5px; line-height: 1.05; margin-bottom: 20px; }
+.pub-hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.pub-hero-tag {
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px); color: rgba(255,255,255,0.9);
+  font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 20px;
+}
+
+.pub-main { max-width: 1200px; margin: 0 auto; padding: 40px 48px; display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+
+.pub-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
+.pub-card-title { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.pub-desc { font-size: 14px; color: var(--gray-600); line-height: 1.75; }
+
+.pub-lineup { display: flex; flex-direction: column; gap: 2px; }
+.pub-artist {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  transition: background 0.12s;
+}
+.pub-artist:hover { background: var(--gray-50); }
+.pub-artist-left { display: flex; align-items: center; gap: 12px; }
+.pub-artist-avatar {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.pub-artist-name { font-size: 14px; font-weight: 700; color: var(--gray-900); }
+.pub-artist-role { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
+.pub-artist-time { font-size: 12px; font-weight: 600; color: var(--indigo); font-family: monospace; }
+
+/* Ticket widget */
+.ticket-widget {
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-xl);
+  overflow: hidden; position: sticky; top: 108px;
+  box-shadow: var(--shadow-xl);
+}
+.tw-top {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  padding: 24px; position: relative; overflow: hidden;
+}
+.tw-top::after {
+  content: ''; position: absolute; right: -20px; bottom: -20px;
+  width: 80px; height: 80px; background: rgba(255,255,255,0.08); border-radius: 50%;
+}
+.tw-price-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.tw-price { font-size: 44px; font-weight: 900; color: white; letter-spacing: -3px; line-height: 1; }
+.tw-price sub { font-size: 16px; font-weight: 400; letter-spacing: 0; }
+.tw-stock { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+.tw-stock-dot { width: 6px; height: 6px; border-radius: 50%; background: #86efac; box-shadow: 0 0 6px #86efac; }
+.tw-stock-text { font-size: 12px; color: rgba(255,255,255,0.65); font-weight: 500; }
+.tw-divider { height: 1px; background: var(--gray-100); position: relative; }
+.tw-divider::before { content: ''; position: absolute; left: -10px; top: -9px; width: 18px; height: 18px; background: var(--gray-50); border-radius: 50%; border: 1px solid var(--gray-200); }
+.tw-divider::after { content: ''; position: absolute; right: -10px; top: -9px; width: 18px; height: 18px; background: var(--gray-50); border-radius: 50%; border: 1px solid var(--gray-200); }
+.tw-body { padding: 20px; }
+.tw-label { font-size: 11px; font-weight: 700; color: var(--gray-500); letter-spacing: 0.5px; margin-bottom: 5px; display: block; }
+.tw-input {
+  width: 100%; border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm);
+  padding: 10px 12px; font-size: 13px; font-family: 'Inter', sans-serif;
+  color: var(--gray-900); outline: none; margin-bottom: 12px;
+  transition: all 0.15s; background: var(--gray-50);
+}
+.tw-input:focus { border-color: var(--indigo); background: white; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+.tw-input::placeholder { color: var(--gray-300); }
+.tw-total {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-top: 1.5px dashed var(--gray-200); border-bottom: 1.5px dashed var(--gray-200);
+  margin: 8px 0 14px;
+}
+.tw-total-label { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+.tw-total-price { font-size: 20px; font-weight: 800; color: var(--gray-900); letter-spacing: -0.5px; }
+.btn-buy-ticket {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm); border: none;
+  background: var(--indigo); color: white; font-size: 14px;
+  font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(79,70,229,0.35);
+}
+.tw-payments { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
+.tw-pay-badge { font-size: 10px; font-weight: 700; color: var(--gray-500); background: var(--gray-100); border-radius: 4px; padding: 3px 8px; }
+.tw-rules { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gray-100); }
+.tw-rule { font-size: 11px; color: var(--gray-400); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 7 — ADMIN PANEL
+══════════════════════════════════════════════════════════════════════════════ */
+#p-admin { background: var(--gray-50); }
+#p-admin.active { display: flex; }
+
+.admin-card {
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  padding: 20px; display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 12px;
+}
+.admin-card-avatar {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--indigo-100); display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.admin-card-info { flex: 1; min-width: 0; }
+.admin-card-name { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+.admin-card-email { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+.admin-card-date { font-size: 11px; color: var(--gray-300); margin-top: 4px; }
+.admin-card-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-approve { padding: 7px 14px; border-radius: var(--radius-sm); border: none; background: var(--green); color: white; font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; }
+.btn-reject { padding: 7px 14px; border-radius: var(--radius-sm); border: 1px solid var(--gray-200); background: white; color: var(--gray-600); font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; }
+.admin-approved-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-50); padding: 4px 10px; border-radius: 10px; margin-top: 6px; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 8 — ORDER SUCCESS
+══════════════════════════════════════════════════════════════════════════════ */
+#p-success {
+  background: white; display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 80px 24px;
+}
+#p-success.active { display: flex; }
+.success-box {
+  max-width: 480px; width: 100%; text-align: center;
+}
+.success-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--green-50); display: flex; align-items: center; justify-content: center;
+  font-size: 36px; margin: 0 auto 24px;
+  box-shadow: 0 0 0 12px rgba(16,185,129,0.08);
+}
+.success-title { font-size: 28px; font-weight: 900; color: var(--gray-900); letter-spacing: -1px; margin-bottom: 8px; }
+.success-sub { font-size: 15px; color: var(--gray-500); line-height: 1.6; margin-bottom: 32px; }
+.success-ticket-card {
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  padding: 24px; margin-bottom: 24px; text-align: left;
+}
+.success-ticket-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-100); font-size: 13px; }
+.success-ticket-row:last-child { border-bottom: none; }
+.success-ticket-label { color: var(--gray-500); }
+.success-ticket-value { font-weight: 600; color: var(--gray-900); }
+.success-ticket-num { color: var(--indigo); font-family: monospace; font-size: 14px; font-weight: 800; letter-spacing: 2px; }
+.success-email-note {
+  background: var(--indigo-50); border: 1px solid var(--indigo-100); border-radius: var(--radius-sm);
+  padding: 14px 16px; font-size: 13px; color: var(--indigo-dark); text-align: left; margin-bottom: 24px;
+}
+.btn-success { width: 100%; padding: 14px; border-radius: var(--radius-sm); border: none; background: var(--indigo); color: white; font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer; margin-bottom: 10px; }
+.btn-success-outline { width: 100%; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--gray-200); background: white; color: var(--gray-700); font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAGE 9 — QR SCANNER (mobile)
+══════════════════════════════════════════════════════════════════════════════ */
+#p-scanner {
+  background: black;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+}
+#p-scanner.active { display: flex; }
+.scanner-frame { position: relative; width: 360px; height: 640px; background: black; overflow: hidden; border-radius: var(--radius-xl); box-shadow: 0 0 60px rgba(0,0,0,0.6); }
+.scanner-camera-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0d1117 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.scanner-camera-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.scanner-topbar {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent);
+}
+.scanner-topbar-title { color: white; font-size: 15px; font-weight: 700; }
+.scanner-topbar-close { color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; }
+.scanner-event-info { position: absolute; top: 56px; left: 0; right: 0; z-index: 10; padding: 0 20px; }
+.scanner-event-badge { background: rgba(255,255,255,0.08); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 12px; }
+.scanner-event-name { font-size: 12px; font-weight: 700; color: white; }
+.scanner-event-meta { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.scanner-qr-area {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 220px; height: 220px;
+}
+.scanner-corner {
+  position: absolute; width: 28px; height: 28px;
+  border-color: var(--indigo-light); border-style: solid;
+}
+.scanner-corner.tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+.scanner-corner.tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+.scanner-corner.bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+.scanner-corner.br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+.scanner-line {
+  position: absolute; left: 4px; right: 4px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--indigo-light), transparent);
+  top: 30%; animation: scan 2s linear infinite;
+  box-shadow: 0 0 8px var(--indigo-light);
+}
+@keyframes scan {
+  0% { top: 10%; }
+  100% { top: 85%; }
+}
+.scanner-qr-placeholder {
+  position: absolute; inset: 12px;
+  background: rgba(79,70,229,0.06); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+}
+.scanner-qr-placeholder-text { color: rgba(255,255,255,0.15); font-size: 11px; text-align: center; }
+.scanner-hint {
+  position: absolute; bottom: 140px; left: 0; right: 0; z-index: 10; text-align: center;
+  font-size: 12px; color: rgba(255,255,255,0.35);
+}
+.scanner-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+  padding: 20px; background: linear-gradient(0deg, rgba(0,0,0,0.8), transparent);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.scanner-count-badge {
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 20px;
+  padding: 6px 16px; color: white; font-size: 12px; font-weight: 600;
+}
+.scanner-count-badge strong { color: var(--indigo-light); }
+.scanner-result-success {
+  background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 12px; padding: 16px 20px; width: 100%; text-align: center;
+}
+.scanner-result-icon { font-size: 28px; margin-bottom: 4px; }
+.scanner-result-name { font-size: 15px; font-weight: 700; color: white; }
+.scanner-result-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+</style>
+</head>
+<body>
+
+<!-- ─── PAGE SWITCHER ──────────────────────────────────────────────────────── -->
+<div class="switcher">
+  <span class="sw-brand">biletle mockup</span>
+  <button class="sw-btn active" onclick="showPage('p-landing', this)">🏠 Landing</button>
+  <button class="sw-btn" onclick="showPage('p-auth', this)">🔐 Giriş / Kayıt</button>
+  <button class="sw-btn" onclick="showPage('p-dashboard', this)">📊 Dashboard</button>
+  <button class="sw-btn" onclick="showPage('p-eventlist', this)">📋 Etkinlik Listesi</button>
+  <button class="sw-btn" onclick="showPage('p-eventdetail', this)">🎪 Etkinlik Detayı</button>
+  <button class="sw-btn" onclick="showPage('p-public', this)">🎫 Halka Açık Sayfa</button>
+  <button class="sw-btn" onclick="showPage('p-admin', this)">🔧 Admin Panel</button>
+  <button class="sw-btn" onclick="showPage('p-success', this)">✅ Sipariş Başarılı</button>
+  <button class="sw-btn" onclick="showPage('p-scanner', this)">📷 QR Scanner</button>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 1 — LANDING
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-landing" class="page active">
+  <!-- Nav -->
+  <nav class="lnd-nav">
+    <span class="lnd-logo">biletle<span>.</span></span>
+    <div class="lnd-nav-links">
+      <a href="#">Özellikler</a>
+      <a href="#">Nasıl Çalışır</a>
+      <a href="#">Fiyatlar</a>
+    </div>
+    <div class="lnd-nav-cta">
+      <button class="btn-ghost">Giriş Yap</button>
+      <button class="btn-primary">Ücretsiz Başla →</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="lnd-hero">
+    <div class="lnd-hero-bg"></div>
+    <div class="lnd-hero-grid"></div>
+    <div class="lnd-hero-inner">
+      <div class="lnd-badge">
+        <span class="lnd-badge-dot"></span>
+        Türkiye'nin etkinlik platformu
+      </div>
+      <h1>Etkinliğini sat,<br><span class="accent">takibini yap.</span></h1>
+      <p class="lnd-hero-sub">Konser, festival, workshop — her türlü etkinlik için bilet satışı ve QR kod girişi. Dakikalar içinde hazır.</p>
+      <div class="lnd-hero-btns">
+        <button class="btn-hero-primary">Hemen Başla — Ücretsiz</button>
+        <button class="btn-hero-secondary">Demo İzle ▶</button>
+      </div>
+      <div class="lnd-hero-stats">
+        <div class="lnd-stat"><div class="lnd-stat-num">12K+</div><div class="lnd-stat-label">Satılan Bilet</div></div>
+        <div class="lnd-stat"><div class="lnd-stat-num">340+</div><div class="lnd-stat-label">Etkinlik</div></div>
+        <div class="lnd-stat"><div class="lnd-stat-num">98%</div><div class="lnd-stat-label">Müşteri Memnuniyeti</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="lnd-section">
+    <div class="lnd-section-label">Özellikler</div>
+    <div class="lnd-section-title">Her şey dahil</div>
+    <p class="lnd-section-sub">Bilet satışından check-in'e, raporlamadan e-posta bildirimlerine — tek platform.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎫</div>
+        <div class="feature-title">Kolay Bilet Satışı</div>
+        <div class="feature-desc">Etkinliğini oluştur, linki paylaş. Ziyaretçiler kredi kartıyla anında bilet alır.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📷</div>
+        <div class="feature-title">QR Kod Girişi</div>
+        <div class="feature-desc">Cep telefonu kamerası ile anlık QR tarama. Her bilet tek kullanımlık, güvenli.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📧</div>
+        <div class="feature-title">Otomatik E-posta</div>
+        <div class="feature-desc">Satın alma sonrası QR kodlu bilet otomatik gönderilir. Müşteri memnuniyeti garantili.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Canlı İstatistikler</div>
+        <div class="feature-desc">Kaç bilet satıldı, kaçı giriş yaptı — anlık olarak görün.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📥</div>
+        <div class="feature-title">CSV Export</div>
+        <div class="feature-desc">Katılımcı listesini Excel'e aktarın. Tüm bilet ve giriş bilgileri dahil.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Güvenli Ödeme</div>
+        <div class="feature-desc">Shopier entegrasyonu ile güvenli ödeme alın. VISA, MC, TROY desteği.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="lnd-section" style="padding-top: 0;">
+    <div class="lnd-section-label">Nasıl Çalışır</div>
+    <div class="lnd-section-title">4 adımda başla</div>
+    <p class="lnd-section-sub">Teknik bilgi gerektirmez. 5 dakikada etkinliğin satışa açık.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <div class="how-step-title">Kayıt Ol</div>
+        <div class="how-step-desc">Organizatör hesabı aç, onay bekle</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <div class="how-step-title">Etkinlik Oluştur</div>
+        <div class="how-step-desc">Tarih, fiyat, kapasite bilgilerini gir</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <div class="how-step-title">Linki Paylaş</div>
+        <div class="how-step-desc">Sosyal medyada duyur, biletler satılsın</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">4</div>
+        <div class="how-step-title">Girişi Yönet</div>
+        <div class="how-step-desc">QR okuyucu ile hızlı kapı kontrolü</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="lnd-section" style="padding-top: 0;">
+    <div class="lnd-section-label">Fiyatlar</div>
+    <div class="lnd-section-title">Şeffaf fiyatlandırma</div>
+    <p class="lnd-section-sub">Gizli ücret yok. Küçük organizatörden büyük festivale kadar uygun planlar.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Starter</div>
+        <div class="pricing-price">Ücretsiz</div>
+        <div class="pricing-desc">Başlamak için yeterli. İlk etkinliğini dene.</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 1 aktif etkinlik</li>
+          <li><span class="check">✓</span> 50 bilet/ay</li>
+          <li><span class="check">✓</span> QR giriş</li>
+          <li><span class="check">✓</span> E-posta bildirimi</li>
+        </ul>
+        <button class="btn-pricing">Ücretsiz Başla</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Popüler</div>
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-price">₺499 <sub>/ay</sub></div>
+        <div class="pricing-desc">Ciddi etkinlikler için. Sınırsız kapasite.</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Sınırsız etkinlik</li>
+          <li><span class="check">✓</span> Sınırsız bilet</li>
+          <li><span class="check">✓</span> CSV export</li>
+          <li><span class="check">✓</span> Öncelikli destek</li>
+          <li><span class="check">✓</span> Ücretsiz etkinlik</li>
+        </ul>
+        <button class="btn-pricing featured">Pro'ya Geç</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Enterprise</div>
+        <div class="pricing-price">Özel</div>
+        <div class="pricing-desc">Festival ve büyük organizasyonlar için.</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> White-label</li>
+          <li><span class="check">✓</span> API erişimi</li>
+          <li><span class="check">✓</span> Özel entegrasyon</li>
+          <li><span class="check">✓</span> Dedicated destek</li>
+        </ul>
+        <button class="btn-pricing">Bize Ulaş</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.07); margin: 0 48px;">
+    <div class="lnd-footer">
+      <span class="lnd-footer-logo">biletle.</span>
+      <div class="lnd-footer-links">
+        <a href="#">Gizlilik</a>
+        <a href="#">Kullanım Koşulları</a>
+        <a href="#">İletişim</a>
+      </div>
+      <span class="lnd-footer-copy">© 2025 biletle. Tüm hakları saklıdır.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 2 — AUTH
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-auth" class="page">
+  <div class="auth-box">
+    <div class="auth-brand">
+      <div class="auth-brand-logo">biletle.</div>
+      <div class="auth-brand-tagline">Etkinliklerini yönet, biletlerini sat</div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <div class="auth-tab active">Giriş Yap</div>
+        <div class="auth-tab">Kayıt Ol</div>
+      </div>
+      <div class="auth-form">
+        <div class="auth-form-group">
+          <label class="auth-label">E-posta Adresi</label>
+          <input class="auth-input" type="email" placeholder="ornek@gmail.com" value="demo@biletle.shop">
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Şifre</label>
+          <input class="auth-input" type="password" placeholder="••••••••" value="••••••••">
+        </div>
+        <div style="text-align: right; margin-top: -8px; margin-bottom: 16px;">
+          <a href="#" style="font-size: 12px; color: var(--indigo-light); text-decoration: none;">Şifremi unuttum</a>
+        </div>
+        <button class="btn-auth">Giriş Yap →</button>
+        <div class="auth-footer-text">
+          Hesabın yok mu? <a href="#">Kayıt ol</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kayıt formu (ek bilgi) -->
+    <div style="margin-top: 16px;" class="auth-card">
+      <div style="padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.7);">Kayıt Ol — Organizatör Hesabı</div>
+      </div>
+      <div class="auth-form">
+        <div class="auth-form-group">
+          <label class="auth-label">Organizasyon Adı</label>
+          <input class="auth-input" type="text" placeholder="Etkinlik Ajansı A.Ş.">
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">E-posta</label>
+          <input class="auth-input" type="email" placeholder="ornek@ajans.com">
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Şifre</label>
+          <input class="auth-input" type="password" placeholder="En az 8 karakter">
+        </div>
+        <button class="btn-auth" style="background: rgba(79,70,229,0.7);">Hesap Oluştur</button>
+        <div class="auth-note">
+          <strong>⏳ Manuel onay gerekiyor.</strong><br>
+          Hesabınız oluşturulacak, admin onayından sonra erişim sağlanacak. Genellikle 24 saat içinde onaylanır.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 3 — DASHBOARD HOME
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-dashboard" class="page">
+  <div class="db-layout">
+    <!-- Sidebar -->
+    <aside class="db-sidebar">
+      <div class="db-sidebar-brand">
+        <div class="db-sidebar-logo">biletle.</div>
+        <div class="db-sidebar-org">Arkaoda Organizasyon</div>
+      </div>
+      <nav class="db-sidebar-nav">
+        <div class="db-nav-section">Ana Menü</div>
+        <a class="db-nav-item active" href="#"><span class="icon">🏠</span> Dashboard</a>
+        <a class="db-nav-item" href="#"><span class="icon">🎪</span> Etkinlikler <span class="badge">3</span></a>
+        <a class="db-nav-item" href="#"><span class="icon">🎫</span> Siparişler</a>
+        <div class="db-nav-section" style="margin-top: 8px;">Araçlar</div>
+        <a class="db-nav-item" href="#"><span class="icon">📷</span> QR Scanner</a>
+        <a class="db-nav-item" href="#"><span class="icon">📊</span> Raporlar</a>
+        <a class="db-nav-item" href="#"><span class="icon">⚙️</span> Ayarlar</a>
+      </nav>
+      <div class="db-sidebar-bottom">
+        <div class="db-user-row">
+          <div class="db-user-avatar">A</div>
+          <div>
+            <div class="db-user-name">Arkaoda</div>
+            <div class="db-user-role">Organizatör</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="db-main">
+      <div class="db-topbar">
+        <div class="db-topbar-title">Dashboard</div>
+        <div class="db-topbar-right">
+          <button class="btn-sm btn-sm-secondary">📥 Export</button>
+          <button class="btn-sm btn-sm-primary">+ Etkinlik Oluştur</button>
+        </div>
+      </div>
+      <div class="db-content">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-icon" style="background:#eef2ff;">🎫</div>
+            <div class="stat-card-value">1,284</div>
+            <div class="stat-card-label">Toplam Bilet</div>
+            <div class="stat-card-change up">↑ 12% bu ay</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon" style="background:#ecfdf5;">💰</div>
+            <div class="stat-card-value">₺184K</div>
+            <div class="stat-card-label">Toplam Gelir</div>
+            <div class="stat-card-change up">↑ 8% bu ay</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon" style="background:#fef3c7;">🎪</div>
+            <div class="stat-card-value">3</div>
+            <div class="stat-card-label">Aktif Etkinlik</div>
+            <div class="stat-card-change neutral">1 bu hafta başlıyor</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon" style="background:#f0fdf4;">🚪</div>
+            <div class="stat-card-value">67%</div>
+            <div class="stat-card-label">Check-in Oranı</div>
+            <div class="stat-card-change up">↑ 5% son etkinlik</div>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="db-grid-2">
+          <div>
+            <div class="card-box">
+              <div class="card-box-title">
+                Son Etkinlikler
+                <a href="#">Tümünü gör →</a>
+              </div>
+              <div class="event-row">
+                <div class="event-row-icon">🎵</div>
+                <div class="event-row-info">
+                  <div class="event-row-title">Techno Night Underground Session</div>
+                  <div class="event-row-meta">28 Haz 2025 · Arkaoda, Kadıköy</div>
+                </div>
+                <div class="event-row-right">
+                  <div class="event-row-sales">228/350</div>
+                  <span class="event-row-status status-active">Aktif</span>
+                </div>
+              </div>
+              <div class="event-row">
+                <div class="event-row-icon">🎸</div>
+                <div class="event-row-info">
+                  <div class="event-row-title">Indie Rock Night Vol.4</div>
+                  <div class="event-row-meta">15 Tem 2025 · Babylon, Beyoğlu</div>
+                </div>
+                <div class="event-row-right">
+                  <div class="event-row-sales">94/200</div>
+                  <span class="event-row-status status-upcoming">Yakında</span>
+                </div>
+              </div>
+              <div class="event-row">
+                <div class="event-row-icon">🎹</div>
+                <div class="event-row-info">
+                  <div class="event-row-title">Jazz Under the Stars</div>
+                  <div class="event-row-meta">1 Haz 2025 · Salon İKSV</div>
+                </div>
+                <div class="event-row-right">
+                  <div class="event-row-sales">180/180</div>
+                  <span class="event-row-status status-ended">Tamamlandı</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-box">
+            <div class="card-box-title">Özet</div>
+            <div class="quick-stat">
+              <span class="quick-stat-label">Bu ayki satış</span>
+              <span class="quick-stat-value">₺68,250</span>
+            </div>
+            <div class="quick-stat">
+              <span class="quick-stat-label">Bekleyen sipariş</span>
+              <span class="quick-stat-value" style="color:var(--amber)">12</span>
+            </div>
+            <div class="quick-stat">
+              <span class="quick-stat-label">Bu hafta check-in</span>
+              <span class="quick-stat-value">145</span>
+            </div>
+            <div class="quick-stat">
+              <span class="quick-stat-label">İptal edilen</span>
+              <span class="quick-stat-value" style="color:var(--red)">3</span>
+            </div>
+            <div class="quick-stat">
+              <span class="quick-stat-label">Dolan kapasite</span>
+              <span class="quick-stat-value" style="color:var(--green)">%65</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 4 — EVENT LIST
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-eventlist" class="page">
+  <div class="db-layout">
+    <aside class="db-sidebar">
+      <div class="db-sidebar-brand">
+        <div class="db-sidebar-logo">biletle.</div>
+        <div class="db-sidebar-org">Arkaoda Organizasyon</div>
+      </div>
+      <nav class="db-sidebar-nav">
+        <a class="db-nav-item" href="#"><span class="icon">🏠</span> Dashboard</a>
+        <a class="db-nav-item active" href="#"><span class="icon">🎪</span> Etkinlikler <span class="badge">3</span></a>
+        <a class="db-nav-item" href="#"><span class="icon">🎫</span> Siparişler</a>
+        <a class="db-nav-item" href="#"><span class="icon">📷</span> QR Scanner</a>
+        <a class="db-nav-item" href="#"><span class="icon">⚙️</span> Ayarlar</a>
+      </nav>
+      <div class="db-sidebar-bottom">
+        <div class="db-user-row">
+          <div class="db-user-avatar">A</div>
+          <div>
+            <div class="db-user-name">Arkaoda</div>
+            <div class="db-user-role">Organizatör</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="db-main">
+      <div class="db-topbar">
+        <div class="db-topbar-title">Etkinlikler</div>
+        <div class="db-topbar-right">
+          <button class="btn-new-event btn-sm btn-sm-primary">+ Yeni Etkinlik</button>
+        </div>
+      </div>
+      <div class="db-content">
+        <div class="events-grid">
+          <div class="ev-card">
+            <div class="ev-card-top ev-card-top-g1">
+              <div class="ev-card-top-emoji">🎧</div>
+              <span class="ev-card-status ev-status-active">Satışta</span>
+            </div>
+            <div class="ev-card-body">
+              <div class="ev-card-title">Techno Night Underground Session</div>
+              <div class="ev-card-meta">📅 28 Haz 2025 · 23:00 &nbsp; 📍 Arkaoda</div>
+              <div class="ev-card-progress"><div class="ev-card-progress-bar" style="width:65%"></div></div>
+              <div style="font-size:11px; color:var(--gray-400); margin-bottom:4px;">228 / 350 bilet satıldı (%65)</div>
+              <div class="ev-card-footer">
+                <span class="ev-card-sales">228 bilet</span>
+                <span class="ev-card-revenue">₺79,800</span>
+              </div>
+            </div>
+          </div>
+          <div class="ev-card">
+            <div class="ev-card-top ev-card-top-g2">
+              <div class="ev-card-top-emoji">🎸</div>
+              <span class="ev-card-status ev-status-upcoming">Yakında</span>
+            </div>
+            <div class="ev-card-body">
+              <div class="ev-card-title">Indie Rock Night Vol.4</div>
+              <div class="ev-card-meta">📅 15 Tem 2025 · 21:00 &nbsp; 📍 Babylon</div>
+              <div class="ev-card-progress"><div class="ev-card-progress-bar" style="width:47%; background: #0ea5e9;"></div></div>
+              <div style="font-size:11px; color:var(--gray-400); margin-bottom:4px;">94 / 200 bilet satıldı (%47)</div>
+              <div class="ev-card-footer">
+                <span class="ev-card-sales">94 bilet</span>
+                <span class="ev-card-revenue">₺28,200</span>
+              </div>
+            </div>
+          </div>
+          <div class="ev-card">
+            <div class="ev-card-top ev-card-top-g3">
+              <div class="ev-card-top-emoji">🎹</div>
+              <span class="ev-card-status" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);border:none;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;position:absolute;top:10px;right:10px;">Tamamlandı</span>
+            </div>
+            <div class="ev-card-body">
+              <div class="ev-card-title">Jazz Under the Stars</div>
+              <div class="ev-card-meta">📅 1 Haz 2025 · 20:00 &nbsp; 📍 Salon İKSV</div>
+              <div class="ev-card-progress"><div class="ev-card-progress-bar" style="width:100%; background: var(--green);"></div></div>
+              <div style="font-size:11px; color:var(--gray-400); margin-bottom:4px;">180 / 180 bilet satıldı (%100)</div>
+              <div class="ev-card-footer">
+                <span class="ev-card-sales">180 bilet</span>
+                <span class="ev-card-revenue">₺72,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boş durum (yeni kullanıcı) -->
+        <div style="background:white;border:1.5px dashed var(--gray-200);border-radius:var(--radius-lg);padding:48px;text-align:center;margin-top:16px;">
+          <div style="font-size:40px;margin-bottom:12px;">🎪</div>
+          <div style="font-size:15px;font-weight:700;color:var(--gray-700);margin-bottom:6px;">İlk etkinliğini oluştur</div>
+          <div style="font-size:13px;color:var(--gray-400);margin-bottom:20px;">Bilet satmaya başlamak için bir etkinlik ekle.</div>
+          <button class="btn-new-event btn-sm btn-sm-primary" style="display:inline-flex;margin:0 auto;">+ Etkinlik Oluştur</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 5 — EVENT DETAIL (dashboard)
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-eventdetail" class="page">
+  <div class="db-layout">
+    <aside class="db-sidebar">
+      <div class="db-sidebar-brand">
+        <div class="db-sidebar-logo">biletle.</div>
+        <div class="db-sidebar-org">Arkaoda Organizasyon</div>
+      </div>
+      <nav class="db-sidebar-nav">
+        <a class="db-nav-item" href="#"><span class="icon">🏠</span> Dashboard</a>
+        <a class="db-nav-item active" href="#"><span class="icon">🎪</span> Etkinlikler</a>
+        <a class="db-nav-item" href="#"><span class="icon">🎫</span> Siparişler</a>
+        <a class="db-nav-item" href="#"><span class="icon">📷</span> QR Scanner</a>
+        <a class="db-nav-item" href="#"><span class="icon">⚙️</span> Ayarlar</a>
+      </nav>
+      <div class="db-sidebar-bottom">
+        <div class="db-user-row">
+          <div class="db-user-avatar">A</div>
+          <div>
+            <div class="db-user-name">Arkaoda</div>
+            <div class="db-user-role">Organizatör</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="db-main">
+      <!-- Event header -->
+      <div class="ev-detail-header">
+        <div class="ev-detail-breadcrumb"><a href="#">Etkinlikler</a> / Techno Night</div>
+        <div class="ev-detail-title">Techno Night Underground Session</div>
+        <div class="ev-detail-meta">
+          <span class="ev-detail-meta-item">📅 28 Haziran 2025, Cumartesi</span>
+          <span class="ev-detail-meta-item">📍 Arkaoda, Kadıköy</span>
+          <span class="ev-detail-meta-item">🕚 23:00 – 06:00</span>
+          <span class="ev-detail-meta-item" style="color:var(--green);font-weight:600;">● Satışta</span>
+        </div>
+        <div class="ev-detail-actions">
+          <button class="btn-sm btn-sm-secondary">✏️ Düzenle</button>
+          <button class="btn-sm btn-sm-secondary">📥 CSV İndir</button>
+          <button class="btn-sm btn-sm-secondary">🔗 Linki Kopyala</button>
+          <button class="btn-sm" style="background:var(--red-50);color:var(--red);border:1px solid #fecaca;">🗑 İptal</button>
+        </div>
+      </div>
+
+      <div class="db-content">
+        <!-- Stats -->
+        <div class="ev-stat-cards">
+          <div class="ev-stat-card">
+            <div class="ev-stat-card-icon">🎫</div>
+            <div class="ev-stat-card-value">228</div>
+            <div class="ev-stat-card-label">Satılan Bilet</div>
+          </div>
+          <div class="ev-stat-card">
+            <div class="ev-stat-card-icon">📋</div>
+            <div class="ev-stat-card-value" style="color:var(--indigo)">122</div>
+            <div class="ev-stat-card-label">Kalan Kapasite</div>
+          </div>
+          <div class="ev-stat-card">
+            <div class="ev-stat-card-icon">🚪</div>
+            <div class="ev-stat-card-value" style="color:#0891b2">153</div>
+            <div class="ev-stat-card-label">Giriş Yapan</div>
+          </div>
+          <div class="ev-stat-card">
+            <div class="ev-stat-card-icon">💰</div>
+            <div class="ev-stat-card-value" style="color:var(--green)">₺79.8K</div>
+            <div class="ev-stat-card-label">Toplam Gelir</div>
+          </div>
+        </div>
+
+        <!-- Orders table -->
+        <div class="card-box" style="padding: 0; overflow: hidden;">
+          <div style="padding: 18px 20px; border-bottom: 1px solid var(--gray-100); display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-size:14px;font-weight:700;color:var(--gray-900);">Siparişler</div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn-sm btn-sm-secondary" style="font-size:11px;">Tümü</button>
+              <button class="btn-sm btn-sm-secondary" style="font-size:11px;background:var(--indigo-50);color:var(--indigo);">Bekleyen (4)</button>
+              <button class="btn-sm btn-sm-secondary" style="font-size:11px;">Onaylı</button>
+            </div>
+          </div>
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Ad Soyad</th>
+                <th>E-posta</th>
+                <th>Bilet No</th>
+                <th>Adet</th>
+                <th>Tutar</th>
+                <th>Durum</th>
+                <th>Giriş</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ahmet Yılmaz</strong></td>
+                <td style="color:var(--gray-400)">a.yilmaz@gmail.com</td>
+                <td><span class="ticket-num">BLT-001-A7B2</span></td>
+                <td>2</td>
+                <td style="font-weight:600;">₺700</td>
+                <td><span class="event-row-status status-active">Onaylı</span></td>
+                <td><span class="checkin-yes">✓ Girdi</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><strong>Zeynep Demir</strong></td>
+                <td style="color:var(--gray-400)">z.demir@hotmail.com</td>
+                <td><span class="ticket-num">BLT-002-C3D9</span></td>
+                <td>1</td>
+                <td style="font-weight:600;">₺350</td>
+                <td><span class="event-row-status status-active">Onaylı</span></td>
+                <td><span class="checkin-no">— Girmedi</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><strong>Mert Kaya</strong></td>
+                <td style="color:var(--gray-400)">mertkaya@icloud.com</td>
+                <td><span class="ticket-num">—</span></td>
+                <td>1</td>
+                <td style="font-weight:600;">₺350</td>
+                <td><span class="event-row-status status-upcoming">Bekliyor</span></td>
+                <td><span class="checkin-no">—</span></td>
+                <td><button style="font-size:11px;padding:4px 8px;border-radius:4px;border:none;background:var(--green);color:white;cursor:pointer;font-weight:600;">Onayla</button></td>
+              </tr>
+              <tr>
+                <td><strong>Elif Arslan</strong></td>
+                <td style="color:var(--gray-400)">elif.arslan@gmail.com</td>
+                <td><span class="ticket-num">BLT-004-E1F5</span></td>
+                <td>3</td>
+                <td style="font-weight:600;">₺1,050</td>
+                <td><span class="event-row-status status-active">Onaylı</span></td>
+                <td><span class="checkin-yes">✓ Girdi</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><strong>Can Öztürk</strong></td>
+                <td style="color:var(--gray-400)">can.ozturk@yahoo.com</td>
+                <td><span class="ticket-num">—</span></td>
+                <td>2</td>
+                <td style="font-weight:600;">₺700</td>
+                <td><span class="event-row-status" style="background:var(--red-50);color:var(--red);">İptal</span></td>
+                <td><span class="checkin-no">—</span></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 6 — PUBLIC EVENT PAGE
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-public" class="page">
+  <nav class="pub-nav">
+    <span class="pub-nav-logo">biletle.</span>
+    <a class="pub-nav-back" href="#">← Tüm Etkinlikler</a>
+  </nav>
+
+  <div class="pub-hero">
+    <div class="pub-hero-inner">
+      <div class="pub-hero-badge"><span class="pub-hero-badge-dot"></span> Satışta · 122 bilet kaldı</div>
+      <h1>Techno Night<br>Underground Session</h1>
+      <div class="pub-hero-tags">
+        <span class="pub-hero-tag">📅 28 Haziran 2025 · Cumartesi</span>
+        <span class="pub-hero-tag">📍 Arkaoda, Kadıköy</span>
+        <span class="pub-hero-tag">🕚 23:00 – 06:00</span>
+        <span class="pub-hero-tag">🎫 350 TL</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-main">
+    <!-- Left -->
+    <div>
+      <div class="pub-card">
+        <div class="pub-card-title">🎵 Etkinlik Hakkında</div>
+        <p class="pub-desc">İstanbul'un en köklü underground sahnelerinden Arkaoda'da, sezonun en beklenen gecesi başlıyor. Berlin ekolünden ilham alan sert ritimler ve derin ses katmanlarıyla sabahın ilk saatlerine kadar sürecek bu geceye hazır mısın? Kapasiteli etkinlik, geç kalma!</p>
+      </div>
+      <div class="pub-card">
+        <div class="pub-card-title">🎧 Lineup</div>
+        <div class="pub-lineup">
+          <div class="pub-artist">
+            <div class="pub-artist-left">
+              <div class="pub-artist-avatar" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">🎧</div>
+              <div>
+                <div class="pub-artist-name">VALE</div>
+                <div class="pub-artist-role">OPENING SET</div>
+              </div>
+            </div>
+            <span class="pub-artist-time">23:00 – 01:00</span>
+          </div>
+          <div class="pub-artist">
+            <div class="pub-artist-left">
+              <div class="pub-artist-avatar" style="background:linear-gradient(135deg,#ec4899,#ef4444)">🔊</div>
+              <div>
+                <div class="pub-artist-name">SVRECA</div>
+                <div class="pub-artist-role">HEADLINER</div>
+              </div>
+            </div>
+            <span class="pub-artist-time">01:00 – 03:30</span>
+          </div>
+          <div class="pub-artist">
+            <div class="pub-artist-left">
+              <div class="pub-artist-avatar" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">🎛️</div>
+              <div>
+                <div class="pub-artist-name">ORPHX</div>
+                <div class="pub-artist-role">LIVE SET</div>
+              </div>
+            </div>
+            <span class="pub-artist-time">03:30 – 06:00</span>
+          </div>
+        </div>
+      </div>
+      <!-- Venue info -->
+      <div class="pub-card">
+        <div class="pub-card-title">📍 Mekan</div>
+        <div style="background:var(--gray-100);border-radius:var(--radius-sm);height:140px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gray-400);">
+          🗺 Harita — Arkaoda, Kadıköy, İstanbul
+        </div>
+        <div style="margin-top:12px;font-size:13px;color:var(--gray-600);">
+          <strong style="color:var(--gray-900);">Arkaoda</strong><br>
+          Damga Sokak 8, Kadıköy / İstanbul<br>
+          <span style="color:var(--gray-400);font-size:12px;">Metro: Kadıköy (M4) · 5 dk yürüme</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ticket widget -->
+    <div>
+      <div class="ticket-widget">
+        <div class="tw-top">
+          <div class="tw-price-label">Kişi Başı Fiyat</div>
+          <div class="tw-price">350 <sub>TL</sub></div>
+          <div class="tw-stock">
+            <span class="tw-stock-dot"></span>
+            <span class="tw-stock-text">122 bilet kaldı</span>
+          </div>
+        </div>
+        <div class="tw-divider"></div>
+        <div class="tw-body">
+          <label class="tw-label">AD SOYAD *</label>
+          <input class="tw-input" type="text" placeholder="Adınız Soyadınız">
+          <label class="tw-label">E-POSTA *</label>
+          <input class="tw-input" type="email" placeholder="ornek@gmail.com">
+          <label class="tw-label">TELEFON</label>
+          <input class="tw-input" type="tel" placeholder="05xx xxx xx xx">
+          <div class="tw-total">
+            <span class="tw-total-label">1 bilet toplamı</span>
+            <span class="tw-total-price">350 TL</span>
+          </div>
+          <button class="btn-buy-ticket">🎫 Hemen Bilet Al</button>
+          <div class="tw-payments">
+            <span class="tw-pay-badge">VISA</span>
+            <span class="tw-pay-badge">MC</span>
+            <span class="tw-pay-badge">TROY</span>
+            <span class="tw-pay-badge">🍎 Pay</span>
+          </div>
+          <div class="tw-rules">
+            <div class="tw-rule">🔒 Güvenli ödeme · Shopier</div>
+            <div class="tw-rule">📧 QR kod e-posta ile gönderilir</div>
+            <div class="tw-rule">🔞 18+ etkinlik, kimlik kontrolü</div>
+            <div class="tw-rule">↩️ İade yapılmaz</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 7 — ADMIN PANEL
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-admin" class="page">
+  <div class="db-layout">
+    <aside class="db-sidebar">
+      <div class="db-sidebar-brand">
+        <div class="db-sidebar-logo">biletle.</div>
+        <div class="db-sidebar-org" style="color:var(--red);">⚡ Admin</div>
+      </div>
+      <nav class="db-sidebar-nav">
+        <a class="db-nav-item" href="#"><span class="icon">🏠</span> Dashboard</a>
+        <a class="db-nav-item active" href="#"><span class="icon">🔧</span> Admin Panel <span class="badge" style="background:var(--red)">3</span></a>
+        <a class="db-nav-item" href="#"><span class="icon">🎪</span> Tüm Etkinlikler</a>
+        <a class="db-nav-item" href="#"><span class="icon">👥</span> Organizatörler</a>
+      </nav>
+      <div class="db-sidebar-bottom">
+        <div class="db-user-row">
+          <div class="db-user-avatar" style="background:#fee2e2;color:var(--red);">S</div>
+          <div>
+            <div class="db-user-name">Super Admin</div>
+            <div class="db-user-role" style="color:var(--red);">codebtechmain@gmail.com</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="db-main">
+      <div class="db-topbar">
+        <div class="db-topbar-title">Admin Panel</div>
+      </div>
+      <div class="db-content">
+
+        <!-- Pending approval -->
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:14px;">
+          Onay Bekleyen Hesaplar (3)
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-avatar">🎭</div>
+          <div class="admin-card-info">
+            <div class="admin-card-name">Rhythm Events</div>
+            <div class="admin-card-email">info@rhythmevents.com.tr</div>
+            <div class="admin-card-date">Kayıt: 2 saat önce</div>
+          </div>
+          <div class="admin-card-actions">
+            <button class="btn-approve">✓ Onayla</button>
+            <button class="btn-reject">Reddet</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-avatar">🎵</div>
+          <div class="admin-card-info">
+            <div class="admin-card-name">Moda Sahnesi</div>
+            <div class="admin-card-email">bilet@modasahnesi.com</div>
+            <div class="admin-card-date">Kayıt: 5 saat önce</div>
+          </div>
+          <div class="admin-card-actions">
+            <button class="btn-approve">✓ Onayla</button>
+            <button class="btn-reject">Reddet</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-avatar">🎸</div>
+          <div class="admin-card-info">
+            <div class="admin-card-name">Istanbul Underground</div>
+            <div class="admin-card-email">contact@istanbulunderground.net</div>
+            <div class="admin-card-date">Kayıt: 1 gün önce</div>
+          </div>
+          <div class="admin-card-actions">
+            <button class="btn-approve">✓ Onayla</button>
+            <button class="btn-reject">Reddet</button>
+          </div>
+        </div>
+
+        <!-- Approved -->
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-top:28px;margin-bottom:14px;">
+          Onaylı Hesaplar (2)
+        </div>
+        <div class="admin-card" style="opacity:0.7">
+          <div class="admin-card-avatar">🎧</div>
+          <div class="admin-card-info">
+            <div class="admin-card-name">Arkaoda Organizasyon</div>
+            <div class="admin-card-email">arkaoda@gmail.com</div>
+            <div class="admin-approved-badge">✓ Onaylı</div>
+          </div>
+        </div>
+        <div class="admin-card" style="opacity:0.7">
+          <div class="admin-card-avatar">🎹</div>
+          <div class="admin-card-info">
+            <div class="admin-card-name">Salon İKSV Events</div>
+            <div class="admin-card-email">events@iksv.org</div>
+            <div class="admin-approved-badge">✓ Onaylı</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 8 — ORDER SUCCESS
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-success" class="page">
+  <div class="success-box">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">Biletiniz Hazır!</div>
+    <p class="success-sub">Satın alma işleminiz başarıyla tamamlandı. QR kodunuz aşağıdaki bilgilerle birlikte e-posta adresinize gönderildi.</p>
+
+    <div class="success-ticket-card">
+      <div class="success-ticket-row">
+        <span class="success-ticket-label">Etkinlik</span>
+        <span class="success-ticket-value">Techno Night Underground</span>
+      </div>
+      <div class="success-ticket-row">
+        <span class="success-ticket-label">Tarih</span>
+        <span class="success-ticket-value">28 Haziran 2025 · 23:00</span>
+      </div>
+      <div class="success-ticket-row">
+        <span class="success-ticket-label">Mekan</span>
+        <span class="success-ticket-value">Arkaoda, Kadıköy</span>
+      </div>
+      <div class="success-ticket-row">
+        <span class="success-ticket-label">Alıcı</span>
+        <span class="success-ticket-value">Ahmet Yılmaz</span>
+      </div>
+      <div class="success-ticket-row">
+        <span class="success-ticket-label">Adet</span>
+        <span class="success-ticket-value">1 bilet · ₺350</span>
+      </div>
+      <div class="success-ticket-row">
+        <span class="success-ticket-label">Bilet No</span>
+        <span class="success-ticket-num">BLT-007-X4K2</span>
+      </div>
+    </div>
+
+    <div class="success-email-note">
+      📧 <strong>a.yilmaz@gmail.com</strong> adresine QR kodunuz gönderildi.<br>
+      Spam klasörünü de kontrol etmeyi unutmayın.
+    </div>
+
+    <button class="btn-success">Ana Sayfaya Dön</button>
+    <button class="btn-success-outline">Etkinlik Detaylarına Git</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     PAGE 9 — QR SCANNER (mobile mockup)
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="p-scanner" class="page">
+  <div class="scanner-frame">
+    <!-- Camera simulation -->
+    <div class="scanner-camera-bg"></div>
+
+    <!-- Top bar -->
+    <div class="scanner-topbar">
+      <span class="scanner-topbar-title">📷 QR Tarayıcı</span>
+      <span class="scanner-topbar-close">✕</span>
+    </div>
+
+    <!-- Event info badge -->
+    <div class="scanner-event-info">
+      <div class="scanner-event-badge">
+        <div class="scanner-event-name">Techno Night Underground Session</div>
+        <div class="scanner-event-meta">28 Haz 2025 · Arkaoda · 153 giriş yapıldı</div>
+      </div>
+    </div>
+
+    <!-- QR frame -->
+    <div class="scanner-qr-area">
+      <div class="scanner-corner tl"></div>
+      <div class="scanner-corner tr"></div>
+      <div class="scanner-corner bl"></div>
+      <div class="scanner-corner br"></div>
+      <div class="scanner-qr-placeholder">
+        <div class="scanner-qr-placeholder-text">QR kod burada<br>taranacak</div>
+      </div>
+      <div class="scanner-line"></div>
+    </div>
+
+    <!-- Hint -->
+    <div class="scanner-hint">QR kodu kare içine hizalayın</div>
+
+    <!-- Bottom -->
+    <div class="scanner-bottom">
+      <div class="scanner-count-badge">
+        Bu gece <strong>153</strong> kişi giriş yaptı
+      </div>
+      <!-- Success state (shown after scan) -->
+      <div class="scanner-result-success">
+        <div class="scanner-result-icon">✅</div>
+        <div class="scanner-result-name">Zeynep Demir</div>
+        <div class="scanner-result-sub">BLT-002-C3D9 · Geçerli bilet · Giriş onaylandı</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

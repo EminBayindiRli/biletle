@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { Button } from '@/components/ui/button'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
@@ -32,7 +31,6 @@ export default function RegisterPage() {
     }
 
     if (data.user) {
-      // Slug oluştur: "Emin Bayındırlı" → "emin-bayindirli"
       const slug = name
         .toLowerCase()
         .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
@@ -59,68 +57,153 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 w-full max-w-md p-8">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-600">biletle</h1>
-          <p className="text-gray-500 mt-1 text-sm">Ücretsiz hesap oluştur</p>
+    <div style={{
+      minHeight: '100vh', background: '#07071a',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '80px 24px', position: 'relative', overflow: 'hidden',
+      fontFamily: 'Inter, -apple-system, sans-serif',
+    }}>
+      {/* Gradient bg */}
+      <div style={{
+        position: 'fixed', inset: 0, pointerEvents: 'none',
+        background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(79,70,229,0.18) 0%, transparent 70%)',
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '420px' }}>
+        {/* Brand */}
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{ fontSize: '28px', fontWeight: 900, color: 'white', letterSpacing: '-1.5px' }}>
+            biletle<span style={{ color: '#818cf8' }}>.</span>
+          </div>
+          <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', marginTop: '4px' }}>
+            Ücretsiz hesap oluştur
+          </div>
         </div>
 
-        <form onSubmit={handleRegister} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Adınız / Organizasyon Adı</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Emin Bayındırlı"
-              required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
+        {/* Card */}
+        <div style={{
+          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '24px', overflow: 'hidden', backdropFilter: 'blur(20px)',
+        }}>
+          {/* Tabs */}
+          <div style={{ borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex' }}>
+            <Link href="/auth/login" style={{
+              flex: 1, padding: '14px', textAlign: 'center', fontSize: '13px', fontWeight: 600,
+              color: 'rgba(255,255,255,0.35)', textDecoration: 'none', display: 'block',
+            }}>
+              Giriş Yap
+            </Link>
+            <div style={{
+              flex: 1, padding: '14px', textAlign: 'center', fontSize: '13px', fontWeight: 600,
+              color: 'white', borderBottom: '2px solid #4f46e5', marginBottom: '-1px',
+            }}>
+              Kayıt Ol
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="sen@ornek.com"
-              required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
-          </div>
+          <form onSubmit={handleRegister} style={{ padding: '28px' }}>
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: '6px', letterSpacing: '0.5px' }}>
+                ORGANİZASYON ADI
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Etkinlik Ajansı / Adınız"
+                required
+                style={{
+                  width: '100%', background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)', borderRadius: '8px',
+                  padding: '11px 14px', color: 'white', fontSize: '14px',
+                  outline: 'none', boxSizing: 'border-box',
+                  fontFamily: 'Inter, -apple-system, sans-serif',
+                }}
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Şifre</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="En az 6 karakter"
-              required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
-          </div>
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: '6px', letterSpacing: '0.5px' }}>
+                E-POSTA
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="ornek@gmail.com"
+                required
+                style={{
+                  width: '100%', background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)', borderRadius: '8px',
+                  padding: '11px 14px', color: 'white', fontSize: '14px',
+                  outline: 'none', boxSizing: 'border-box',
+                  fontFamily: 'Inter, -apple-system, sans-serif',
+                }}
+              />
+            </div>
 
-          {error && (
-            <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-              {error}
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: '6px', letterSpacing: '0.5px' }}>
+                ŞİFRE
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="En az 6 karakter"
+                required
+                style={{
+                  width: '100%', background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)', borderRadius: '8px',
+                  padding: '11px 14px', color: 'white', fontSize: '14px',
+                  outline: 'none', boxSizing: 'border-box',
+                  fontFamily: 'Inter, -apple-system, sans-serif',
+                }}
+              />
+            </div>
+
+            {error && (
+              <div style={{
+                background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+                borderRadius: '8px', padding: '10px 14px', fontSize: '13px', color: '#fca5a5',
+                marginBottom: '16px',
+              }}>
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: '100%', padding: '13px', borderRadius: '8px', border: 'none',
+                background: '#4f46e5', color: 'white', fontSize: '14px', fontWeight: 700,
+                fontFamily: 'Inter, -apple-system, sans-serif', cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading ? 0.7 : 1,
+                boxShadow: '0 4px 16px rgba(79,70,229,0.3)',
+              }}
+            >
+              {loading ? 'Hesap oluşturuluyor...' : 'Hesap Oluştur'}
+            </button>
+
+            {/* Manuel onay notu */}
+            <div style={{
+              background: 'rgba(79,70,229,0.08)', border: '1px solid rgba(79,70,229,0.15)',
+              borderRadius: '8px', padding: '12px', marginTop: '16px',
+              fontSize: '12px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.6,
+            }}>
+              <strong style={{ color: 'rgba(255,255,255,0.65)' }}>⏳ Manuel onay gerekiyor.</strong><br />
+              Hesabınız oluşturulacak, admin onayından sonra erişim sağlanacak.
+            </div>
+
+            <p style={{ textAlign: 'center', fontSize: '12px', color: 'rgba(255,255,255,0.25)', marginTop: '20px' }}>
+              Zaten hesabın var mı?{' '}
+              <Link href="/auth/login" style={{ color: '#818cf8', textDecoration: 'none' }}>
+                Giriş yap
+              </Link>
             </p>
-          )}
-
-          <Button type="submit" disabled={loading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white">
-            {loading ? 'Hesap oluşturuluyor...' : 'Kayıt Ol'}
-          </Button>
-        </form>
-
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Zaten hesabın var mı?{' '}
-          <Link href="/auth/login" className="text-indigo-600 font-medium hover:underline">
-            Giriş yap
-          </Link>
-        </p>
+          </form>
+        </div>
       </div>
     </div>
   )

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Techno Night – Underground Session</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #6c47ff;
+      --accent-light: #ede9ff;
+      --text-primary: #0f0f0f;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --card: #f9fafb;
+      --radius: 14px;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      margin-top: 60px;
+      padding: 80px 24px 0;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .event-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .event-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+
+    /* META ROW */
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .meta-icon {
+      width: 38px; height: 38px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* COVER IMAGE */
+    .cover {
+      width: 100%;
+      height: 420px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
+      margin-bottom: 64px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover-visual {
+      position: absolute;
+      inset: 0;
+      opacity: 0.5;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 60%, rgba(108,71,255,0.4) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,100,180,0.2) 0%, transparent 60%);
+    }
+    .cover-circles {
+      position: absolute;
+      inset: 0;
+    }
+    .cover-circles::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 0 0 60px rgba(255,255,255,0.03),
+        0 0 0 120px rgba(255,255,255,0.02);
+    }
+    .cover-text {
+      position: relative;
+      text-align: center;
+      color: white;
+    }
+    .cover-text p {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+    .cover-text h2 {
+      font-size: 52px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .cover-text span {
+      display: block;
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.7;
+      margin-top: 8px;
+      letter-spacing: 0.1em;
+    }
+
+    /* LAYOUT */
+    .content-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* DESCRIPTION */
+    .description h3 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .description p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #374151;
+      margin-bottom: 16px;
+    }
+    .description p:last-child { margin-bottom: 0; }
+
+    .dj-list {
+      margin-top: 36px;
+    }
+    .dj-list h3 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .dj-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .dj-item:last-child { border-bottom: none; }
+    .dj-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .dj-name { font-size: 14px; font-weight: 500; }
+    .dj-set { font-size: 12px; color: var(--text-secondary); }
+
+    /* TICKET CARD */
+    .ticket-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      position: sticky;
+      top: 80px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+    }
+
+    .price-display {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .price-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .price-amount {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--text-primary);
+    }
+    .price-amount span {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0;
+    }
+    .price-note {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .seats-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-top: 8px;
+    }
+
+    /* FORM */
+    .form-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: white;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(108,71,255,0.12);
+    }
+    input::placeholder { color: #9ca3af; }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .qty-btn {
+      width: 42px; height: 42px;
+      border: none;
+      background: var(--card);
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--text-primary);
+      transition: background 0.1s;
+      flex-shrink: 0;
+    }
+    .qty-btn:hover { background: var(--accent-light); color: var(--accent); }
+    .qty-val {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: -0.2px;
+    }
+    .submit-btn:hover {
+      background: #5535e0;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(108,71,255,0.35);
+    }
+    .submit-btn:active { transform: translateY(0); }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .content-wrap {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .ticket-card { position: static; }
+      .meta-row { gap: 16px; }
+      .cover { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">bilet<span>.</span></a>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-size:13px;color:#6b7280;">İstanbul</span>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="event-tag">Elektronik Müzik</div>
+    <h1>Techno Night<br><em>Underground Session</em></h1>
+    <p class="subtitle">
+      İstanbul'un en ikonik yeraltı mekânında, gecenin derinliklerinde yolculuk. Dört duvar, sonsuz ritim.
+    </p>
+
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="meta-icon">📅</div>
+        <div>
+          <div class="meta-label">Tarih</div>
+          <div class="meta-value">14 Haziran 2026, Cumartesi</div>
+        </div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-icon">🕙</div>
+        <div>
+          <div class="meta-label">Saat</div>
+          <div class="meta-value">23:00 — 06:00</div>
+        </div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-icon">📍</div>
+        <div>
+          <div class="meta-label">Mekan</div>
+          <div class="meta-value">Vault Club, Karaköy</div>
+        </div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-icon">👤</div>
+        <div>
+          <div class="meta-label">Kapasite</div>
+          <div class="meta-value">800 Kişi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COVER IMAGE -->
+  <div style="max-width:820px;margin:0 auto;padding:0 24px;">
+    <div class="cover">
+      <div class="cover-visual"></div>
+      <div class="cover-circles"></div>
+      <div class="cover-text">
+        <p>Vault Club · Karaköy</p>
+        <h2>TECHNO<br>NIGHT</h2>
+        <span>Underground Session 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- LEFT: Description -->
+    <div>
+      <div class="description">
+        <h3>Etkinlik Hakkında</h3>
+        <p>
+          Vault Club'ın çelik duvarları arasında, sadece müziğin var olduğu bir gece sizi bekliyor. Yeraltı ritimlerinin nabzını tutmak için bir araya gelen üç DJ ile sabaha kadar sürecek bu özel gecede kimlik kavramı kaybolur, geriye yalnızca ses kalır.
+        </p>
+        <p>
+          Katı kapı politikası uygulanmaktadır. 18+ etkinlik. Bilet sahipleri saat 23:00'a kadar içeri alınır; sonrasında bilet geçerliliği sona erer.
+        </p>
+      </div>
+
+      <div class="dj-list">
+        <h3>Line-up</h3>
+        <div class="dj-item">
+          <div class="dj-avatar">KF</div>
+          <div>
+            <div class="dj-name">Karanlık Frekans</div>
+            <div class="dj-set">23:00 — 01:30 · Opening Set</div>
+          </div>
+        </div>
+        <div class="dj-item">
+          <div class="dj-avatar">NX</div>
+          <div>
+            <div class="dj-name">NEXUS</div>
+            <div class="dj-set">01:30 — 03:30 · Main Act</div>
+          </div>
+        </div>
+        <div class="dj-item">
+          <div class="dj-avatar">VR</div>
+          <div>
+            <div class="dj-name">Void Runner</div>
+            <div class="dj-set">03:30 — 06:00 · Closing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Ticket Card -->
+    <div class="ticket-card">
+      <div class="price-display">
+        <div class="price-label">Bilet Fiyatı</div>
+        <div class="price-amount">₺ 350 <span>/ kişi</span></div>
+        <div class="price-note">KDV dahil · Komisyon dahil</div>
+        <div class="seats-left">⚡ Son 47 bilet</div>
+      </div>
+
+      <div class="form-title">Bilet Satın Al</div>
+
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label for="name">Ad Soyad</label>
+          <input type="text" id="name" placeholder="Adınızı girin" />
+        </div>
+        <div class="form-group">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" placeholder="ornek@mail.com" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Telefon</label>
+          <input type="tel" id="phone" placeholder="+90 5XX XXX XX XX" />
+        </div>
+        <div class="form-group">
+          <label for="qty">Bilet Adedi</label>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="adj(-1)">−</button>
+            <input class="qty-val" type="text" id="qty" value="1" readonly />
+            <button class="qty-btn" onclick="adj(1)">+</button>
+          </div>
+        </div>
+
+        <div style="background:var(--card);border-radius:10px;padding:14px;margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary);margin-bottom:6px;">
+            <span>₺350 × <span id="qtyLabel">1</span> bilet</span>
+            <span id="subtotal">₺350</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600;color:var(--text-primary);">
+            <span>Toplam</span>
+            <span id="total">₺350</span>
+          </div>
+        </div>
+
+        <button class="submit-btn">Satın Al →</button>
+        <div class="secure-note">🔒 256-bit SSL ile güvenli ödeme</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let qty = 1;
+    function adj(d) {
+      qty = Math.max(1, Math.min(10, qty + d));
+      document.getElementById('qty').value = qty;
+      document.getElementById('qtyLabel').textContent = qty;
+      document.getElementById('subtotal').textContent = '₺' + (350 * qty).toLocaleString('tr-TR');
+      document.getElementById('total').textContent = '₺' + (350 * qty).toLocaleString('tr-TR');
+    }
+  </script>
+
+</body>
+</html>

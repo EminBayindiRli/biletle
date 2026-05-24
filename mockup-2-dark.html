@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Techno Night – Underground Session</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --neon: #00f5a0;
+      --neon2: #7c3aed;
+      --neon3: #f0abfc;
+      --bg: #060608;
+      --bg2: #0e0e12;
+      --bg3: #16161c;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0f0f5;
+      --muted: #6b7280;
+      --font: 'Space Grotesk', system-ui, sans-serif;
+      --mono: 'Space Mono', monospace;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* SCANLINES EFFECT */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(6,6,8,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 16px;
+      color: var(--neon);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: rgba(255,255,255,0.3); }
+    .nav-tag {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--neon);
+      background: rgba(0,245,160,0.1);
+      border: 1px solid rgba(0,245,160,0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.1em;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 120px 40px 60px;
+      overflow: hidden;
+    }
+
+    /* Animated background */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 30%, rgba(124,58,237,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 70%, rgba(0,245,160,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(240,171,252,0.05) 0%, transparent 70%);
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(3%, 2%) scale(1.04); }
+    }
+
+    /* Grid overlay */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 80%, transparent 100%);
+    }
+
+    /* Center graphic */
+    .hero-graphic {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 500px;
+      pointer-events: none;
+    }
+    .hero-graphic::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(0,245,160,0.1);
+      box-shadow:
+        0 0 0 40px rgba(0,245,160,0.03),
+        0 0 0 80px rgba(0,245,160,0.02),
+        0 0 0 140px rgba(0,245,160,0.01);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.02); }
+    }
+    .hero-graphic::after {
+      content: 'T';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--mono);
+      font-size: 120px;
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(0,245,160,0.15);
+      letter-spacing: -5px;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; width: 100%; }
+
+    .hero-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-kicker-line {
+      width: 32px; height: 1px;
+      background: var(--neon);
+      display: block;
+    }
+    .hero-kicker-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+    }
+
+    .hero-title {
+      font-size: clamp(56px, 9vw, 110px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      color: white;
+      margin-bottom: 24px;
+    }
+    .hero-title .outline {
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      color: transparent;
+    }
+    .hero-title .neon-word {
+      color: var(--neon);
+      text-shadow: 0 0 40px rgba(0,245,160,0.4);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hmi-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--neon);
+      opacity: 0.7;
+    }
+    .hmi-value {
+      font-size: 16px;
+      font-weight: 500;
+      color: white;
+    }
+
+    /* SCROLL INDICATOR */
+    .scroll-hint {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--neon);
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* MAIN SECTION */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px 100px;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* SECTION HEADERS */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-size: 17px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 16px;
+    }
+    .highlight-text {
+      color: white;
+      font-weight: 500;
+    }
+
+    /* LINE-UP */
+    .lineup {
+      margin-top: 56px;
+    }
+    .lineup-item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .lineup-item:hover { border-color: rgba(0,245,160,0.2); }
+    .lineup-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--neon);
+      opacity: 0.5;
+    }
+    .lineup-info {}
+    .lineup-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 3px;
+    }
+    .lineup-time {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .lineup-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .badge-main {
+      background: rgba(0,245,160,0.1);
+      color: var(--neon);
+      border: 1px solid rgba(0,245,160,0.2);
+    }
+    .badge-open {
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* TICKET PANEL */
+    .ticket-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: sticky;
+      top: 84px;
+    }
+
+    .ticket-panel-header {
+      padding: 24px 28px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(0,245,160,0.05) 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .ticket-panel-header::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,245,160,0.15) 0%, transparent 70%);
+    }
+    .tp-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 8px;
+      opacity: 0.8;
+    }
+    .tp-price {
+      font-size: 44px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .tp-price sub {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+      vertical-align: baseline;
+    }
+    .tp-stock {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .stock-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #f59e0b;
+      box-shadow: 0 0 6px rgba(245,158,11,0.6);
+      animation: blink 2s infinite;
+    }
+
+    .ticket-panel-body { padding: 28px; }
+
+    .dark-label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .dark-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: 14px;
+      color: white;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      margin-bottom: 16px;
+    }
+    .dark-input:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 0 3px rgba(0,245,160,0.08), 0 0 12px rgba(0,245,160,0.05);
+    }
+    .dark-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .qty-dark {
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .qdark-btn {
+      padding: 0 18px;
+      border: none;
+      background: transparent;
+      color: var(--neon);
+      font-size: 20px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .qdark-btn:hover { background: rgba(0,245,160,0.08); }
+    .qdark-val {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 16px;
+      color: white;
+      padding: 12px 0;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .total-label { font-size: 13px; color: var(--muted); }
+    .total-amount {
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--neon);
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--neon);
+      color: #060608;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .buy-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .buy-btn:hover::before { left: 100%; }
+    .buy-btn:hover {
+      box-shadow: 0 0 30px rgba(0,245,160,0.4), 0 0 60px rgba(0,245,160,0.15);
+      transform: translateY(-1px);
+    }
+    .buy-btn:active { transform: translateY(0); }
+
+    .security-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .sec-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: var(--muted);
+      font-family: var(--mono);
+      letter-spacing: 0.05em;
+    }
+
+    /* FOOTER BAR */
+    .footer-bar {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      main { grid-template-columns: 1fr; padding: 40px 20px 60px; }
+      .hero { padding: 100px 20px 40px; min-height: auto; }
+      .hero-title { font-size: 52px; letter-spacing: -2px; }
+      .ticket-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">VAULT<span>//</span>EVENTS</a>
+    <span class="nav-tag">LIVE · 14 HAZİRAN 2026</span>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-graphic"></div>
+
+    <div class="hero-content">
+      <div class="hero-kicker">
+        <span class="hero-kicker-line"></span>
+        <span class="hero-kicker-text">Vault Club · Karaköy · İstanbul</span>
+      </div>
+
+      <h1 class="hero-title">
+        TECHNO<br>
+        <span class="outline">NIGHT</span><br>
+        <span class="neon-word">UNDERGROUND</span>
+      </h1>
+
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hmi-label">Tarih</span>
+          <span class="hmi-value">14 Haziran 2026</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hmi-label">Gün</span>
+          <span class="hmi-value">Cumartesi</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hmi-label">Saat</span>
+          <span class="hmi-value">23:00 — 06:00</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hmi-label">Mekan</span>
+          <span class="hmi-value">Vault Club</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hmi-label">Kapasite</span>
+          <span class="hmi-value">800 Kişi</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span class="scroll-dot"></span>
+      SCROLL
+    </div>
+  </section>
+
+  <main>
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="section-label">Etkinlik Hakkında</div>
+
+      <p class="about-text">
+        <span class="highlight-text">Karaköy'ün derinliklerinde, tarihin izlerini taşıyan çelik bir mekanda</span> — Vault Club bu geceye ev sahipliği yapıyor. Duvarlardan sızan nem, katmanlı sesle buluştuğunda geriye sadece an kalır.
+      </p>
+      <p class="about-text">
+        Üç DJ, üç farklı evren. Sabahın karanlığına kadar uzanan bir yolculuk. Biletler kapıda satılmaz; bu bir yeraltı gecesi — yalnızca bilenlere açık.
+      </p>
+      <p class="about-text" style="font-size:13px;color:#4b5563;">
+        18+ etkinlik. Katı kapı politikası uygulanır. Alkol servisi yapılmaktadır. Etkinlik fotoğraflanabilir ancak profesyonel ekipman yasaktır.
+      </p>
+
+      <div class="lineup">
+        <div class="section-label">Line-up</div>
+
+        <div class="lineup-item">
+          <span class="lineup-num">01 —</span>
+          <div class="lineup-info">
+            <div class="lineup-name">Karanlık Frekans</div>
+            <div class="lineup-time">23:00 → 01:30</div>
+          </div>
+          <span class="lineup-badge badge-open">Opening</span>
+        </div>
+
+        <div class="lineup-item">
+          <span class="lineup-num">02 —</span>
+          <div class="lineup-info">
+            <div class="lineup-name">NEXUS</div>
+            <div class="lineup-time">01:30 → 03:30</div>
+          </div>
+          <span class="lineup-badge badge-main">Headliner</span>
+        </div>
+
+        <div class="lineup-item">
+          <span class="lineup-num">03 —</span>
+          <div class="lineup-info">
+            <div class="lineup-name">Void Runner</div>
+            <div class="lineup-time">03:30 → 06:00</div>
+          </div>
+          <span class="lineup-badge badge-open">Closing</span>
+        </div>
+
+        <div class="lineup-item" style="border:none;">
+          <span class="lineup-num">04 —</span>
+          <div class="lineup-info">
+            <div class="lineup-name" style="font-size:14px;color:rgba(255,255,255,0.4);">+ Sürpriz Sanatçı</div>
+            <div class="lineup-time">Açıklanacak</div>
+          </div>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Ticket Panel -->
+    <div class="ticket-panel">
+      <div class="ticket-panel-header">
+        <div class="tp-label">Bilet Fiyatı</div>
+        <div class="tp-price">₺350 <sub>/ kişi</sub></div>
+        <div class="tp-stock">
+          <span class="stock-dot"></span>
+          Son 47 bilet mevcut
+        </div>
+      </div>
+
+      <div class="ticket-panel-body">
+        <form onsubmit="return false;">
+          <label class="dark-label">Ad Soyad</label>
+          <input class="dark-input" type="text" placeholder="Adınızı girin" />
+
+          <label class="dark-label">E-posta Adresi</label>
+          <input class="dark-input" type="email" placeholder="ornek@mail.com" />
+
+          <label class="dark-label">Telefon Numarası</label>
+          <input class="dark-input" type="tel" placeholder="+90 5XX XXX XX XX" />
+
+          <label class="dark-label">Bilet Adedi</label>
+          <div class="qty-dark">
+            <button class="qdark-btn" type="button" onclick="dkAdj(-1)">−</button>
+            <input class="qdark-val" type="text" id="dkQty" value="1" readonly />
+            <button class="qdark-btn" type="button" onclick="dkAdj(1)">+</button>
+          </div>
+
+          <div class="total-row">
+            <span class="total-label">Toplam Tutar</span>
+            <span class="total-amount" id="dkTotal">₺350</span>
+          </div>
+
+          <button class="buy-btn" type="submit">BİLET SATIN AL</button>
+
+          <div class="security-row">
+            <span class="sec-item">🔒 SSL</span>
+            <span class="sec-item">✓ GÜVENLI ÖDEME</span>
+            <span class="sec-item">📧 ANİNDA TESLİM</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div class="footer-bar">
+    © 2026 VAULT EVENTS — TÜM HAKLAR SAKLIDIR — KARAKÖY, İSTANBUL
+  </div>
+
+  <script>
+    let dkQty = 1;
+    function dkAdj(d) {
+      dkQty = Math.max(1, Math.min(10, dkQty + d));
+      document.getElementById('dkQty').value = dkQty;
+      document.getElementById('dkTotal').textContent = '₺' + (350 * dkQty).toLocaleString('tr-TR');
+    }
+  </script>
+
+</body>
+</html>

@@ -53,34 +53,38 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
 
   return (
     <div>
-      {/* Başlık */}
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <Link href="/dashboard/events" className="text-sm text-gray-400 hover:text-gray-600">← Etkinlikler</Link>
-          <h1 className="text-2xl font-bold text-gray-900 mt-1">{event.title}</h1>
-          <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-            <span>📅 {new Date(event.starts_at).toLocaleDateString('tr-TR', {
-              day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit',
-            })}</span>
-            {event.location && <span>📍 {event.location}</span>}
-          </div>
+      {/* Sticky event header */}
+      <div style={{
+        background: 'white', borderBottom: '1px solid #e5e7eb',
+        padding: '20px 32px', position: 'sticky', top: 0, zIndex: 10,
+      }}>
+        <Link href="/dashboard/events" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>← Etkinlikler</Link>
+        <div style={{ fontSize: '22px', fontWeight: 800, color: '#111827', letterSpacing: '-1px', marginTop: '4px' }}>{event.title}</div>
+        <div style={{ display: 'flex', gap: '20px', marginTop: '6px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '12px', color: '#6b7280', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            📅 {new Date(event.starts_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </span>
+          {event.location && <span style={{ fontSize: '12px', color: '#6b7280' }}>📍 {event.location}</span>}
+          <span style={{ fontSize: '12px', fontWeight: 600, color: event.status === 'active' ? '#10b981' : '#9ca3af' }}>
+            {event.status === 'active' ? '● Satışta' : '● Taslak'}
+          </span>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
           {event.status === 'active' && (
-            <a href={`/e/${event.slug}`} target="_blank"
-              className="text-sm border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
-              Sayfayı Gör ↗
-            </a>
+            <a href={`/e/${event.slug}`} target="_blank" style={{
+              fontSize: '12px', padding: '6px 12px', borderRadius: '7px',
+              border: '1px solid #e5e7eb', color: '#6b7280', textDecoration: 'none', fontWeight: 500,
+            }}>Sayfayı Gör ↗</a>
           )}
-          <Link
-            href={`/dashboard/events/${id}/edit`}
-            className="text-sm border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            ✏️ Düzenle
-          </Link>
+          <Link href={`/dashboard/events/${id}/edit`} style={{
+            fontSize: '12px', padding: '6px 12px', borderRadius: '7px',
+            border: '1px solid #e5e7eb', color: '#6b7280', textDecoration: 'none', fontWeight: 500,
+          }}>✏️ Düzenle</Link>
           <EventStatusButton eventId={event.id} currentStatus={event.status} />
         </div>
       </div>
+
+      <div style={{ padding: '28px 32px' }}>
 
       {/* İstatistikler */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
@@ -196,6 +200,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
           </div>
         )}
       </div>
+      </div>{/* /padding wrapper */}
     </div>
   )
 }

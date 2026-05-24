@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Canlı — biletle</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f7f8fc; color: #111; }
+
+  nav {
+    background: white; padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 1px 0 #eee;
+  }
+  .logo { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #667eea, #f093fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  nav a { font-size: 13px; color: #888; text-decoration: none; font-weight: 500; }
+
+  /* Hero Banner */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    padding: 60px 48px;
+    display: flex; align-items: center; gap: 48px;
+  }
+  .hero-orb1 { position: absolute; width: 400px; height: 400px; background: rgba(255,255,255,0.08); border-radius: 50%; top: -100px; left: -80px; }
+  .hero-orb2 { position: absolute; width: 300px; height: 300px; background: rgba(255,255,255,0.06); border-radius: 50%; bottom: -100px; right: 200px; }
+  .hero-content { position: relative; z-index: 1; flex: 1; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 20px; margin-bottom: 20px;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; background: #ffe; border-radius: 50%; box-shadow: 0 0 6px #ffe; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 { font-size: 52px; font-weight: 800; color: white; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
+
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pill { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 30px; }
+
+  /* İçerik alanı */
+  .main {
+    max-width: 1200px; margin: 0 auto;
+    padding: 48px 48px;
+    display: grid; grid-template-columns: 1fr 400px; gap: 48px;
+    align-items: start;
+  }
+
+  /* Sol */
+  .card { background: white; border-radius: 20px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+  .card h3 { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+  p.desc { font-size: 15px; color: #666; line-height: 1.75; }
+
+  .lineup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .artist-card {
+    background: #f7f8fc; border-radius: 14px; padding: 16px;
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid #eef0f8; transition: all 0.2s;
+  }
+  .artist-card:hover { border-color: #667eea; background: white; box-shadow: 0 4px 16px rgba(102,126,234,0.12); }
+  .avatar { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .av1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .av2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .av3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .av4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .artist-name { font-size: 14px; font-weight: 700; color: #111; }
+  .artist-time { font-size: 12px; color: #999; margin-top: 2px; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat { background: white; border-radius: 16px; padding: 20px; text-align: center; box-shadow: 0 2px 20px rgba(0,0,0,0.04); }
+  .stat-num { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #667eea, #f093fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: 11px; color: #999; font-weight: 500; margin-top: 4px; }
+
+  /* Ticket Card */
+  .ticket-card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.08); position: sticky; top: 24px; }
+
+  .ticket-top {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 28px;
+    position: relative; overflow: hidden;
+  }
+  .ticket-top::before {
+    content: ''; position: absolute;
+    right: -30px; bottom: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.1); border-radius: 50%;
+  }
+  .ticket-top::after {
+    content: ''; position: absolute;
+    right: 40px; top: -40px;
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,0.07); border-radius: 50%;
+  }
+
+  .ticket-top-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .ticket-price { font-size: 48px; font-weight: 800; color: white; letter-spacing: -3px; line-height: 1; }
+  .ticket-price sub { font-size: 18px; font-weight: 400; letter-spacing: 0; }
+
+  /* Bilet koçanı efekti */
+  .ticket-divider {
+    position: relative; height: 1px; background: #f0f0f5;
+    margin: 0 -1px;
+  }
+  .ticket-divider::before { content: ''; position: absolute; left: -12px; top: -10px; width: 20px; height: 20px; background: #f7f8fc; border-radius: 50%; border: 1px solid #eee; }
+  .ticket-divider::after { content: ''; position: absolute; right: -12px; top: -10px; width: 20px; height: 20px; background: #f7f8fc; border-radius: 50%; border: 1px solid #eee; }
+
+  .ticket-body { padding: 24px; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: #777; margin-bottom: 6px; display: block; }
+  .form-input {
+    width: 100%; border: 1.5px solid #eef0f8; border-radius: 12px;
+    padding: 12px 14px; font-size: 14px; font-family: inherit;
+    outline: none; transition: all 0.15s; background: #fafbff; color: #111;
+  }
+  .form-input:focus { border-color: #667eea; background: white; box-shadow: 0 0 0 4px rgba(102,126,234,0.1); }
+  .form-input::placeholder { color: #c0c6d4; }
+
+  .total-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-top: 1.5px dashed #eee; border-bottom: 1.5px dashed #eee;
+    margin: 16px 0;
+  }
+  .total-label { font-size: 13px; color: #888; font-weight: 500; }
+  .total-price { font-size: 22px; font-weight: 800; color: #111; }
+
+  .btn-buy {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border: none; border-radius: 14px;
+    font-size: 15px; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(102,126,234,0.35);
+  }
+  .btn-buy:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(102,126,234,0.5); }
+
+  .payment-methods { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; }
+  .pm { background: #f7f8fc; border: 1px solid #eee; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 600; color: #666; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 40px 24px; flex-direction: column; }
+    .hero h1 { font-size: 34px; }
+    .main { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
+    .ticket-card { position: static; }
+    nav { padding: 0 24px; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .lineup-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">biletle</span>
+  <a href="#">← Tüm Etkinlikler</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span> Biletler Satışta</div>
+    <h1>Techno Night<br>Underground Session</h1>
+    <div class="hero-pills">
+      <div class="pill">📅 28 Haziran 2025 · Cumartesi</div>
+      <div class="pill">📍 Arkaoda, Kadıköy</div>
+      <div class="pill">🕚 23:00 – 06:00</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div>
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat"><div class="stat-num">228</div><div class="stat-label">Bilet Satıldı</div></div>
+      <div class="stat"><div class="stat-num">122</div><div class="stat-label">Kalan Bilet</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">DJ / Artist</div></div>
+    </div>
+
+    <!-- Hakkında -->
+    <div class="card">
+      <h3>🎵 Etkinlik Hakkında</h3>
+      <p class="desc">İstanbul'un en köklü underground sahnelerinden Arkaoda'da, sezonun en beklenen gecesi başlıyor. Berlin ekolünden ilham alan sert ritimler ve derin ses katmanlarıyla sabahın ilk saatlerine kadar sürecek bu geceye hazır mısın? Kapasiteli etkinlik, geç kalma!</p>
+    </div>
+
+    <!-- Lineup -->
+    <div class="card">
+      <h3>🎧 Lineup</h3>
+      <div class="lineup-grid">
+        <div class="artist-card">
+          <div class="avatar av1">🎧</div>
+          <div>
+            <div class="artist-name">VALE</div>
+            <div class="artist-time">23:00 – 01:00</div>
+          </div>
+        </div>
+        <div class="artist-card">
+          <div class="avatar av2">🔊</div>
+          <div>
+            <div class="artist-name">SVRECA</div>
+            <div class="artist-time">01:00 – 03:30</div>
+          </div>
+        </div>
+        <div class="artist-card">
+          <div class="avatar av3">🎛️</div>
+          <div>
+            <div class="artist-name">ORPHX</div>
+            <div class="artist-time">03:30 – 06:00</div>
+          </div>
+        </div>
+        <div class="artist-card">
+          <div class="avatar av4">🌀</div>
+          <div>
+            <div class="artist-name">LOCAL B2B</div>
+            <div class="artist-time">Opening</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket -->
+  <div>
+    <div class="ticket-card">
+      <div class="ticket-top">
+        <div class="ticket-top-label">Kişi Başı Ücret</div>
+        <div class="ticket-price">350 <sub>TL</sub></div>
+      </div>
+      <div class="ticket-divider"></div>
+      <div class="ticket-body">
+        <div class="form-group">
+          <label class="form-label">Ad Soyad *</label>
+          <input type="text" class="form-input" placeholder="Adınız Soyadınız">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-posta *</label>
+          <input type="email" class="form-input" placeholder="ornek@gmail.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefon</label>
+          <input type="tel" class="form-input" placeholder="05xx xxx xx xx">
+        </div>
+
+        <div class="total-row">
+          <span class="total-label">1 bilet toplamı</span>
+          <span class="total-price">350 TL</span>
+        </div>
+
+        <button class="btn-buy">✨ Hemen Bilet Al</button>
+
+        <div class="payment-methods">
+          <div class="pm">VISA</div>
+          <div class="pm">MC</div>
+          <div class="pm">TROY</div>
+          <div class="pm">🍎 Pay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

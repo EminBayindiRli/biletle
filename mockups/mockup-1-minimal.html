@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimal Event — Biletle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #1a1a1a;
+      --ink-2:    #6b6b6b;
+      --ink-3:    #a8a8a8;
+      --surface:  #fafaf8;
+      --white:    #ffffff;
+      --line:     #e8e6e1;
+      --accent:   #2d5be3;
+      --tag-bg:   #f0eeea;
+      --success:  #18a058;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .nav-link:hover { color: var(--ink); }
+
+    /* LAYOUT */
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 96px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* LEFT COLUMN */
+    .event-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      background: var(--tag-bg);
+      border-radius: 4px;
+      padding: 4px 10px;
+      transition: background 0.18s;
+    }
+    .tag:hover { background: var(--line); }
+
+    .event-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .event-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--line);
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .meta-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+    .meta-label { font-size: 12px; color: var(--ink-3); display: block; margin-bottom: 2px; }
+    .meta-value { font-size: 15px; font-weight: 500; color: var(--ink); }
+
+    .event-image-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #dde8f7 0%, #e8ddf7 50%, #f7e8dd 100%);
+    }
+    .event-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      opacity: 0.35;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 16px;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--ink-2);
+      margin-bottom: 40px;
+    }
+    .description p + p { margin-top: 16px; }
+    .description strong { color: var(--ink); font-weight: 500; }
+
+    .organizer-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .organizer-card:hover {
+      border-color: #c8c5be;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .organizer-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #dde8f7, #c8d5f0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .organizer-name { font-size: 15px; font-weight: 500; color: var(--ink); }
+    .organizer-role { font-size: 13px; color: var(--ink-3); }
+
+    /* STICKY FORM */
+    .ticket-panel {
+      position: sticky;
+      top: 76px;
+    }
+    .ticket-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .price-block {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+    .price-label { font-size: 12px; color: var(--ink-3); margin-bottom: 4px; }
+    .price-amount {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 3px;
+    }
+    .price-amount .currency { font-size: 16px; font-weight: 400; margin-top: 5px; }
+    .price-note { font-size: 13px; color: var(--ink-3); margin-top: 8px; }
+
+    .capacity-bar-wrap { margin-bottom: 28px; }
+    .capacity-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--ink-3);
+      margin-bottom: 8px;
+    }
+    .capacity-header strong { color: var(--ink-2); font-weight: 500; }
+    .capacity-bar {
+      height: 4px;
+      background: var(--tag-bg);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .capacity-fill {
+      height: 100%;
+      width: 68%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-2);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+      transition: color 0.15s;
+    }
+    .form-input {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder { color: var(--ink-3); }
+    .form-input:hover { border-color: #c8c5be; }
+    .form-input:focus {
+      border-color: var(--accent);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(45,91,227,0.09);
+    }
+    .form-input.error { border-color: #e05454; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .btn-buy {
+      width: 100%;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--ink);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      letter-spacing: 0.01em;
+      transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+    }
+    .btn-buy:hover {
+      background: #2d2d2d;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      transform: translateY(-1px);
+    }
+    .btn-buy:active { transform: translateY(0); }
+    .btn-buy:disabled { cursor: not-allowed; opacity: 0.7; transform: none; }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-top: 14px;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--ink);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      z-index: 999;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 80px 20px 48px;
+        gap: 40px;
+      }
+      .ticket-panel { position: static; }
+      .ticket-card { border-radius: 16px; padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-inner { padding: 0 20px; }
+      .event-title { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="logo" href="#">biletle</a>
+      <a class="nav-link" href="#">Etkinlikler →</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- LEFT -->
+    <main>
+      <div class="event-tags">
+        <span class="tag">Müzik</span>
+        <span class="tag">Canlı Performans</span>
+        <span class="tag">İstanbul</span>
+      </div>
+
+      <h1 class="event-title">Akustik Gecesi:<br>Nisan'da Melodi</h1>
+
+      <div class="event-meta">
+        <div class="meta-row">
+          <div class="meta-icon">📅</div>
+          <div>
+            <span class="meta-label">Tarih ve Saat</span>
+            <span class="meta-value">19 Nisan 2025, Cumartesi · 20:00–23:30</span>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">📍</div>
+          <div>
+            <span class="meta-label">Mekan</span>
+            <span class="meta-value">Babylon Bomonti, İstanbul</span>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">🎸</div>
+          <div>
+            <span class="meta-label">Sanatçılar</span>
+            <span class="meta-value">Elif Şahin, Deniz Arman Trio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-image-wrap">
+        <div class="event-image-placeholder">🎵</div>
+      </div>
+
+      <p class="section-title">Etkinlik Hakkında</p>
+      <div class="description">
+        <p>
+          Babylon Bomonti'nin eşsiz atmosferinde, <strong>Elif Şahin</strong> ve <strong>Deniz Arman Trio</strong> müziğin en saf haliyle buluşuyor. Yalnızca akustik enstrümanlar, yalnızca anın hissi.
+        </p>
+        <p>
+          Bu özel gecede iki set icra edilecek: ilk set 20:30–21:45, ikinci set 22:15–23:30 saatleri arasında. Oturma kapasitesi sınırlı tutulduğundan her sandalye bir sahne koltuğu gibi hissettirecek.
+        </p>
+        <p>
+          Kapılar 19:30'da açılıyor. İçecek servisi mevcuttur.
+        </p>
+      </div>
+
+      <p class="section-title">Organizatör</p>
+      <div class="organizer-card">
+        <div class="organizer-avatar">🎭</div>
+        <div>
+          <div class="organizer-name">Nota Kültür</div>
+          <div class="organizer-role">İstanbul · 48 etkinlik düzenledi</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT (STICKY) -->
+    <aside>
+      <div class="ticket-panel">
+        <div class="ticket-card">
+
+          <div class="price-block">
+            <div class="price-label">Standart Bilet</div>
+            <div class="price-amount">
+              <span class="currency">₺</span>380
+            </div>
+            <div class="price-note">Vergiler dahil · İade edilmez</div>
+          </div>
+
+          <div class="capacity-bar-wrap">
+            <div class="capacity-header">
+              <span>Kapasite doluluk oranı</span>
+              <strong>51 yer kaldı</strong>
+            </div>
+            <div class="capacity-bar">
+              <div class="capacity-fill"></div>
+            </div>
+          </div>
+
+          <form id="ticketForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="fn">Ad</label>
+                <input class="form-input" id="fn" type="text" placeholder="Adınız" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ln">Soyad</label>
+                <input class="form-input" id="ln" type="text" placeholder="Soyadınız" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">E-posta</label>
+              <input class="form-input" id="email" type="email" placeholder="ornek@email.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="phone">Telefon</label>
+              <input class="form-input" id="phone" type="tel" placeholder="+90 5XX XXX XX XX" />
+            </div>
+
+            <button class="btn-buy" type="submit">Bilet Al · ₺380</button>
+          </form>
+
+          <div class="secure-note">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
+              <path d="M6 1L1 3.5V7.5C1 10.35 3.2 13.05 6 13.75C8.8 13.05 11 10.35 11 7.5V3.5L6 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            Güvenli ödeme · SSL şifreli
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="toast" id="toast">✓ Biletiniz e-postanıza gönderildi</div>
+
+  <script>
+    document.getElementById('ticketForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputs = this.querySelectorAll('[required]');
+      let valid = true;
+      inputs.forEach(inp => {
+        inp.classList.remove('error');
+        if (!inp.value.trim()) {
+          inp.classList.add('error');
+          inp.addEventListener('input', () => inp.classList.remove('error'), { once: true });
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      const btn = this.querySelector('.btn-buy');
+      btn.textContent = 'İşleniyor…';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.textContent = '✓ Bilet Alındı';
+        btn.style.background = '#18a058';
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3800);
+      }, 1400);
+    });
+
+    document.querySelectorAll('.form-input').forEach(inp => {
+      const label = inp.closest('.form-group')?.querySelector('.form-label');
+      if (!label) return;
+      inp.addEventListener('focus', () => { label.style.color = 'var(--accent)'; });
+      inp.addEventListener('blur',  () => { label.style.color = ''; });
+    });
+  </script>
+</body>
+</html>

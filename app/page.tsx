@@ -2,126 +2,292 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ background: '#07071a', fontFamily: 'Inter, -apple-system, sans-serif' }}>
+
       {/* Nav */}
-      <nav className="border-b border-gray-100 px-6 py-4 flex items-center justify-between max-w-6xl mx-auto">
-        <h1 className="text-2xl font-bold text-indigo-600">biletle</h1>
-        <div className="flex items-center gap-3">
-          <Link href="/auth/login" className="text-sm text-gray-600 hover:text-gray-900">
+      <nav style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        background: 'rgba(7,7,26,0.85)', backdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        padding: '0 48px', height: '64px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <span style={{ fontSize: '20px', fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>
+          biletle<span style={{ color: '#818cf8' }}>.</span>
+        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+          <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>Özellikler</span>
+          <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>Nasıl Çalışır</span>
+          <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>Fiyatlar</span>
+        </div>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <Link href="/auth/login" style={{
+            padding: '8px 16px', borderRadius: '8px',
+            border: '1px solid rgba(255,255,255,0.12)',
+            color: 'rgba(255,255,255,0.7)', fontSize: '13px', fontWeight: 500,
+            textDecoration: 'none',
+          }}>
             Giriş Yap
           </Link>
-          <Link
-            href="/auth/register"
-            className="text-sm bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Ücretsiz Başla
+          <Link href="/auth/register" style={{
+            padding: '8px 18px', borderRadius: '8px',
+            background: '#4f46e5', color: 'white',
+            fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+          }}>
+            Ücretsiz Başla →
           </Link>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 py-24 text-center">
-        <span className="inline-block bg-indigo-50 text-indigo-700 text-sm font-medium px-3 py-1 rounded-full mb-6">
-          Türkiye&apos;nin bilet platformu
-        </span>
-        <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-          Etkinliğini oluştur,<br />
-          <span className="text-indigo-600">linki paylaş, bilet sat.</span>
-        </h2>
-        <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
-          Parti, workshop, festival — ne düzenlersen düzenle. Biletle ile dakikalar içinde bilet satışına başla.
-          Komisyon yok, karmaşıklık yok.
-        </p>
-        <Link
-          href="/auth/register"
-          className="inline-flex items-center gap-2 bg-indigo-600 text-white text-lg px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors font-medium shadow-lg shadow-indigo-200"
-        >
-          Ücretsiz Başla →
-        </Link>
-        <p className="text-sm text-gray-400 mt-4">Kredi kartı gerekmez · 2 dakikada hazır</p>
-      </section>
+      <section style={{ position: 'relative', padding: '120px 48px 100px', overflow: 'hidden' }}>
+        {/* Gradient orbs */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(79,70,229,0.25) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 60%, rgba(99,102,241,0.12) 0%, transparent 60%)',
+        }} />
+        {/* Grid background */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+          maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 70%)',
+        }} />
 
-      {/* Özellikler */}
-      <section className="max-w-5xl mx-auto px-6 pb-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
-          {
-            icon: '🔗',
-            title: 'Link Paylaş',
-            desc: 'Etkinlik sayfanı Instagram, WhatsApp veya sitenle paylaş. Müşterilerin direkt oradan bilet alsın.',
-          },
-          {
-            icon: '💳',
-            title: 'Komisyon Yok',
-            desc: 'Bilet başına komisyon almıyoruz. Sana ait parayı tamamen sen alırsın.',
-          },
-          {
-            icon: '📱',
-            title: 'QR Check-in',
-            desc: 'Etkinlik günü telefonunla QR kodları okut. Sahte bilet imkansız, kalabalık yönetimi kolay.',
-          },
-        ].map((f) => (
-          <div key={f.title} className="bg-gray-50 rounded-2xl p-6">
-            <span className="text-3xl">{f.icon}</span>
-            <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">{f.title}</h3>
-            <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '860px', margin: '0 auto', textAlign: 'center' }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            background: 'rgba(79,70,229,0.15)', border: '1px solid rgba(129,140,248,0.3)',
+            color: '#818cf8', fontSize: '12px', fontWeight: 600,
+            padding: '6px 14px', borderRadius: '20px', marginBottom: '28px',
+          }}>
+            <span style={{ width: '6px', height: '6px', background: '#818cf8', borderRadius: '50%', boxShadow: '0 0 8px #818cf8', display: 'inline-block' }} />
+            Türkiye&apos;nin etkinlik platformu
           </div>
-        ))}
-      </section>
 
-      {/* Fiyatlandırma */}
-      <section className="max-w-4xl mx-auto px-6 pb-24">
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-3">Basit Fiyatlandırma</h2>
-        <p className="text-gray-500 text-center mb-12">Gizli ücret yok. Bilet başına komisyon yok.</p>
+          <h1 style={{
+            fontSize: 'clamp(48px, 7vw, 72px)', fontWeight: 900, lineHeight: 1,
+            letterSpacing: '-4px', color: 'white', marginBottom: '24px',
+          }}>
+            Etkinliğini sat,<br />
+            <span style={{ color: '#818cf8' }}>takibini yap.</span>
+          </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          {/* Ücretsiz */}
-          <div className="bg-white rounded-2xl border-2 border-gray-200 p-8">
-            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Başlangıç</p>
-            <p className="text-4xl font-bold text-gray-900 mb-1">Ücretsiz</p>
-            <p className="text-gray-500 text-sm mb-6">Sonsuza kadar</p>
-            <ul className="space-y-3 text-sm text-gray-600 mb-8">
-              {['3 aktif etkinlik', '100 bilet/etkinlik', 'QR check-in', 'E-posta bildirim'].map(f => (
-                <li key={f} className="flex items-center gap-2">
-                  <span className="text-teal-500">✓</span> {f}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/auth/register"
-              className="block text-center border-2 border-indigo-600 text-indigo-600 font-medium py-2.5 rounded-xl hover:bg-indigo-50 transition-colors text-sm"
-            >
-              Ücretsiz Başla
+          <p style={{
+            fontSize: '18px', color: 'rgba(255,255,255,0.45)', fontWeight: 400,
+            lineHeight: 1.6, maxWidth: '520px', margin: '0 auto 40px',
+          }}>
+            Parti, workshop, festival — ne düzenlersen düzenle. Dakikalar içinde bilet satışına başla. Komisyon yok, karmaşıklık yok.
+          </p>
+
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/auth/register" style={{
+              padding: '14px 28px', borderRadius: '10px', border: 'none',
+              background: '#4f46e5', color: 'white', fontSize: '15px', fontWeight: 700,
+              textDecoration: 'none', boxShadow: '0 0 32px rgba(79,70,229,0.4)',
+              display: 'inline-block',
+            }}>
+              Hemen Başla — Ücretsiz
+            </Link>
+            <Link href="/auth/login" style={{
+              padding: '14px 28px', borderRadius: '10px',
+              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.7)',
+              fontSize: '15px', fontWeight: 600, textDecoration: 'none',
+              display: 'inline-block',
+            }}>
+              Giriş Yap
             </Link>
           </div>
 
-          {/* Pro */}
-          <div className="bg-indigo-600 rounded-2xl p-8 relative">
-            <span className="absolute top-4 right-4 text-xs bg-white text-indigo-600 font-bold px-2 py-0.5 rounded-full">
-              POPÜLER
-            </span>
-            <p className="text-sm font-semibold text-indigo-200 uppercase tracking-wide mb-1">Pro</p>
-            <p className="text-4xl font-bold text-white mb-1">₺299<span className="text-lg font-normal text-indigo-200">/ay</span></p>
-            <p className="text-indigo-200 text-sm mb-6">Aylık, istediğin zaman iptal et</p>
-            <ul className="space-y-3 text-sm text-white mb-8">
-              {['Sınırsız etkinlik', 'Sınırsız bilet', 'Öncelikli destek', 'Katılımcı CSV export', 'Özel etkinlik URL'].map(f => (
-                <li key={f} className="flex items-center gap-2">
-                  <span className="text-indigo-200">✓</span> {f}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/auth/register"
-              className="block text-center bg-white text-indigo-600 font-medium py-2.5 rounded-xl hover:bg-indigo-50 transition-colors text-sm"
-            >
-              Pro ile Başla
-            </Link>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)', marginTop: '16px' }}>
+            Kredi kartı gerekmez · 2 dakikada hazır
+          </p>
+
+          {/* Stats */}
+          <div style={{ display: 'flex', gap: '48px', justifyContent: 'center', marginTop: '72px' }}>
+            {[
+              { num: '12K+', label: 'Satılan Bilet' },
+              { num: '340+', label: 'Etkinlik' },
+              { num: '98%', label: 'Memnuniyet' },
+            ].map(s => (
+              <div key={s.label} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '32px', fontWeight: 900, color: 'white', letterSpacing: '-2px' }}>{s.num}</div>
+                <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', fontWeight: 500, marginTop: '2px' }}>{s.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* Features */}
+      <section style={{ padding: '0 48px 80px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#818cf8', marginBottom: '12px' }}>
+          Özellikler
+        </div>
+        <h2 style={{ fontSize: '40px', fontWeight: 800, color: 'white', letterSpacing: '-2px', marginBottom: '16px' }}>
+          Her şey dahil
+        </h2>
+        <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.4)', maxWidth: '480px', lineHeight: 1.6, marginBottom: '48px' }}>
+          Bilet satışından check-in&apos;e, raporlamadan e-posta bildirimlerine — tek platform.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+          {[
+            { icon: '🎫', title: 'Kolay Bilet Satışı', desc: 'Etkinliğini oluştur, linki paylaş. Ziyaretçiler kredi kartıyla anında bilet alır.' },
+            { icon: '📷', title: 'QR Kod Girişi', desc: 'Cep telefonu kamerası ile anlık QR tarama. Her bilet tek kullanımlık, güvenli.' },
+            { icon: '📧', title: 'Otomatik E-posta', desc: 'Satın alma sonrası QR kodlu bilet otomatik gönderilir. Müşteri memnuniyeti garantili.' },
+            { icon: '📊', title: 'Canlı İstatistikler', desc: 'Kaç bilet satıldı, kaçı giriş yaptı — anlık olarak görün.' },
+            { icon: '📥', title: 'CSV Export', desc: 'Katılımcı listesini Excel\'e aktarın. Tüm bilet ve giriş bilgileri dahil.' },
+            { icon: '🔒', title: 'Güvenli Ödeme', desc: 'Shopier entegrasyonu ile güvenli ödeme alın. VISA, MC, TROY desteği.' },
+          ].map(f => (
+            <div key={f.title} style={{
+              background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
+              borderRadius: '16px', padding: '28px', transition: 'all 0.2s',
+            }}>
+              <div style={{
+                width: '44px', height: '44px', borderRadius: '10px',
+                background: 'rgba(79,70,229,0.15)', border: '1px solid rgba(79,70,229,0.2)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '20px', marginBottom: '16px',
+              }}>
+                {f.icon}
+              </div>
+              <div style={{ fontSize: '15px', fontWeight: 700, color: 'white', marginBottom: '8px' }}>{f.title}</div>
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>{f.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section style={{ padding: '0 48px 80px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#818cf8', marginBottom: '12px' }}>
+          Nasıl Çalışır
+        </div>
+        <h2 style={{ fontSize: '40px', fontWeight: 800, color: 'white', letterSpacing: '-2px', marginBottom: '16px' }}>
+          4 adımda başla
+        </h2>
+        <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.4)', maxWidth: '480px', lineHeight: 1.6, marginBottom: '48px' }}>
+          Teknik bilgi gerektirmez. 5 dakikada etkinliğin satışa açık.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', position: 'relative' }}>
+          <div style={{
+            position: 'absolute', top: '28px', left: '10%', right: '10%', height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(79,70,229,0.3) 20%, rgba(79,70,229,0.3) 80%, transparent)',
+          }} />
+          {[
+            { n: '1', title: 'Kayıt Ol', desc: 'Organizatör hesabı aç, onay bekle' },
+            { n: '2', title: 'Etkinlik Oluştur', desc: 'Tarih, fiyat, kapasite bilgilerini gir' },
+            { n: '3', title: 'Linki Paylaş', desc: 'Sosyal medyada duyur, biletler satılsın' },
+            { n: '4', title: 'Girişi Yönet', desc: 'QR okuyucu ile hızlı kapı kontrolü' },
+          ].map(s => (
+            <div key={s.n} style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
+              <div style={{
+                width: '56px', height: '56px', borderRadius: '50%',
+                background: 'rgba(79,70,229,0.15)', border: '1px solid rgba(79,70,229,0.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '18px', fontWeight: 800, color: '#818cf8',
+                margin: '0 auto 16px',
+              }}>
+                {s.n}
+              </div>
+              <div style={{ fontSize: '14px', fontWeight: 700, color: 'white', marginBottom: '6px' }}>{s.title}</div>
+              <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.6 }}>{s.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section style={{ padding: '0 48px 80px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#818cf8', marginBottom: '12px' }}>
+          Fiyatlar
+        </div>
+        <h2 style={{ fontSize: '40px', fontWeight: 800, color: 'white', letterSpacing: '-2px', marginBottom: '16px' }}>
+          Şeffaf fiyatlandırma
+        </h2>
+        <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.4)', maxWidth: '480px', lineHeight: 1.6, marginBottom: '48px' }}>
+          Gizli ücret yok. Küçük organizatörden büyük festivale kadar uygun planlar.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', maxWidth: '900px' }}>
+          {[
+            {
+              name: 'Starter', price: 'Ücretsiz', desc: 'Başlamak için yeterli.',
+              features: ['1 aktif etkinlik', '50 bilet/ay', 'QR giriş', 'E-posta bildirimi'],
+              featured: false,
+            },
+            {
+              name: 'Pro', price: '₺499', sub: '/ay', desc: 'Ciddi etkinlikler için. Sınırsız.',
+              features: ['Sınırsız etkinlik', 'Sınırsız bilet', 'CSV export', 'Öncelikli destek', 'Ücretsiz etkinlik'],
+              featured: true,
+            },
+            {
+              name: 'Enterprise', price: 'Özel', desc: 'Festival ve büyük organizasyonlar.',
+              features: ['White-label', 'API erişimi', 'Özel entegrasyon', 'Dedicated destek'],
+              featured: false,
+            },
+          ].map(p => (
+            <div key={p.name} style={{
+              background: p.featured ? 'linear-gradient(135deg, rgba(79,70,229,0.2), rgba(99,102,241,0.1))' : 'rgba(255,255,255,0.03)',
+              border: p.featured ? '1px solid rgba(129,140,248,0.3)' : '1px solid rgba(255,255,255,0.07)',
+              borderRadius: '24px', padding: '32px', position: 'relative',
+            }}>
+              {p.featured && (
+                <div style={{
+                  position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
+                  background: '#4f46e5', color: 'white', fontSize: '11px', fontWeight: 700,
+                  padding: '4px 12px', borderRadius: '12px', whiteSpace: 'nowrap',
+                }}>
+                  Popüler
+                </div>
+              )}
+              <div style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.4)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>{p.name}</div>
+              <div style={{ fontSize: '40px', fontWeight: 900, color: 'white', letterSpacing: '-2px', lineHeight: 1 }}>
+                {p.price}
+                {p.sub && <span style={{ fontSize: '14px', fontWeight: 400, color: 'rgba(255,255,255,0.35)' }}>{p.sub}</span>}
+              </div>
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: '12px 0 24px', lineHeight: 1.5 }}>{p.desc}</div>
+              <ul style={{ listStyle: 'none', marginBottom: '28px' }}>
+                {p.features.map(f => (
+                  <li key={f} style={{
+                    fontSize: '13px', color: 'rgba(255,255,255,0.5)', padding: '7px 0',
+                    borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '8px',
+                  }}>
+                    <span style={{ color: '#818cf8' }}>✓</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/auth/register" style={{
+                display: 'block', textAlign: 'center', padding: '12px',
+                borderRadius: '10px',
+                border: p.featured ? 'none' : '1px solid rgba(255,255,255,0.12)',
+                background: p.featured ? '#4f46e5' : 'rgba(255,255,255,0.05)',
+                color: 'white', fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+              }}>
+                {p.featured ? 'Pro\'ya Geç' : p.name === 'Starter' ? 'Ücretsiz Başla' : 'Bize Ulaş'}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-8 text-center">
-        <p className="text-sm text-gray-400">© 2025 biletle.shop · Güvenli etkinlik bilet platformu</p>
+      <footer style={{
+        borderTop: '1px solid rgba(255,255,255,0.07)',
+        padding: '40px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        maxWidth: '1200px', margin: '0 auto',
+      }}>
+        <span style={{ fontSize: '18px', fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>biletle.</span>
+        <div style={{ display: 'flex', gap: '24px' }}>
+          {['Gizlilik', 'Kullanım Koşulları', 'İletişim'].map(l => (
+            <span key={l} style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>{l}</span>
+          ))}
+        </div>
+        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>© 2025 biletle.shop</span>
       </footer>
     </div>
   )

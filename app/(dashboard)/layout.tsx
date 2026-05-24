@@ -14,15 +14,14 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .eq('user_id', user.id)
     .single()
 
-  // Hesap onayı bekliyor
   if (org && !(org as any).is_approved) {
     redirect('/pending-approval')
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div style={{ minHeight: '100vh', background: '#f9fafb', display: 'flex' }}>
       <DashboardSidebar org={org} />
-      <main className="flex-1 p-6 lg:p-8 overflow-auto">
+      <main style={{ flex: 1, overflowY: 'auto', minWidth: 0 }}>
         {children}
       </main>
     </div>

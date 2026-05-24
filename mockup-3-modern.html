@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Techno Night – Underground Session</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --grad1: #667eea;
+      --grad2: #764ba2;
+      --grad3: #f093fb;
+      --orange: #ff6b35;
+      --teal: #00d4aa;
+      --pink: #ff4d8b;
+      --bg: #f5f3ff;
+      --white: #ffffff;
+      --text: #1a1a2e;
+      --muted: #64748b;
+      --border: rgba(0,0,0,0.07);
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.1), 0 12px 40px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 32px rgba(102,126,234,0.25), 0 20px 60px rgba(0,0,0,0.08);
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: linear-gradient(135deg, var(--grad1) 0%, var(--grad2) 50%, var(--grad3) 100%);
+      padding: 10px 24px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: white;
+      letter-spacing: 0.02em;
+    }
+    .topbar strong { font-weight: 700; }
+
+    /* NAV */
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--grad1), var(--grad3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-btn-outline {
+      padding: 8px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font);
+    }
+    .nav-btn-outline:hover { border-color: var(--grad1); color: var(--grad1); }
+    .nav-btn-filled {
+      padding: 8px 18px;
+      background: linear-gradient(135deg, var(--grad1), var(--grad2));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 0.15s;
+    }
+    .nav-btn-filled:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* HERO BANNER */
+    .banner {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 48px;
+    }
+    .banner-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 80% 30%, rgba(102,126,234,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(240,147,251,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(0,212,170,0.1) 0%, transparent 60%);
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+    .orb-1 {
+      width: 300px; height: 300px;
+      background: rgba(102,126,234,0.3);
+      top: -100px; right: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 200px; height: 200px;
+      background: rgba(240,147,251,0.25);
+      bottom: 20px; right: 35%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    .orb-3 {
+      width: 150px; height: 150px;
+      background: rgba(0,212,170,0.2);
+      top: 30%; left: 15%;
+      animation: float 7s ease-in-out infinite 2s;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.05); }
+    }
+
+    .banner-content { position: relative; z-index: 2; }
+
+    .banner-tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .tag-genre { background: rgba(102,126,234,0.3); color: #a5b4fc; border: 1px solid rgba(102,126,234,0.3); }
+    .tag-venue { background: rgba(0,212,170,0.2); color: #6ee7d0; border: 1px solid rgba(0,212,170,0.2); }
+    .tag-18 { background: rgba(255,75,139,0.2); color: #fca5c0; border: 1px solid rgba(255,75,139,0.2); }
+
+    .banner-title {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      color: white;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .banner-title span {
+      background: linear-gradient(90deg, #a5f3fc, #c4b5fd, #fca5c0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .banner-desc {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .banner-meta-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .meta-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: white;
+    }
+    .meta-chip-icon {
+      width: 18px; height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    /* MAIN GRID */
+    .page-body {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 20px 24px 0;
+    }
+    .card-body { padding: 24px; }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: '';
+      width: 3px; height: 14px;
+      background: linear-gradient(to bottom, var(--grad1), var(--grad3));
+      border-radius: 2px;
+      display: block;
+    }
+
+    /* ABOUT CARD */
+    .about-card p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #475569;
+      margin-bottom: 14px;
+    }
+    .about-card p:last-child { margin-bottom: 0; }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-icon { font-size: 24px; margin-bottom: 8px; }
+    .stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* LINEUP CARD */
+    .lineup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .lup-card {
+      background: linear-gradient(135deg, #f8f9ff, #f0f4ff);
+      border: 1px solid rgba(102,126,234,0.12);
+      border-radius: 14px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .lup-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .lup-card.headliner {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-color: transparent;
+    }
+    .lup-card.headliner::before {
+      content: 'HEADLINER';
+      position: absolute;
+      top: 12px; right: 12px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6);
+    }
+    .lup-avatar {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .lup-card:not(.headliner) .lup-avatar {
+      background: linear-gradient(135deg, var(--grad1), var(--grad2));
+      color: white;
+    }
+    .lup-card.headliner .lup-avatar {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    .lup-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .lup-card:not(.headliner) .lup-name { color: var(--text); }
+    .lup-card.headliner .lup-name { color: white; }
+    .lup-time {
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .lup-card:not(.headliner) .lup-time { color: var(--muted); }
+    .lup-card.headliner .lup-time { color: rgba(255,255,255,0.6); }
+
+    /* TICKET CARD */
+    .ticket-main {
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      position: sticky;
+      top: 86px;
+    }
+
+    .ticket-hero {
+      background: linear-gradient(135deg, var(--grad1) 0%, var(--grad2) 60%, var(--grad3) 100%);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ticket-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(0,0,0,0.1) 0%, transparent 50%);
+    }
+    .th-relative { position: relative; }
+    .th-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 6px;
+    }
+    .th-price {
+      font-size: 48px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .th-price sub {
+      font-size: 18px;
+      font-weight: 400;
+      opacity: 0.65;
+      vertical-align: baseline;
+      letter-spacing: 0;
+    }
+
+    .th-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .th-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* Dashed separator (like a real ticket) */
+    .ticket-tear {
+      position: relative;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--border) 0px, var(--border) 8px, transparent 8px, transparent 14px);
+    }
+    .ticket-tear::before,
+    .ticket-tear::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+    .ticket-tear::before { left: -14px; }
+    .ticket-tear::after { right: -14px; }
+
+    .ticket-form { padding: 28px; }
+
+    .tf-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 7px;
+      letter-spacing: 0.03em;
+    }
+    .tf-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text);
+      background: #fafbfd;
+      outline: none;
+      transition: all 0.15s;
+      margin-bottom: 14px;
+    }
+    .tf-input:focus {
+      border-color: var(--grad1);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+    }
+    .tf-input::placeholder { color: #cbd5e1; }
+
+    /* Qty selector */
+    .qty-modern {
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fafbfd;
+    }
+    .qm-btn {
+      padding: 0 18px;
+      border: none;
+      background: transparent;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--grad1);
+      font-weight: 700;
+      transition: background 0.1s;
+      font-family: var(--font);
+    }
+    .qm-btn:hover { background: rgba(102,126,234,0.06); }
+    .qm-val {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-left: 1.5px solid #e2e8f0;
+      border-right: 1.5px solid #e2e8f0;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      padding: 12px 0;
+      font-family: var(--font);
+    }
+
+    /* Summary box */
+    .summary-box {
+      background: linear-gradient(135deg, #f8f9ff, #f0f4ff);
+      border: 1px solid rgba(102,126,234,0.15);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .sum-divider {
+      height: 1px;
+      background: rgba(102,126,234,0.12);
+      margin: 10px 0;
+    }
+    .sum-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .sum-total span:last-child {
+      background: linear-gradient(135deg, var(--grad1), var(--grad2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .buy-main {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--grad1) 0%, var(--grad2) 50%, var(--grad3) 100%);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: -0.2px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .buy-main::after {
+      content: '→';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      transition: right 0.2s;
+    }
+    .buy-main:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .buy-main:hover::after { right: 16px; }
+    .buy-main:active { transform: translateY(0); }
+
+    .payment-methods {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .pm-badge {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* GUARANTEE BAR */
+    .guarantee-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      background: linear-gradient(135deg, var(--grad1), var(--grad2));
+      border-radius: 0 0 24px 24px;
+    }
+    .gbar-item {
+      padding: 14px 8px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    .gbar-item:last-child { border-right: none; }
+    .gbar-icon { font-size: 16px; margin-bottom: 3px; }
+    .gbar-text { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); letter-spacing: 0.03em; }
+
+    @media (max-width: 900px) {
+      .page-body { grid-template-columns: 1fr; padding: 24px 20px 60px; }
+      .ticket-main { position: static; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .lineup-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .banner { padding: 24px; min-height: 400px; }
+      .banner-title { font-size: 36px; }
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    Son <strong>47 bilet</strong> kaldı — Şimdi al, geceni garantile! 🎟️
+  </div>
+
+  <nav>
+    <a class="nav-logo" href="#">BiletiAl</a>
+    <div class="nav-links">
+      <button class="nav-btn-outline">Etkinlikler</button>
+      <button class="nav-btn-outline">Mekanlar</button>
+      <button class="nav-btn-filled">Giriş Yap</button>
+    </div>
+  </nav>
+
+  <div class="banner">
+    <div class="banner-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="banner-content">
+      <div class="banner-tags">
+        <span class="tag tag-genre">Elektronik / Techno</span>
+        <span class="tag tag-venue">Vault Club</span>
+        <span class="tag tag-18">18+</span>
+      </div>
+      <h1 class="banner-title">
+        Techno Night<br>
+        <span>Underground Session</span>
+      </h1>
+      <p class="banner-desc">
+        İstanbul'un en ikonik yeraltı kulübünde sabaha kadar sürecek dört duvar, sonsuz ritim. Üç DJ, bir gece, binlerce an.
+      </p>
+      <div class="banner-meta-chips">
+        <div class="meta-chip">
+          <span class="meta-chip-icon">📅</span>
+          14 Haziran 2026, Cumartesi
+        </div>
+        <div class="meta-chip">
+          <span class="meta-chip-icon">🕙</span>
+          23:00 — 06:00
+        </div>
+        <div class="meta-chip">
+          <span class="meta-chip-icon">📍</span>
+          Vault Club, Karaköy
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">🎧</div>
+          <div class="stat-val">3</div>
+          <div class="stat-label">DJ Sanatçı</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-val">800</div>
+          <div class="stat-label">Kapasite</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-val">7 Sa</div>
+          <div class="stat-label">Süre</div>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="card about-card">
+        <div class="card-body">
+          <div class="card-title">Etkinlik Hakkında</div>
+          <p>
+            Karaköy'ün tarihi dokusunun altında, demir kapılarla çevrili bu yeraltı kulübü, İstanbul'un tekno sahnesinin kalbi olmaya devam ediyor. Bu özel gecede mekân, ses ve insanlar bir araya gelerek unutulmaz bir deneyim yaratıyor.
+          </p>
+          <p>
+            Vault Club'ın akustik altyapısı ve profesyonel ses sistemi, her ritmi hissetmenizi sağlıyor. Sahne önü alanı, bar ve lounge üç katmanlı bir deneyim sunuyor.
+          </p>
+          <p style="font-size:13px;background:#fef3c7;padding:12px 14px;border-radius:10px;color:#92400e;border:1px solid #fde68a;">
+            ⚠️ 18+ etkinlik. Kimlik ibrazı zorunludur. Etkinlik fotoğrafçılığı serbesttir; profesyonel ekipman yasaktır. Katı kapı politikası uygulanır.
+          </p>
+        </div>
+      </div>
+
+      <!-- LINEUP -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">Line-up</div>
+          <div class="lineup-grid">
+            <div class="lup-card">
+              <div class="lup-avatar">KF</div>
+              <div class="lup-name">Karanlık Frekans</div>
+              <div class="lup-time">23:00 — 01:30</div>
+            </div>
+            <div class="lup-card headliner">
+              <div class="lup-avatar">NX</div>
+              <div class="lup-name">NEXUS</div>
+              <div class="lup-time">01:30 — 03:30</div>
+            </div>
+            <div class="lup-card">
+              <div class="lup-avatar">VR</div>
+              <div class="lup-name">Void Runner</div>
+              <div class="lup-time">03:30 — 06:00</div>
+            </div>
+            <div class="lup-card" style="background:#f8f9ff;border-style:dashed;display:flex;align-items:center;justify-content:center;min-height:90px;">
+              <div style="text-align:center;">
+                <div style="font-size:20px;margin-bottom:4px;">🎵</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Sürpriz Sanatçı</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAP PLACEHOLDER -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">Mekan</div>
+          <div style="background:linear-gradient(135deg,#e0e7ff,#ede9fe);border-radius:14px;height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;margin-bottom:12px;">
+            <span style="font-size:32px;">📍</span>
+            <span style="font-size:15px;font-weight:600;color:var(--grad2);">Vault Club</span>
+            <span style="font-size:13px;color:var(--muted);">Kemeraltı Cd. No:5, Karaköy, İstanbul</span>
+          </div>
+          <p style="font-size:13px;color:var(--muted);line-height:1.6;">
+            Karaköy Metro İstasyonu'na 3 dakika yürüme mesafesinde. Ücretli otopark mevcut değildir; toplu taşıma tavsiye edilir.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Ticket -->
+    <div class="ticket-main">
+      <div class="ticket-hero">
+        <div class="th-relative">
+          <div class="th-label">Bilet Fiyatı</div>
+          <div class="th-price">₺350 <sub>/ kişi</sub></div>
+          <div class="th-tags">
+            <span class="th-tag">✓ KDV Dahil</span>
+            <span class="th-tag">✓ Komisyon Yok</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-tear"></div>
+
+      <div class="ticket-form">
+        <form onsubmit="return false;">
+          <label class="tf-label">Ad Soyad</label>
+          <input class="tf-input" type="text" placeholder="Adınızı ve soyadınızı girin" />
+
+          <label class="tf-label">E-posta Adresi</label>
+          <input class="tf-input" type="email" placeholder="ornek@mail.com" />
+
+          <label class="tf-label">Telefon Numarası</label>
+          <input class="tf-input" type="tel" placeholder="+90 5XX XXX XX XX" />
+
+          <label class="tf-label">Bilet Adedi</label>
+          <div class="qty-modern">
+            <button class="qm-btn" type="button" onclick="moAdj(-1)">−</button>
+            <input class="qm-val" type="text" id="moQty" value="1" readonly />
+            <button class="qm-btn" type="button" onclick="moAdj(1)">+</button>
+          </div>
+
+          <div class="summary-box">
+            <div class="sum-row">
+              <span>₺350 × <span id="moQtyLabel">1</span> bilet</span>
+              <span id="moSubtotal">₺350</span>
+            </div>
+            <div class="sum-row">
+              <span>Servis ücreti</span>
+              <span style="color:#16a34a;">Ücretsiz</span>
+            </div>
+            <div class="sum-divider"></div>
+            <div class="sum-total">
+              <span>Toplam</span>
+              <span id="moTotal">₺350</span>
+            </div>
+          </div>
+
+          <button class="buy-main" type="submit">Hemen Satın Al</button>
+
+          <div class="payment-methods" style="margin-top:14px;">
+            <span class="pm-badge">Visa</span>
+            <span class="pm-badge">Mastercard</span>
+            <span class="pm-badge">Troy</span>
+            <span class="pm-badge">Apple Pay</span>
+          </div>
+        </form>
+      </div>
+
+      <div class="guarantee-bar">
+        <div class="gbar-item">
+          <div class="gbar-icon">🔒</div>
+          <div class="gbar-text">Güvenli Ödeme</div>
+        </div>
+        <div class="gbar-item">
+          <div class="gbar-icon">📧</div>
+          <div class="gbar-text">Anında Teslimat</div>
+        </div>
+        <div class="gbar-item">
+          <div class="gbar-icon">↩️</div>
+          <div class="gbar-text">İade Garantisi</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let moQty = 1;
+    function moAdj(d) {
+      moQty = Math.max(1, Math.min(10, moQty + d));
+      document.getElementById('moQty').value = moQty;
+      document.getElementById('moQtyLabel').textContent = moQty;
+      document.getElementById('moSubtotal').textContent = '₺' + (350 * moQty).toLocaleString('tr-TR');
+      document.getElementById('moTotal').textContent = '₺' + (350 * moQty).toLocaleString('tr-TR');
+    }
+  </script>
+
+</body>
+</html>
