@@ -135,10 +135,9 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
           <div className="p-12 text-center text-gray-400 text-sm">Henüz sipariş yok.</div>
         ) : (
           <div className="divide-y divide-gray-50">
-            {orderList.map((order) => (
-              {(() => {
-                const ticket = ticketByOrder.get(order.id)
-                return (
+            {orderList.map((order) => {
+              const ticket = ticketByOrder.get(order.id)
+              return (
                   <div key={order.id} className="flex items-center justify-between p-4 hover:bg-gray-50">
                     <div>
                       <p className="text-sm font-medium text-gray-900">{order.buyer_name}</p>
@@ -192,9 +191,8 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
                       )}
                     </div>
                   </div>
-                )
-              })()}
-            ))}
+              )
+            })}
           </div>
         )}
       </div>
