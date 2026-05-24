@@ -22,36 +22,57 @@ export default async function AdminPage() {
   const pending = (orgs ?? []).filter((o: any) => !o.is_approved)
   const approved = (orgs ?? []).filter((o: any) => o.is_approved)
 
+  const surface = 'rgba(255,255,255,0.04)'
+  const border = '1px solid rgba(255,255,255,0.08)'
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-6 py-10">
+    <div style={{ minHeight: '100vh', background: '#07071a' }}>
+      {/* Header */}
+      <div style={{
+        background: 'rgba(14,14,36,0.9)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        padding: '0 32px', height: '60px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        position: 'sticky', top: 0, zIndex: 10,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '18px', fontWeight: 900, color: '#818cf8', letterSpacing: '-1px' }}>biletle.</span>
+          <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.25)' }}>/</span>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Admin Panel</span>
+        </div>
+        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>{user.email}</span>
+      </div>
 
-        {/* Başlık */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Panel</h1>
-          <p className="text-gray-500 text-sm mt-1">Organizatör hesaplarını yönet</p>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '32px' }}>
+
+        {/* Stats */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '32px' }}>
+          <div style={{
+            background: pending.length > 0 ? 'rgba(251,191,36,0.08)' : surface,
+            border: pending.length > 0 ? '1px solid rgba(251,191,36,0.2)' : border,
+            borderRadius: '16px', padding: '20px',
+          }}>
+            <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '8px' }}>Onay Bekleyen</div>
+            <div style={{ fontSize: '36px', fontWeight: 800, color: pending.length > 0 ? '#fbbf24' : 'rgba(255,255,255,0.9)', letterSpacing: '-2px', lineHeight: 1 }}>
+              {pending.length}
+            </div>
+          </div>
+          <div style={{ background: surface, border, borderRadius: '16px', padding: '20px' }}>
+            <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '8px' }}>Onaylanan</div>
+            <div style={{ fontSize: '36px', fontWeight: 800, color: '#34d399', letterSpacing: '-2px', lineHeight: 1 }}>
+              {approved.length}
+            </div>
+          </div>
         </div>
 
-        {/* Özet */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-white rounded-xl border border-amber-200 bg-amber-50 p-4">
-            <p className="text-sm text-amber-700 font-medium">Onay Bekleyen</p>
-            <p className="text-3xl font-bold text-amber-800 mt-1">{pending.length}</p>
-          </div>
-          <div className="bg-white rounded-xl border border-teal-200 bg-teal-50 p-4">
-            <p className="text-sm text-teal-700 font-medium">Onaylanan</p>
-            <p className="text-3xl font-bold text-teal-800 mt-1">{approved.length}</p>
-          </div>
-        </div>
-
-        {/* Bekleyen hesaplar */}
+        {/* Pending */}
         {pending.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />
-              Onay Bekleyenler
-            </h2>
-            <div className="space-y-3">
+          <div style={{ marginBottom: '32px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#fbbf24', boxShadow: '0 0 8px #fbbf24', display: 'inline-block' }} />
+              <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Onay Bekleyenler</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {pending.map((org: any) => (
                 <AdminOrgCard key={org.id} org={org} type="pending" />
               ))}
@@ -60,19 +81,23 @@ export default async function AdminPage() {
         )}
 
         {pending.length === 0 && (
-          <div className="bg-white rounded-xl border border-gray-200 p-8 text-center text-gray-400 text-sm mb-8">
+          <div style={{
+            background: surface, border, borderRadius: '14px',
+            padding: '40px', textAlign: 'center',
+            fontSize: '13px', color: 'rgba(255,255,255,0.25)', marginBottom: '32px',
+          }}>
             Onay bekleyen hesap yok 🎉
           </div>
         )}
 
-        {/* Onaylanan hesaplar */}
+        {/* Approved */}
         {approved.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-teal-500 inline-block" />
-              Onaylanan Hesaplar
-            </h2>
-            <div className="space-y-3">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+              <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Onaylanan Hesaplar</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {approved.map((org: any) => (
                 <AdminOrgCard key={org.id} org={org} type="approved" />
               ))}

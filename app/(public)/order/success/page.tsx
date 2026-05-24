@@ -9,51 +9,73 @@ function SuccessContent() {
   const isFree = searchParams.get('free') === '1'
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 max-w-md w-full p-8 text-center">
-      <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-4">
-        <span className="text-3xl">🎉</span>
+    <div style={{
+      background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '24px', maxWidth: '440px', width: '100%',
+      padding: '40px', textAlign: 'center',
+      backdropFilter: 'blur(20px)',
+      boxShadow: '0 0 60px rgba(79,70,229,0.1)',
+    }}>
+      <div style={{
+        width: '64px', height: '64px', borderRadius: '50%',
+        background: isFree ? 'rgba(52,211,153,0.12)' : 'rgba(79,70,229,0.12)',
+        border: isFree ? '1px solid rgba(52,211,153,0.2)' : '1px solid rgba(79,70,229,0.2)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        margin: '0 auto 20px', fontSize: '28px',
+      }}>
+        🎉
       </div>
 
       {isFree ? (
         <>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Biletiniz Hazır!</h1>
-          <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+          <h1 style={{ fontSize: '24px', fontWeight: 800, color: 'rgba(255,255,255,0.9)', letterSpacing: '-1px', marginBottom: '10px' }}>
+            Biletiniz Hazır!
+          </h1>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, marginBottom: '24px' }}>
             QR kodlu biletiniz e-posta adresinize gönderildi.
             Birkaç dakika içinde gelmezse spam klasörünüzü kontrol edin.
           </p>
-          <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 mb-6 text-left">
-            <p className="text-sm font-medium text-teal-800 mb-1">✅ Biletiniz Gönderildi</p>
-            <p className="text-xs text-teal-700 leading-relaxed">
+          <div style={{
+            background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.15)',
+            borderRadius: '14px', padding: '16px', marginBottom: '24px', textAlign: 'left',
+          }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, color: '#34d399', marginBottom: '6px' }}>✅ Biletiniz Gönderildi</div>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7 }}>
               E-postanızdaki QR kodu etkinlik girişinde göstermeniz yeterli.
-            </p>
+            </div>
           </div>
         </>
       ) : (
         <>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Ödeme Alındı!</h1>
-          <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+          <h1 style={{ fontSize: '24px', fontWeight: 800, color: 'rgba(255,255,255,0.9)', letterSpacing: '-1px', marginBottom: '10px' }}>
+            Ödeme Alındı!
+          </h1>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, marginBottom: '24px' }}>
             Ödemeniz başarıyla tamamlandı. Siparişiniz inceleniyor,
             biletiniz kısa süre içinde e-posta adresinize gönderilecek.
           </p>
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
-            <p className="text-sm font-medium text-amber-800 mb-1">📬 Biletiniz Ne Zaman Gelir?</p>
-            <p className="text-xs text-amber-700 leading-relaxed">
+          <div style={{
+            background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.15)',
+            borderRadius: '14px', padding: '16px', marginBottom: '24px', textAlign: 'left',
+          }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, color: '#fbbf24', marginBottom: '6px' }}>📬 Biletiniz Ne Zaman Gelir?</div>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7 }}>
               Siparişler organizatör tarafından onaylandıktan sonra QR kodlu biletiniz
               e-posta adresinize gönderilir. Bu işlem genellikle birkaç saat sürer.
-            </p>
+            </div>
           </div>
         </>
       )}
 
-      <div className="space-y-2">
-        <p className="text-xs text-gray-400">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'center' }}>
+        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>
           Spam klasörünüzü de kontrol etmeyi unutmayın.
-        </p>
+        </div>
         <Link
           href="/"
-          className="inline-block text-sm text-indigo-600 hover:underline"
+          style={{ fontSize: '13px', color: '#818cf8', textDecoration: 'none', fontWeight: 500 }}
         >
-          biletle.shop ana sayfasına dön
+          biletle ana sayfasına dön →
         </Link>
       </div>
     </div>
@@ -62,8 +84,15 @@ function SuccessContent() {
 
 export default function OrderSuccessPage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <Suspense fallback={<div className="text-center text-gray-400">Yükleniyor...</div>}>
+    <div style={{
+      minHeight: '100vh', background: '#07071a',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '24px',
+      backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,70,229,0.15), transparent)',
+    }}>
+      <Suspense fallback={
+        <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.3)' }}>Yükleniyor...</div>
+      }>
         <SuccessContent />
       </Suspense>
     </div>

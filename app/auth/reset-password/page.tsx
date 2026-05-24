@@ -13,7 +13,6 @@ export default function ResetPasswordPage() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    // Supabase URL'den token alır ve session'ı kurar
     supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') {
         setReady(true)
@@ -47,58 +46,95 @@ export default function ResetPasswordPage() {
     router.push('/dashboard')
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+    padding: '11px 14px', fontSize: '14px', fontFamily: 'Inter, -apple-system, sans-serif',
+    color: 'white', outline: 'none', background: 'rgba(255,255,255,0.06)',
+    boxSizing: 'border-box',
+  }
+
+  const pageWrapper: React.CSSProperties = {
+    minHeight: '100vh', background: '#07071a',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    padding: '24px',
+    backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,70,229,0.2), transparent)',
+  }
+
+  const card: React.CSSProperties = {
+    background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: '24px', width: '100%', maxWidth: '400px',
+    padding: '40px', backdropFilter: 'blur(20px)',
+    boxShadow: '0 0 60px rgba(79,70,229,0.1)',
+  }
+
   if (!ready) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 w-full max-w-md p-8 text-center">
-          <div className="animate-spin text-3xl mb-3">⏳</div>
-          <p className="text-gray-500 text-sm">Link doğrulanıyor...</p>
+      <div style={pageWrapper}>
+        <div style={{ ...card, textAlign: 'center' }}>
+          <div style={{ fontSize: '32px', marginBottom: '12px' }}>⏳</div>
+          <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>Link doğrulanıyor...</div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 w-full max-w-md p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-600">biletle</h1>
-          <p className="text-gray-500 mt-1 text-sm">Yeni şifre belirle</p>
+    <div style={pageWrapper}>
+      <div style={card}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{ fontSize: '22px', fontWeight: 900, color: '#818cf8', letterSpacing: '-1px', marginBottom: '6px' }}>biletle.</div>
+          <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>Yeni şifre belirle</div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre</label>
+            <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.35)', marginBottom: '6px', letterSpacing: '0.5px' }}>
+              YENİ ŞİFRE
+            </label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="En az 6 karakter"
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              style={inputStyle}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Şifre Tekrar</label>
+            <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.35)', marginBottom: '6px', letterSpacing: '0.5px' }}>
+              ŞİFRE TEKRAR
+            </label>
             <input
               type="password"
               value={confirm}
               onChange={e => setConfirm(e.target.value)}
               placeholder="Aynı şifreyi tekrar gir"
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              style={inputStyle}
             />
           </div>
 
           {error && (
-            <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>
+            <div style={{
+              background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+              borderRadius: '8px', padding: '10px 12px',
+              fontSize: '13px', color: '#f87171',
+            }}>
+              {error}
+            </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 text-white text-sm py-2.5 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 font-medium"
+            style={{
+              width: '100%', padding: '13px', borderRadius: '10px', border: 'none',
+              background: '#4f46e5', color: 'white', fontSize: '14px', fontWeight: 600,
+              fontFamily: 'Inter, -apple-system, sans-serif', cursor: 'pointer',
+              opacity: loading ? 0.6 : 1,
+              boxShadow: '0 4px 16px rgba(79,70,229,0.35)',
+            }}
           >
             {loading ? 'Kaydediliyor...' : 'Şifreyi Güncelle'}
           </button>

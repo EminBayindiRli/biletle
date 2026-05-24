@@ -29,62 +29,95 @@ export default function ForgotPasswordPage() {
     setLoading(false)
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+    padding: '11px 14px', fontSize: '14px', fontFamily: 'Inter, -apple-system, sans-serif',
+    color: 'white', outline: 'none', background: 'rgba(255,255,255,0.06)',
+    boxSizing: 'border-box',
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 w-full max-w-md p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-600">biletle</h1>
-          <p className="text-gray-500 mt-1 text-sm">Şifre sıfırlama</p>
+    <div style={{
+      minHeight: '100vh', background: '#07071a',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '24px',
+      backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,70,229,0.2), transparent)',
+    }}>
+      <div style={{
+        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '24px', width: '100%', maxWidth: '400px',
+        padding: '40px', backdropFilter: 'blur(20px)',
+        boxShadow: '0 0 60px rgba(79,70,229,0.1)',
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{ fontSize: '22px', fontWeight: 900, color: '#818cf8', letterSpacing: '-1px', marginBottom: '6px' }}>biletle.</div>
+          <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>Şifre sıfırlama</div>
         </div>
 
         {sent ? (
-          <div className="text-center">
-            <div className="w-14 h-14 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">📬</span>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{
+              width: '56px', height: '56px', borderRadius: '50%',
+              background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.2)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 16px', fontSize: '24px',
+            }}>
+              📬
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">E-posta Gönderildi</h2>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              <strong>{email}</strong> adresine şifre sıfırlama linki gönderdik.
+            <div style={{ fontSize: '16px', fontWeight: 700, color: 'rgba(255,255,255,0.9)', marginBottom: '8px' }}>E-posta Gönderildi</div>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, marginBottom: '24px' }}>
+              <strong style={{ color: 'rgba(255,255,255,0.6)' }}>{email}</strong> adresine şifre sıfırlama linki gönderdik.
               Spam klasörünü de kontrol et.
             </p>
-            <Link
-              href="/auth/login"
-              className="text-sm text-indigo-600 hover:underline"
-            >
+            <Link href="/auth/login" style={{ fontSize: '13px', color: '#818cf8', textDecoration: 'none' }}>
               ← Giriş sayfasına dön
             </Link>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.35)', marginBottom: '6px', letterSpacing: '0.5px' }}>
+                E-POSTA
+              </label>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="sen@ornek.com"
                 required
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                style={inputStyle}
               />
             </div>
 
             {error && (
-              <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>
+              <div style={{
+                background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+                borderRadius: '8px', padding: '10px 12px',
+                fontSize: '13px', color: '#f87171',
+              }}>
+                {error}
+              </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 text-white text-sm py-2.5 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 font-medium"
+              style={{
+                width: '100%', padding: '13px', borderRadius: '10px', border: 'none',
+                background: '#4f46e5', color: 'white', fontSize: '14px', fontWeight: 600,
+                fontFamily: 'Inter, -apple-system, sans-serif', cursor: 'pointer',
+                opacity: loading ? 0.6 : 1,
+                boxShadow: '0 4px 16px rgba(79,70,229,0.35)',
+              }}
             >
               {loading ? 'Gönderiliyor...' : 'Sıfırlama Linki Gönder'}
             </button>
 
-            <p className="text-center text-sm text-gray-500">
-              <Link href="/auth/login" className="text-indigo-600 hover:underline">
+            <div style={{ textAlign: 'center' }}>
+              <Link href="/auth/login" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', textDecoration: 'none' }}>
                 ← Giriş sayfasına dön
               </Link>
-            </p>
+            </div>
           </form>
         )}
       </div>

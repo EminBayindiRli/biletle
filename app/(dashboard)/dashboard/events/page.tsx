@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase-server'
 import Link from 'next/link'
 
-const CARD_GRADIENTS = [
+const GRADIENTS = [
   'linear-gradient(135deg, #4f46e5, #7c3aed)',
   'linear-gradient(135deg, #0ea5e9, #6366f1)',
   'linear-gradient(135deg, #f59e0b, #ef4444)',
@@ -9,8 +9,7 @@ const CARD_GRADIENTS = [
   'linear-gradient(135deg, #ec4899, #f43f5e)',
   'linear-gradient(135deg, #8b5cf6, #3b82f6)',
 ]
-
-const CARD_EMOJIS = ['🎵', '🎸', '🎹', '🎧', '🎤', '🎭', '🎪', '🥁']
+const EMOJIS = ['🎵', '🎸', '🎹', '🎧', '🎤', '🎭', '🎪', '🥁']
 
 export default async function EventsPage() {
   const supabase = await createClient()
@@ -31,22 +30,29 @@ export default async function EventsPage() {
   const list = (events ?? []) as any[]
 
   return (
-    <div>
-      {/* Top bar */}
+    <div style={{ minHeight: '100vh', background: '#07071a' }}>
+      {/* Topbar */}
       <div style={{
-        background: 'white', borderBottom: '1px solid #e5e7eb',
+        background: 'rgba(14,14,36,0.9)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
         padding: '0 32px', height: '60px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'sticky', top: 0, zIndex: 10,
       }}>
-        <div>
-          <span style={{ fontSize: '16px', fontWeight: 700, color: '#111827' }}>Etkinlikler</span>
-          <span style={{ fontSize: '13px', color: '#9ca3af', marginLeft: '8px' }}>{list.length} etkinlik</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontSize: '15px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>Etkinlikler</span>
+          <span style={{
+            fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '10px',
+            background: 'rgba(79,70,229,0.2)', color: '#818cf8', border: '1px solid rgba(79,70,229,0.3)',
+          }}>
+            {list.length}
+          </span>
         </div>
         <Link href="/dashboard/events/new" style={{
           padding: '8px 16px', borderRadius: '8px', border: 'none',
           background: '#4f46e5', color: 'white', fontSize: '13px', fontWeight: 600,
           textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px',
+          boxShadow: '0 0 20px rgba(79,70,229,0.3)',
         }}>
           + Yeni Etkinlik
         </Link>
@@ -55,12 +61,16 @@ export default async function EventsPage() {
       <div style={{ padding: '28px 32px' }}>
         {list.length === 0 ? (
           <div style={{
-            background: 'white', border: '1.5px dashed #e5e7eb', borderRadius: '16px',
-            padding: '64px', textAlign: 'center',
+            background: 'rgba(255,255,255,0.02)', border: '1.5px dashed rgba(255,255,255,0.1)',
+            borderRadius: '16px', padding: '64px', textAlign: 'center',
           }}>
             <div style={{ fontSize: '48px', marginBottom: '12px' }}>🎪</div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: '#374151', marginBottom: '6px' }}>İlk etkinliğini oluştur</div>
-            <div style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '24px' }}>Bilet satmaya başlamak için bir etkinlik ekle.</div>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '6px' }}>
+              İlk etkinliğini oluştur
+            </div>
+            <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)', marginBottom: '24px' }}>
+              Bilet satmaya başlamak için bir etkinlik ekle.
+            </div>
             <Link href="/dashboard/events/new" style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '10px 20px', borderRadius: '8px', background: '#4f46e5',
@@ -72,76 +82,78 @@ export default async function EventsPage() {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
             {list.map((event, i) => {
-              const kalan = event.capacity - event.sold_count
               const doluluk = event.capacity > 0 ? Math.round((event.sold_count / event.capacity) * 100) : 0
-              const gradient = CARD_GRADIENTS[i % CARD_GRADIENTS.length]
-              const emoji = CARD_EMOJIS[i % CARD_EMOJIS.length]
+              const gradient = GRADIENTS[i % GRADIENTS.length]
+              const emoji = EMOJIS[i % EMOJIS.length]
+              const isActive = event.status === 'active'
 
               return (
                 <div key={event.id} style={{
-                  background: 'white', border: '1px solid #e5e7eb', borderRadius: '16px',
-                  overflow: 'hidden',
-                  transition: 'box-shadow 0.15s, transform 0.15s',
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '16px', overflow: 'hidden',
                 }}>
-                  {/* Card header */}
+                  {/* Card top */}
                   <div style={{
-                    height: '100px', background: gradient,
+                    height: '96px', background: gradient,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     position: 'relative',
                   }}>
-                    <span style={{ fontSize: '40px', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>{emoji}</span>
+                    <span style={{ fontSize: '38px', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))' }}>{emoji}</span>
                     <span style={{
                       position: 'absolute', top: '10px', right: '10px',
                       fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '10px',
-                      background: event.status === 'active' ? 'rgba(16,185,129,0.15)' : event.status === 'draft' ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.12)',
-                      color: event.status === 'active' ? '#86efac' : 'rgba(255,255,255,0.7)',
-                      border: event.status === 'active' ? '1px solid rgba(16,185,129,0.25)' : '1px solid rgba(255,255,255,0.15)',
+                      background: isActive ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.12)',
+                      color: isActive ? '#86efac' : 'rgba(255,255,255,0.65)',
+                      border: isActive ? '1px solid rgba(52,211,153,0.25)' : '1px solid rgba(255,255,255,0.15)',
                     }}>
-                      {event.status === 'active' ? 'Satışta' : event.status === 'draft' ? 'Taslak' : 'Tamamlandı'}
+                      {isActive ? 'Satışta' : event.status === 'draft' ? 'Taslak' : 'Tamamlandı'}
                     </span>
                   </div>
 
                   {/* Card body */}
                   <div style={{ padding: '16px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 700, color: '#111827', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.9)', marginBottom: '5px' }}>
                       {event.title}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '12px' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginBottom: '12px' }}>
                       📅 {new Date(event.starts_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
                       {event.location && ` · 📍 ${event.location}`}
                     </div>
 
                     {/* Progress */}
-                    <div style={{ height: '4px', background: '#f3f4f6', borderRadius: '2px', overflow: 'hidden', marginBottom: '6px' }}>
+                    <div style={{ height: '4px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', overflow: 'hidden', marginBottom: '5px' }}>
                       <div style={{
-                        height: '100%', background: '#4f46e5', borderRadius: '2px',
+                        height: '100%', borderRadius: '2px',
+                        background: doluluk >= 90 ? '#ef4444' : doluluk >= 70 ? '#f59e0b' : '#4f46e5',
                         width: `${doluluk}%`,
                       }} />
                     </div>
-                    <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>
-                      {event.sold_count} / {event.capacity} bilet satıldı (%{doluluk})
+                    <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>
+                      {event.sold_count} / {event.capacity} bilet (%{doluluk})
                     </div>
 
                     {/* Footer */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px', borderTop: '1px solid #f3f4f6' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
                       <div>
-                        <div style={{ fontSize: '13px', fontWeight: 700, color: '#111827' }}>{event.sold_count} bilet</div>
-                        <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600 }}>
+                        <div style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{event.sold_count} bilet</div>
+                        <div style={{ fontSize: '11px', color: '#34d399', fontWeight: 600 }}>
                           ₺{(event.sold_count * Number(event.ticket_price)).toLocaleString('tr-TR')}
                         </div>
                       </div>
                       <div style={{ display: 'flex', gap: '6px' }}>
-                        {event.status === 'active' && (
+                        {isActive && (
                           <a href={`/e/${event.slug}`} target="_blank" style={{
                             fontSize: '11px', padding: '5px 10px', borderRadius: '6px',
-                            border: '1px solid #e5e7eb', color: '#6b7280', textDecoration: 'none', fontWeight: 500,
+                            border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)',
+                            textDecoration: 'none', fontWeight: 500,
                           }}>
                             ↗
                           </a>
                         )}
                         <Link href={`/dashboard/events/${event.id}`} style={{
                           fontSize: '11px', padding: '5px 10px', borderRadius: '6px',
-                          background: '#eef2ff', color: '#4f46e5', textDecoration: 'none', fontWeight: 600,
+                          background: 'rgba(79,70,229,0.2)', border: '1px solid rgba(79,70,229,0.3)',
+                          color: '#818cf8', textDecoration: 'none', fontWeight: 600,
                         }}>
                           Yönet →
                         </Link>

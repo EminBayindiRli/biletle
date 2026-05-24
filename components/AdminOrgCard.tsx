@@ -43,35 +43,50 @@ export default function AdminOrgCard({ org, type }: { org: Org; type: 'pending' 
   })
 
   return (
-    <div className={`bg-white rounded-xl border p-4 flex items-center justify-between gap-4 ${
-      type === 'pending' ? 'border-amber-200' : 'border-gray-200'
-    }`}>
-      <div className="min-w-0">
-        <p className="font-medium text-gray-900 truncate">{org.name}</p>
-        <p className="text-sm text-gray-500 truncate">{org.email}</p>
-        <p className="text-xs text-gray-400 mt-0.5">Kayıt: {createdAt}</p>
+    <div style={{
+      background: type === 'pending' ? 'rgba(251,191,36,0.05)' : 'rgba(255,255,255,0.04)',
+      border: type === 'pending' ? '1px solid rgba(251,191,36,0.2)' : '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '12px', padding: '16px',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px',
+    }}>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(255,255,255,0.85)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{org.name}</div>
+        <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{org.email}</div>
+        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', marginTop: '3px' }}>Kayıt: {createdAt}</div>
       </div>
 
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
         {type === 'pending' ? (
           <>
             <button
               onClick={handleApprove}
               disabled={loading !== null}
-              className="text-sm bg-teal-600 text-white px-3 py-1.5 rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 font-medium"
+              style={{
+                fontSize: '12px', fontWeight: 600, padding: '7px 14px', borderRadius: '8px',
+                background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.25)',
+                color: '#34d399', cursor: 'pointer', opacity: loading !== null ? 0.5 : 1,
+              }}
             >
               {loading === 'approve' ? '...' : '✓ Onayla'}
             </button>
             <button
               onClick={handleReject}
               disabled={loading !== null}
-              className="text-sm border border-red-200 text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
+              style={{
+                fontSize: '12px', fontWeight: 500, padding: '7px 14px', borderRadius: '8px',
+                background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)',
+                color: '#f87171', cursor: 'pointer', opacity: loading !== null ? 0.5 : 1,
+              }}
             >
               {loading === 'reject' ? '...' : 'Reddet'}
             </button>
           </>
         ) : (
-          <span className="text-xs bg-teal-50 text-teal-700 px-2 py-1 rounded-full font-medium">
+          <span style={{
+            fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '20px',
+            background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.2)',
+            color: '#34d399',
+          }}>
             ✓ Onaylı
           </span>
         )}

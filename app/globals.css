@@ -49,8 +49,8 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #07071a;
+  --foreground: rgba(255,255,255,0.88);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -139,6 +139,12 @@
 .animate-scan {
   position: absolute;
   animation: scan 2s linear infinite;
+}
+
+/* Dark input placeholder rengi */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25);
 }
 
 /* html5-qrcode default UI'yı gizle */

@@ -8,7 +8,6 @@ export default async function PendingApprovalPage() {
 
   if (!user) redirect('/auth/login')
 
-  // Zaten onaylandıysa dashboard'a gönder
   const { data: org } = await supabase
     .from('organizations')
     .select('is_approved, name')
@@ -18,36 +17,62 @@ export default async function PendingApprovalPage() {
   if ((org as any)?.is_approved) redirect('/dashboard')
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 max-w-md w-full p-8 text-center">
-        <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-3xl">⏳</span>
+    <div style={{
+      minHeight: '100vh', background: '#07071a',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '24px',
+      backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,70,229,0.15), transparent)',
+    }}>
+      <div style={{
+        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '24px', maxWidth: '440px', width: '100%',
+        padding: '40px', textAlign: 'center',
+        backdropFilter: 'blur(20px)',
+        boxShadow: '0 0 60px rgba(79,70,229,0.1)',
+      }}>
+        <div style={{
+          width: '64px', height: '64px', borderRadius: '50%',
+          background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.2)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 20px', fontSize: '28px',
+        }}>
+          ⏳
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Onay Bekleniyor</h1>
-        <p className="text-gray-500 text-sm leading-relaxed mb-6">
+        <h1 style={{ fontSize: '24px', fontWeight: 800, color: 'rgba(255,255,255,0.9)', letterSpacing: '-1px', marginBottom: '10px' }}>
+          Onay Bekleniyor
+        </h1>
+        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, marginBottom: '24px' }}>
           Hesabın oluşturuldu! Organizatör panelinize erişmek için
           admin onayı gerekiyor. En kısa sürede incelenecek.
         </p>
 
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
-          <p className="text-sm font-medium text-amber-800 mb-1">📬 Ne Yapmalısın?</p>
-          <p className="text-xs text-amber-700 leading-relaxed">
+        <div style={{
+          background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.15)',
+          borderRadius: '14px', padding: '16px', marginBottom: '24px', textAlign: 'left',
+        }}>
+          <div style={{ fontSize: '13px', fontWeight: 600, color: '#fbbf24', marginBottom: '6px' }}>📬 Ne Yapmalısın?</div>
+          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7 }}>
             Hesabın onaylandığında e-posta alacaksın. Onaylandıktan sonra
             bu sayfayı yenileyerek panele geçebilirsin.
-          </p>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <a
             href="/pending-approval"
-            className="text-sm bg-indigo-600 text-white py-2.5 rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+            style={{
+              display: 'block', padding: '12px', borderRadius: '10px',
+              background: '#4f46e5', color: 'white',
+              fontSize: '14px', fontWeight: 600, textDecoration: 'none',
+              boxShadow: '0 4px 16px rgba(79,70,229,0.35)',
+            }}
           >
             Yenile
           </a>
           <Link
             href="/"
-            className="text-sm text-gray-500 hover:text-gray-700"
+            style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}
           >
             Ana sayfaya dön
           </Link>

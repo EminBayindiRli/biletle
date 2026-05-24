@@ -22,7 +22,6 @@ export default function QRScanner({ eventId }: { eventId: string }) {
     let stopped = false
 
     async function startScanner() {
-      // html5-qrcode sadece client-side çalışır
       const { Html5Qrcode } = await import('html5-qrcode')
 
       const scanner = new Html5Qrcode('qr-reader')
@@ -43,7 +42,7 @@ export default function QRScanner({ eventId }: { eventId: string }) {
             setScanning(false)
             await verifyToken(decodedText)
           },
-          () => {} // tarama hatalarını görmezden gel
+          () => {}
         )
         if (!stopped) setScanning(true)
       } catch {
@@ -79,105 +78,126 @@ export default function QRScanner({ eventId }: { eventId: string }) {
     if (scannerRef.current) {
       try {
         await scannerRef.current.resume()
-        scannerRef.current = scannerRef.current
       } catch {
-        // resume başarısız olursa scanner'ı yeniden başlat
         window.location.reload()
       }
     }
   }
 
-  // Sonuç ekranı
+  // Result screen
   if (result) {
     return (
-      <div className={`fixed inset-0 flex flex-col items-center justify-center px-6 ${
-        result.valid ? 'bg-teal-600' : 'bg-red-600'
-      }`}>
-        <div className="text-center">
-          <p className="text-8xl mb-6">{result.valid ? '✅' : '❌'}</p>
-
-          <h2 className="text-3xl font-bold text-white mb-2">
-            {result.valid ? 'GEÇERLİ BİLET' : 'GEÇERSİZ BİLET'}
-          </h2>
-
-          {result.valid ? (
-            <div className="mt-4 space-y-1">
-              {result.attendee && (
-                <p className="text-white text-xl font-medium">{result.attendee.name}</p>
-              )}
-              {result.attendee && (
-                <p className="text-teal-100 text-sm">{result.attendee.email}</p>
-              )}
-              {result.ticket_number && (
-                <p className="text-teal-200 text-sm mt-2 font-mono">{result.ticket_number}</p>
-              )}
-            </div>
-          ) : (
-            <div className="mt-4">
-              <p className="text-red-100 text-lg">{result.reason}</p>
-              {result.checked_in_at && (
-                <p className="text-red-200 text-sm mt-2">
-                  Giriş yapıldı: {new Date(result.checked_in_at).toLocaleTimeString('tr-TR')}
-                </p>
-              )}
-            </div>
-          )}
-
-          <button
-            onClick={handleRescan}
-            className="mt-10 bg-white bg-opacity-20 text-white border border-white border-opacity-40 px-8 py-3 rounded-xl font-medium text-lg hover:bg-opacity-30 transition-colors"
-          >
-            Tekrar Tara
-          </button>
+      <div style={{
+        position: 'fixed', inset: 0,
+        background: result.valid
+          ? 'linear-gradient(135deg, #064e3b, #065f46)'
+          : 'linear-gradient(135deg, #7f1d1d, #991b1b)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        padding: '32px', textAlign: 'center',
+      }}>
+        <div style={{ fontSize: '80px', marginBottom: '20px' }}>
+          {result.valid ? '✅' : '❌'}
         </div>
+
+        <h2 style={{ fontSize: '28px', fontWeight: 900, color: 'white', letterSpacing: '-1px', marginBottom: '8px' }}>
+          {result.valid ? 'GEÇERLİ BİLET' : 'GEÇERSİZ BİLET'}
+        </h2>
+
+        {result.valid ? (
+          <div style={{ marginTop: '8px' }}>
+            {result.attendee && (
+              <div style={{ fontSize: '20px', fontWeight: 600, color: 'white', marginBottom: '4px' }}>{result.attendee.name}</div>
+            )}
+            {result.attendee && (
+              <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>{result.attendee.email}</div>
+            )}
+            {result.ticket_number && (
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '8px', fontFamily: 'monospace', letterSpacing: '1px' }}>{result.ticket_number}</div>
+            )}
+          </div>
+        ) : (
+          <div style={{ marginTop: '8px' }}>
+            <div style={{ fontSize: '16px', color: 'rgba(255,255,255,0.7)' }}>{result.reason}</div>
+            {result.checked_in_at && (
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', marginTop: '8px' }}>
+                Giriş yapıldı: {new Date(result.checked_in_at).toLocaleTimeString('tr-TR')}
+              </div>
+            )}
+          </div>
+        )}
+
+        <button
+          onClick={handleRescan}
+          style={{
+            marginTop: '40px',
+            background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)',
+            color: 'white', padding: '14px 40px', borderRadius: '14px',
+            fontSize: '16px', fontWeight: 600, cursor: 'pointer',
+            backdropFilter: 'blur(8px)',
+          }}
+        >
+          Tekrar Tara
+        </button>
       </div>
     )
   }
 
-  // Yükleme
+  // Loading
   if (loading) {
     return (
-      <div className="fixed inset-0 bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin text-4xl mb-3">⏳</div>
-          <p className="text-white text-sm">Bilet doğrulanıyor...</p>
+      <div style={{
+        position: 'fixed', inset: 0, background: '#0a0a1f',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '40px', marginBottom: '12px' }}>⏳</div>
+          <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>Bilet doğrulanıyor...</div>
         </div>
       </div>
     )
   }
 
-  // Kamera ekranı
+  // Camera view
   return (
-    <div className="fixed inset-0 bg-black">
-      {/* html5-qrcode buraya kamerayı render eder */}
-      <div
-        id="qr-reader"
-        style={{ width: '100%', height: '100%' }}
-      />
+    <div style={{ position: 'fixed', inset: 0, background: '#000' }}>
+      <div id="qr-reader" style={{ width: '100%', height: '100%' }} />
 
-      {/* Hata */}
+      {/* Error */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-          <div className="text-center px-6">
-            <p className="text-4xl mb-4">📷</p>
-            <p className="text-white font-medium">{error}</p>
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: '#0a0a1f',
+        }}>
+          <div style={{ textAlign: 'center', padding: '32px' }}>
+            <div style={{ fontSize: '40px', marginBottom: '16px' }}>📷</div>
+            <div style={{ fontSize: '15px', fontWeight: 600, color: 'rgba(255,255,255,0.85)', marginBottom: '8px' }}>{error}</div>
+            <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>Tarayıcı ayarlarından kamera iznini açın.</div>
           </div>
         </div>
       )}
 
-      {/* Tarama çerçevesi */}
+      {/* Scan frame overlay */}
       {scanning && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {/* Köşeler */}
-          <div className="relative w-64 h-64">
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-lg" />
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-lg" />
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-lg" />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg" />
-            {/* Tarama çizgisi animasyonu */}
-            <div className="absolute left-0 right-0 h-0.5 bg-indigo-400 opacity-80 animate-scan" />
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          pointerEvents: 'none',
+        }}>
+          <div style={{ position: 'relative', width: '256px', height: '256px' }}>
+            {/* Corners */}
+            {[
+              { top: 0, left: 0, borderTop: '3px solid white', borderLeft: '3px solid white', borderRadius: '4px 0 0 0' },
+              { top: 0, right: 0, borderTop: '3px solid white', borderRight: '3px solid white', borderRadius: '0 4px 0 0' },
+              { bottom: 0, left: 0, borderBottom: '3px solid white', borderLeft: '3px solid white', borderRadius: '0 0 0 4px' },
+              { bottom: 0, right: 0, borderBottom: '3px solid white', borderRight: '3px solid white', borderRadius: '0 0 4px 0' },
+            ].map((style, i) => (
+              <div key={i} style={{ position: 'absolute', width: '32px', height: '32px', ...style }} />
+            ))}
           </div>
-          <p className="absolute bottom-28 text-white text-sm opacity-75">QR kodu çerçeve içine al</p>
+          <div style={{ marginTop: '24px', fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}>
+            QR kodu çerçeve içine al
+          </div>
         </div>
       )}
     </div>

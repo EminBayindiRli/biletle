@@ -10,6 +10,9 @@ type EventRow = {
   location: string | null
 }
 
+const surface = 'rgba(255,255,255,0.04)'
+const border = '1px solid rgba(255,255,255,0.08)'
+
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -31,7 +34,7 @@ export default async function DashboardPage() {
     .limit(5)
 
   const events = (eventsData ?? []) as EventRow[]
-  const eventIds: string[] = events.map(e => e.id)
+  const eventIds = events.map(e => e.id)
   const safeIds = eventIds.length > 0 ? eventIds : ['']
 
   const [
@@ -45,56 +48,57 @@ export default async function DashboardPage() {
   ])
 
   const stats = [
-    { label: 'Toplam Etkinlik', value: totalEvents ?? 0, icon: '🎪', color: '#eef2ff', iconColor: '#4f46e5' },
-    { label: 'Satılan Bilet', value: totalTickets ?? 0, icon: '🎫', color: '#ecfdf5', iconColor: '#059669' },
-    { label: 'Bekleyen Onay', value: pendingOrders ?? 0, icon: '⏳', color: (pendingOrders ?? 0) > 0 ? '#fffbeb' : '#f9fafb', iconColor: '#d97706', highlight: (pendingOrders ?? 0) > 0 },
+    { label: 'Toplam Etkinlik', value: totalEvents ?? 0, icon: '🎪', accent: '#818cf8' },
+    { label: 'Satılan Bilet', value: totalTickets ?? 0, icon: '🎫', accent: '#34d399' },
+    { label: 'Bekleyen Onay', value: pendingOrders ?? 0, icon: '⏳', accent: '#fbbf24', highlight: (pendingOrders ?? 0) > 0 },
   ]
 
   return (
-    <div>
-      {/* Top bar */}
+    <div style={{ minHeight: '100vh', background: '#07071a' }}>
+      {/* Topbar */}
       <div style={{
-        background: 'white', borderBottom: '1px solid #e5e7eb',
+        background: 'rgba(14,14,36,0.9)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
         padding: '0 32px', height: '60px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'sticky', top: 0, zIndex: 10,
       }}>
-        <div>
-          <span style={{ fontSize: '16px', fontWeight: 700, color: '#111827' }}>
-            Merhaba, {org?.name} 👋
-          </span>
-        </div>
+        <span style={{ fontSize: '15px', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>
+          Merhaba, {org?.name} 👋
+        </span>
         <Link href="/dashboard/events/new" style={{
           padding: '8px 16px', borderRadius: '8px', border: 'none',
           background: '#4f46e5', color: 'white', fontSize: '13px', fontWeight: 600,
           textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px',
+          boxShadow: '0 0 20px rgba(79,70,229,0.3)',
         }}>
           + Etkinlik Oluştur
         </Link>
       </div>
 
       <div style={{ padding: '28px 32px' }}>
-        {/* Stat cards */}
+        {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '28px' }}>
           {stats.map((stat) => (
             <div key={stat.label} style={{
-              background: stat.highlight ? '#fffbeb' : 'white',
-              border: `1px solid ${stat.highlight ? '#fde68a' : '#e5e7eb'}`,
+              background: stat.highlight ? 'rgba(251,191,36,0.08)' : surface,
+              border: stat.highlight ? '1px solid rgba(251,191,36,0.2)' : border,
               borderRadius: '16px', padding: '20px',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                 <div style={{
-                  width: '40px', height: '40px', borderRadius: '10px',
-                  background: stat.color, display: 'flex', alignItems: 'center',
-                  justifyContent: 'center', fontSize: '18px',
+                  width: '38px', height: '38px', borderRadius: '10px',
+                  background: `${stat.accent}18`,
+                  border: `1px solid ${stat.accent}30`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '17px',
                 }}>
                   {stat.icon}
                 </div>
               </div>
-              <div style={{ fontSize: '28px', fontWeight: 800, color: stat.highlight ? '#92400e' : '#111827', letterSpacing: '-1.5px', lineHeight: 1 }}>
+              <div style={{ fontSize: '30px', fontWeight: 800, color: stat.highlight ? '#fbbf24' : 'white', letterSpacing: '-1.5px', lineHeight: 1 }}>
                 {stat.value}
               </div>
-              <div style={{ fontSize: '12px', color: '#6b7280', fontWeight: 500, marginTop: '4px' }}>
+              <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', fontWeight: 500, marginTop: '5px' }}>
                 {stat.label}
               </div>
             </div>
@@ -102,25 +106,25 @@ export default async function DashboardPage() {
         </div>
 
         {/* Recent events */}
-        <div style={{ background: 'white', border: '1px solid #e5e7eb', borderRadius: '16px', overflow: 'hidden' }}>
+        <div style={{ background: surface, border, borderRadius: '16px', overflow: 'hidden' }}>
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '18px 20px', borderBottom: '1px solid #f3f4f6',
+            padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: '#111827' }}>Son Etkinlikler</span>
-            <Link href="/dashboard/events" style={{ fontSize: '12px', color: '#4f46e5', textDecoration: 'none', fontWeight: 500 }}>
+            <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Son Etkinlikler</span>
+            <Link href="/dashboard/events" style={{ fontSize: '12px', color: '#818cf8', textDecoration: 'none', fontWeight: 500 }}>
               Tümünü gör →
             </Link>
           </div>
 
           {events.length === 0 ? (
             <div style={{ padding: '48px', textAlign: 'center' }}>
-              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🎪</div>
-              <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '16px' }}>Henüz etkinliğin yok.</div>
+              <div style={{ fontSize: '36px', marginBottom: '10px' }}>🎪</div>
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '16px' }}>Henüz etkinliğin yok.</div>
               <Link href="/dashboard/events/new" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 padding: '9px 16px', borderRadius: '8px', background: '#4f46e5',
-                color: 'white', fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+                color: 'white', fontSize: '12px', fontWeight: 600, textDecoration: 'none',
               }}>
                 + İlk Etkinliğini Oluştur
               </Link>
@@ -130,35 +134,36 @@ export default async function DashboardPage() {
               {events.map((event, i) => (
                 <div key={event.id} style={{
                   display: 'flex', alignItems: 'center', gap: '14px',
-                  padding: '14px 20px',
-                  borderBottom: i < events.length - 1 ? '1px solid #f9fafb' : 'none',
+                  padding: '13px 20px',
+                  borderBottom: i < events.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
                 }}>
                   <div style={{
-                    width: '40px', height: '40px', borderRadius: '10px',
-                    background: '#eef2ff', display: 'flex', alignItems: 'center',
-                    justifyContent: 'center', fontSize: '18px', flexShrink: 0,
+                    width: '38px', height: '38px', borderRadius: '10px', flexShrink: 0,
+                    background: 'rgba(79,70,229,0.2)', border: '1px solid rgba(79,70,229,0.3)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '17px',
                   }}>
                     🎵
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#111827', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.85)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {event.title}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>
                       {new Date(event.starts_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
                       {event.location && ` · ${event.location}`}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-                    <span style={{ fontSize: '12px', color: '#6b7280' }}>{event.sold_count} bilet</span>
+                    <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)' }}>{event.sold_count} bilet</span>
                     <span style={{
                       fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '10px',
-                      background: event.status === 'active' ? '#ecfdf5' : event.status === 'draft' ? '#f3f4f6' : '#f9fafb',
-                      color: event.status === 'active' ? '#059669' : event.status === 'draft' ? '#6b7280' : '#9ca3af',
+                      background: event.status === 'active' ? 'rgba(52,211,153,0.12)' : 'rgba(255,255,255,0.06)',
+                      color: event.status === 'active' ? '#34d399' : 'rgba(255,255,255,0.3)',
+                      border: event.status === 'active' ? '1px solid rgba(52,211,153,0.2)' : '1px solid rgba(255,255,255,0.08)',
                     }}>
                       {event.status === 'active' ? 'Aktif' : event.status === 'draft' ? 'Taslak' : 'Bitti'}
                     </span>
-                    <Link href={`/dashboard/events/${event.id}`} style={{ fontSize: '12px', color: '#4f46e5', textDecoration: 'none', fontWeight: 500 }}>
+                    <Link href={`/dashboard/events/${event.id}`} style={{ fontSize: '11px', color: '#818cf8', textDecoration: 'none', fontWeight: 600 }}>
                       Detay →
                     </Link>
                   </div>

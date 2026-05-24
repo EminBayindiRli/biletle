@@ -57,7 +57,7 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
     return (
       <div style={{ padding: '32px', textAlign: 'center' }}>
         <div style={{ fontSize: '32px', marginBottom: '12px' }}>⏳</div>
-        <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: 500 }}>Siparişiniz oluşturuluyor...</div>
+        <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>Siparişiniz oluşturuluyor...</div>
       </div>
     )
   }
@@ -66,22 +66,30 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
     return (
       <div style={{ padding: '32px', textAlign: 'center' }}>
         <div style={{ fontSize: '32px', marginBottom: '12px' }}>💳</div>
-        <div style={{ fontSize: '15px', fontWeight: 700, color: '#111827', marginBottom: '4px' }}>Ödeme sayfasına yönlendiriliyorsunuz...</div>
-        <div style={{ fontSize: '13px', color: '#9ca3af' }}>Ödeme sonrası QR kodlu biletiniz e-postanıza gelecek.</div>
+        <div style={{ fontSize: '15px', fontWeight: 700, color: 'rgba(255,255,255,0.85)', marginBottom: '4px' }}>Ödeme sayfasına yönlendiriliyorsunuz...</div>
+        <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>Ödeme sonrası QR kodlu biletiniz e-postanıza gelecek.</div>
       </div>
     )
   }
 
   const inputStyle: React.CSSProperties = {
-    width: '100%', border: '1.5px solid #e5e7eb', borderRadius: '8px',
-    padding: '10px 12px', fontSize: '13px', fontFamily: 'Inter, -apple-system, sans-serif',
-    color: '#111827', outline: 'none', marginBottom: '12px',
-    background: '#f9fafb', boxSizing: 'border-box',
+    width: '100%',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: '8px',
+    padding: '10px 12px',
+    fontSize: '13px',
+    fontFamily: 'Inter, -apple-system, sans-serif',
+    color: 'white',
+    outline: 'none',
+    marginBottom: '12px',
+    background: 'rgba(255,255,255,0.06)',
+    boxSizing: 'border-box',
     transition: 'all 0.15s',
   }
 
   const labelStyle: React.CSSProperties = {
-    display: 'block', fontSize: '11px', fontWeight: 700, color: '#6b7280',
+    display: 'block', fontSize: '11px', fontWeight: 700,
+    color: 'rgba(255,255,255,0.35)',
     marginBottom: '5px', letterSpacing: '0.5px',
   }
 
@@ -109,7 +117,7 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
           required
           style={inputStyle}
         />
-        <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '-8px', marginBottom: '12px' }}>
+        <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginTop: '-8px', marginBottom: '12px' }}>
           Biletiniz bu adrese gönderilecek.
         </div>
       </div>
@@ -128,19 +136,21 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
       {/* Total row */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '12px 0', borderTop: '1.5px dashed #e5e7eb', borderBottom: '1.5px dashed #e5e7eb',
+        padding: '12px 0',
+        borderTop: '1px dashed rgba(255,255,255,0.1)',
+        borderBottom: '1px dashed rgba(255,255,255,0.1)',
         margin: '4px 0 14px',
       }}>
-        <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: 500 }}>1 bilet toplamı</span>
-        <span style={{ fontSize: '20px', fontWeight: 800, color: '#111827', letterSpacing: '-0.5px' }}>
-          {ticketPrice === 0 ? <span style={{ color: '#10b981' }}>Ücretsiz</span> : `${ticketPrice.toLocaleString('tr-TR')} TL`}
+        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', fontWeight: 500 }}>1 bilet toplamı</span>
+        <span style={{ fontSize: '20px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+          {ticketPrice === 0 ? <span style={{ color: '#34d399' }}>Ücretsiz</span> : `${ticketPrice.toLocaleString('tr-TR')} TL`}
         </span>
       </div>
 
       {error && (
         <div style={{
-          background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px',
-          padding: '10px 12px', fontSize: '13px', color: '#dc2626', marginBottom: '12px',
+          background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '8px',
+          padding: '10px 12px', fontSize: '13px', color: '#f87171', marginBottom: '12px',
         }}>
           {error}
         </div>
@@ -163,16 +173,16 @@ export default function TicketForm({ eventId, ticketPrice, shopierLink }: Props)
         <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
           {['VISA', 'MC', 'TROY', '🍎 Pay'].map(p => (
             <span key={p} style={{
-              fontSize: '10px', fontWeight: 700, color: '#6b7280',
-              background: '#f3f4f6', borderRadius: '4px', padding: '3px 8px',
+              fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.3)',
+              background: 'rgba(255,255,255,0.06)', borderRadius: '4px', padding: '3px 8px',
             }}>
               {p}
             </span>
           ))}
         </div>
-        <div style={{ paddingTop: '12px', borderTop: '1px solid #f3f4f6' }}>
+        <div style={{ paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           {['🔒 Güvenli ödeme · Shopier', '📧 QR kod e-posta ile gönderilir', '↩️ İade yapılmaz'].map(r => (
-            <div key={r} style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '5px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <div key={r} style={{ fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginBottom: '5px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               {r}
             </div>
           ))}

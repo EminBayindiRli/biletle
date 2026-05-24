@@ -51,156 +51,160 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
   // order_id → ticket eşlemesi
   const ticketByOrder = new Map(tickets.map(t => [t.order_id, t]))
 
+  const surface = 'rgba(255,255,255,0.04)'
+  const border = '1px solid rgba(255,255,255,0.08)'
+  const btnStyle: React.CSSProperties = {
+    fontSize: '11px', padding: '6px 12px', borderRadius: '7px',
+    border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)',
+    textDecoration: 'none', fontWeight: 500, background: 'transparent',
+  }
+
   return (
-    <div>
-      {/* Sticky event header */}
+    <div style={{ minHeight: '100vh', background: '#07071a' }}>
+      {/* Sticky header */}
       <div style={{
-        background: 'white', borderBottom: '1px solid #e5e7eb',
-        padding: '20px 32px', position: 'sticky', top: 0, zIndex: 10,
+        background: 'rgba(14,14,36,0.9)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        padding: '16px 32px', position: 'sticky', top: 0, zIndex: 10,
       }}>
-        <Link href="/dashboard/events" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>← Etkinlikler</Link>
-        <div style={{ fontSize: '22px', fontWeight: 800, color: '#111827', letterSpacing: '-1px', marginTop: '4px' }}>{event.title}</div>
-        <div style={{ display: 'flex', gap: '20px', marginTop: '6px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '12px', color: '#6b7280', display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <Link href="/dashboard/events" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>← Etkinlikler</Link>
+        <div style={{ fontSize: '20px', fontWeight: 800, color: 'rgba(255,255,255,0.9)', letterSpacing: '-1px', marginTop: '4px' }}>{event.title}</div>
+        <div style={{ display: 'flex', gap: '20px', marginTop: '5px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
             📅 {new Date(event.starts_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
           </span>
-          {event.location && <span style={{ fontSize: '12px', color: '#6b7280' }}>📍 {event.location}</span>}
-          <span style={{ fontSize: '12px', fontWeight: 600, color: event.status === 'active' ? '#10b981' : '#9ca3af' }}>
+          {event.location && <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>📍 {event.location}</span>}
+          <span style={{ fontSize: '12px', fontWeight: 600, color: event.status === 'active' ? '#34d399' : 'rgba(255,255,255,0.3)' }}>
             {event.status === 'active' ? '● Satışta' : '● Taslak'}
           </span>
         </div>
-        <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px', marginTop: '10px', flexWrap: 'wrap' }}>
           {event.status === 'active' && (
-            <a href={`/e/${event.slug}`} target="_blank" style={{
-              fontSize: '12px', padding: '6px 12px', borderRadius: '7px',
-              border: '1px solid #e5e7eb', color: '#6b7280', textDecoration: 'none', fontWeight: 500,
-            }}>Sayfayı Gör ↗</a>
+            <a href={`/e/${event.slug}`} target="_blank" style={btnStyle}>Sayfayı Gör ↗</a>
           )}
-          <Link href={`/dashboard/events/${id}/edit`} style={{
-            fontSize: '12px', padding: '6px 12px', borderRadius: '7px',
-            border: '1px solid #e5e7eb', color: '#6b7280', textDecoration: 'none', fontWeight: 500,
-          }}>✏️ Düzenle</Link>
+          <Link href={`/dashboard/events/${id}/edit`} style={btnStyle}>✏️ Düzenle</Link>
           <EventStatusButton eventId={event.id} currentStatus={event.status} />
         </div>
       </div>
 
-      <div style={{ padding: '28px 32px' }}>
+      <div style={{ padding: '24px 32px' }}>
 
       {/* İstatistikler */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '12px', marginBottom: '24px' }}>
         {[
-          { label: 'Toplam Sipariş',  value: orderList.length,                 icon: '📋' },
-          { label: 'Bekleyen Onay',   value: pending,                           icon: '⏳', highlight: pending > 0 },
-          { label: 'Onaylanan',       value: paid,                              icon: '✅' },
-          { label: 'Kalan Kapasite',  value: event.capacity - event.sold_count, icon: '🎫' },
-          { label: 'Giriş Yapan',     value: `${checkedIn} / ${totalTickets}`,  icon: '🚪', success: checkedIn > 0 },
+          { label: 'Toplam Sipariş',  value: orderList.length,                 icon: '📋', accent: '#818cf8' },
+          { label: 'Bekleyen Onay',   value: pending,                           icon: '⏳', accent: '#fbbf24', highlight: pending > 0 },
+          { label: 'Onaylanan',       value: paid,                              icon: '✅', accent: '#34d399' },
+          { label: 'Kalan Kapasite',  value: event.capacity - event.sold_count, icon: '🎫', accent: '#818cf8' },
+          { label: 'Giriş Yapan',     value: `${checkedIn} / ${totalTickets}`,  icon: '🚪', accent: '#06b6d4', success: checkedIn > 0 },
         ].map(s => (
-          <div key={s.label} className={`bg-white rounded-xl border p-4 ${
-            (s as any).highlight ? 'border-amber-300 bg-amber-50' :
-            (s as any).success   ? 'border-teal-200 bg-teal-50'   :
-            'border-gray-200'
-          }`}>
-            <div className="flex justify-between items-center">
-              <p className="text-xs text-gray-500">{s.label}</p>
-              <span>{s.icon}</span>
+          <div key={s.label} style={{
+            background: (s as any).highlight ? 'rgba(251,191,36,0.08)' : (s as any).success ? 'rgba(6,182,212,0.06)' : surface,
+            border: (s as any).highlight ? '1px solid rgba(251,191,36,0.2)' : (s as any).success ? '1px solid rgba(6,182,212,0.15)' : border,
+            borderRadius: '12px', padding: '16px',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)' }}>{s.label}</span>
+              <span style={{ fontSize: '16px' }}>{s.icon}</span>
             </div>
-            <p className={`text-2xl font-bold mt-1 ${
-              (s as any).highlight ? 'text-amber-700' :
-              (s as any).success   ? 'text-teal-700'  :
-              'text-gray-900'
-            }`}>{s.value}</p>
+            <div style={{
+              fontSize: '22px', fontWeight: 800, lineHeight: 1,
+              color: (s as any).highlight ? '#fbbf24' : (s as any).success ? '#67e8f9' : 'rgba(255,255,255,0.9)',
+            }}>
+              {s.value}
+            </div>
           </div>
         ))}
       </div>
 
       {/* Sipariş Listesi */}
-      <div className="bg-white rounded-xl border border-gray-200">
-        <div className="flex items-center justify-between p-5 border-b border-gray-100 flex-wrap gap-2">
-          <h2 className="font-semibold text-gray-900">Siparişler</h2>
-          <div className="flex items-center gap-2">
+      <div style={{ background: surface, border, borderRadius: '14px', overflow: 'hidden' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)', flexWrap: 'wrap', gap: '8px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Siparişler</span>
+          <div style={{ display: 'flex', gap: '8px' }}>
             {paid > 0 && (
-              <a
-                href={`/api/events/${id}/export`}
-                className="text-sm border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
-              >
+              <a href={`/api/events/${id}/export`} style={btnStyle}>
                 📥 CSV İndir
               </a>
             )}
             {event.status === 'active' && (
-              <Link href={`/dashboard/events/${id}/checkin`}
-                className="text-sm bg-teal-600 text-white px-3 py-1.5 rounded-lg hover:bg-teal-700 transition-colors">
-                📱 Check-in Başlat
+              <Link href={`/dashboard/events/${id}/checkin`} style={{
+                ...btnStyle, background: 'rgba(6,182,212,0.15)',
+                border: '1px solid rgba(6,182,212,0.25)', color: '#67e8f9',
+              }}>
+                📷 Check-in Başlat
               </Link>
             )}
           </div>
         </div>
 
         {orderList.length === 0 ? (
-          <div className="p-12 text-center text-gray-400 text-sm">Henüz sipariş yok.</div>
+          <div style={{ padding: '48px', textAlign: 'center', fontSize: '13px', color: 'rgba(255,255,255,0.25)' }}>
+            Henüz sipariş yok.
+          </div>
         ) : (
-          <div className="divide-y divide-gray-50">
-            {orderList.map((order) => {
+          <div>
+            {orderList.map((order, i) => {
               const ticket = ticketByOrder.get(order.id)
               return (
-                  <div key={order.id} className="flex items-center justify-between p-4 hover:bg-gray-50">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{order.buyer_name}</p>
-                      <p className="text-xs text-gray-500">
-                        {order.buyer_email} · {Number(order.total_amount).toLocaleString('tr-TR')} TL
-                      </p>
-                      <div className="flex items-center gap-3 mt-0.5">
-                        <p className="text-xs text-gray-400">
-                          {new Date(order.created_at).toLocaleDateString('tr-TR', {
-                            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
-                          })}
-                        </p>
-                        {ticket && (
-                          <p className="text-xs text-gray-400 font-mono">{ticket.ticket_number}</p>
-                        )}
-                      </div>
+                <div key={order.id} style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '14px 20px', gap: '12px', flexWrap: 'wrap',
+                  borderBottom: i < orderList.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                }}>
+                  <div>
+                    <div style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{order.buyer_name}</div>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>
+                      {order.buyer_email} · {Number(order.total_amount).toLocaleString('tr-TR')} TL
                     </div>
-                    <div className="flex items-center gap-2 flex-wrap justify-end">
-                      {/* Check-in durumu */}
-                      {ticket && order.status === 'paid' && (
-                        ticket.checked_in_at ? (
-                          <div className="text-right">
-                            <span className="text-xs bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full font-medium">
-                              🚪 Giriş Yaptı
-                            </span>
-                            <p className="text-xs text-gray-400 mt-0.5">
-                              {new Date(ticket.checked_in_at).toLocaleTimeString('tr-TR', {
-                                hour: '2-digit', minute: '2-digit',
-                              })}
-                            </p>
-                          </div>
-                        ) : (
-                          <span className="text-xs bg-gray-50 text-gray-400 px-2 py-0.5 rounded-full">
-                            Henüz Girmedi
-                          </span>
-                        )
-                      )}
-                      {/* Sipariş durumu */}
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        order.status === 'paid'    ? 'bg-teal-50 text-teal-700' :
-                        order.status === 'pending' ? 'bg-amber-50 text-amber-700' :
-                        'bg-red-50 text-red-600'
-                      }`}>
-                        {order.status === 'paid' ? 'Onaylı' : order.status === 'pending' ? 'Bekliyor' : 'İptal'}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '3px' }}>
+                      <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>
+                        {new Date(order.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                       </span>
-                      {order.status === 'pending' && (
-                        <>
-                          <ApproveButton orderId={order.id} eventId={id} />
-                          <CancelButton orderId={order.id} eventId={id} />
-                        </>
+                      {ticket && (
+                        <span style={{ fontSize: '10px', color: '#818cf8', fontFamily: 'monospace', letterSpacing: '1px' }}>{ticket.ticket_number}</span>
                       )}
                     </div>
                   </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                    {ticket && order.status === 'paid' && (
+                      ticket.checked_in_at ? (
+                        <div style={{ textAlign: 'right' }}>
+                          <span style={{ fontSize: '10px', background: 'rgba(6,182,212,0.12)', border: '1px solid rgba(6,182,212,0.2)', color: '#67e8f9', padding: '3px 8px', borderRadius: '10px', fontWeight: 700 }}>
+                            🚪 Giriş Yaptı
+                          </span>
+                          <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)', marginTop: '2px' }}>
+                            {new Date(ticket.checked_in_at).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}
+                          </div>
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: '10px', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.2)', padding: '3px 8px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                          Girmedi
+                        </span>
+                      )
+                    )}
+                    <span style={{
+                      fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '10px',
+                      background: order.status === 'paid' ? 'rgba(52,211,153,0.12)' : order.status === 'pending' ? 'rgba(251,191,36,0.12)' : 'rgba(239,68,68,0.1)',
+                      color: order.status === 'paid' ? '#34d399' : order.status === 'pending' ? '#fbbf24' : '#f87171',
+                      border: order.status === 'paid' ? '1px solid rgba(52,211,153,0.2)' : order.status === 'pending' ? '1px solid rgba(251,191,36,0.2)' : '1px solid rgba(239,68,68,0.15)',
+                    }}>
+                      {order.status === 'paid' ? 'Onaylı' : order.status === 'pending' ? 'Bekliyor' : 'İptal'}
+                    </span>
+                    {order.status === 'pending' && (
+                      <>
+                        <ApproveButton orderId={order.id} eventId={id} />
+                        <CancelButton orderId={order.id} eventId={id} />
+                      </>
+                    )}
+                  </div>
+                </div>
               )
             })}
           </div>
         )}
       </div>
-      </div>{/* /padding wrapper */}
+      </div>
     </div>
   )
 }
