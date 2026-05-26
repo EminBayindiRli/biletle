@@ -143,6 +143,18 @@ export default function DashboardSidebar({ org }: { org: Org | null }) {
           <span style={{ fontSize: '14px', width: '20px', textAlign: 'center' }}>🚪</span>
           Çıkış Yap
         </button>
+
+        {/* Branding */}
+        <div style={{ padding: '10px 10px 4px', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
+          <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.15)', textAlign: 'center', lineHeight: 1.5 }}>
+            biletle,{' '}
+            <a href="https://codeb.tech" target="_blank" rel="noopener noreferrer"
+              style={{ color: 'rgba(129,140,248,0.4)', textDecoration: 'none' }}>
+              Codeb.tech
+            </a>
+            {' '}ürünüdür
+          </div>
+        </div>
       </div>
     </aside>
   )

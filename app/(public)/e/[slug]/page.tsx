@@ -174,6 +174,18 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '20px 48px', textAlign: 'center' }}>
+        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>
+          biletle,{' '}
+          <a href="https://codeb.tech" target="_blank" rel="noopener noreferrer"
+            style={{ color: 'rgba(129,140,248,0.5)', textDecoration: 'none', fontWeight: 500 }}>
+            Codeb.tech
+          </a>
+          {' '}ürünüdür.
+        </span>
+      </div>
     </div>
   )
 }

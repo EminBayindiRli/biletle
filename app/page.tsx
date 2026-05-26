@@ -204,16 +204,20 @@ export default function HomePage() {
       {/* Footer */}
       <footer style={{
         borderTop: '1px solid rgba(255,255,255,0.07)',
-        padding: '40px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        maxWidth: '1200px', margin: '0 auto',
+        padding: '32px 48px',
       }}>
-        <span style={{ fontSize: '18px', fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>biletle.</span>
-        <div style={{ display: 'flex', gap: '24px' }}>
-          {['Gizlilik', 'Kullanım Koşulları', 'İletişim'].map(l => (
-            <span key={l} style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>{l}</span>
-          ))}
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+          <span style={{ fontSize: '18px', fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>biletle.</span>
+          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>
+            biletle,{' '}
+            <a href="https://codeb.tech" target="_blank" rel="noopener noreferrer"
+              style={{ color: 'rgba(129,140,248,0.7)', textDecoration: 'none', fontWeight: 500 }}>
+              Codeb.tech
+            </a>
+            {' '}ürünüdür.
+          </span>
+          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>© 2025 biletle.shop</span>
         </div>
-        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>© 2025 biletle.shop</span>
       </footer>
     </div>
   )

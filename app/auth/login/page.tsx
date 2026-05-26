@@ -150,6 +150,14 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
+      <div style={{ position: 'absolute', bottom: '16px', left: 0, right: 0, textAlign: 'center' }}>
+        <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.15)' }}>
+          biletle,{' '}
+          <a href="https://codeb.tech" target="_blank" rel="noopener noreferrer"
+            style={{ color: 'rgba(129,140,248,0.4)', textDecoration: 'none' }}>Codeb.tech</a>
+          {' '}ürünüdür
+        </span>
+      </div>
     </div>
   )
 }

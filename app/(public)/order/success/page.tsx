@@ -86,15 +86,24 @@ export default function OrderSuccessPage() {
   return (
     <div style={{
       minHeight: '100vh', background: '#07071a',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       padding: '24px',
       backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,70,229,0.15), transparent)',
+      position: 'relative',
     }}>
       <Suspense fallback={
         <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.3)' }}>Yükleniyor...</div>
       }>
         <SuccessContent />
       </Suspense>
+      <div style={{ position: 'absolute', bottom: '16px', textAlign: 'center' }}>
+        <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.15)' }}>
+          biletle,{' '}
+          <a href="https://codeb.tech" target="_blank" rel="noopener noreferrer"
+            style={{ color: 'rgba(129,140,248,0.4)', textDecoration: 'none' }}>Codeb.tech</a>
+          {' '}ürünüdür
+        </span>
+      </div>
     </div>
   )
 }

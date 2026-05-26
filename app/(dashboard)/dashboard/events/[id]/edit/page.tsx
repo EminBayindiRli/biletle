@@ -46,7 +46,6 @@ export default function EditEventPage() {
       if (!event) { router.push('/dashboard/events'); return }
 
       const e = event as any
-      // datetime-local input değeri: "2025-06-01T20:00"
       function toDatetimeLocal(iso: string | null) {
         if (!iso) return ''
         return iso.slice(0, 16)
@@ -65,7 +64,7 @@ export default function EditEventPage() {
       setFetching(false)
     }
     loadEvent()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   function set(field: string, value: string) {
@@ -100,139 +99,188 @@ export default function EditEventPage() {
     router.push(`/dashboard/events/${id}`)
   }
 
+  const surface = 'rgba(255,255,255,0.04)'
+  const border = '1px solid rgba(255,255,255,0.08)'
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+    padding: '10px 13px', fontSize: '13px', fontFamily: 'Inter, -apple-system, sans-serif',
+    color: 'white', outline: 'none', background: 'rgba(255,255,255,0.06)',
+    boxSizing: 'border-box', colorScheme: 'dark',
+  }
+
+  const labelStyle: React.CSSProperties = {
+    display: 'block', fontSize: '11px', fontWeight: 700,
+    color: 'rgba(255,255,255,0.4)', marginBottom: '6px', letterSpacing: '0.5px',
+  }
+
   if (fetching) {
     return (
-      <div className="flex items-center justify-center py-24">
-        <div className="animate-spin text-2xl">⏳</div>
+      <div style={{ minHeight: '100vh', background: '#07071a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontSize: '32px' }}>⏳</div>
       </div>
     )
   }
 
   return (
-    <div className="max-w-2xl">
-      <div className="mb-6">
-        <Link href={`/dashboard/events/${id}`} className="text-sm text-gray-400 hover:text-gray-600">
-          ← Etkinliğe Dön
-        </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-1">Etkinliği Düzenle</h1>
-        <p className="text-gray-500 text-sm mt-1">Değişiklikler hemen yayınlanır.</p>
+    <div style={{ minHeight: '100vh', background: '#07071a' }}>
+      {/* Topbar */}
+      <div style={{
+        background: 'rgba(14,14,36,0.9)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        padding: '0 32px', height: '60px',
+        display: 'flex', alignItems: 'center',
+        position: 'sticky', top: 0, zIndex: 10,
+      }}>
+        <div>
+          <Link href={`/dashboard/events/${id}`} style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>
+            ← Etkinliğe Dön
+          </Link>
+          <div style={{ fontSize: '15px', fontWeight: 700, color: 'rgba(255,255,255,0.85)', marginTop: '1px' }}>
+            Etkinliği Düzenle
+          </div>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
+      <div style={{ padding: '28px 32px', maxWidth: '680px' }}>
+        <form onSubmit={handleSubmit} style={{ background: surface, border, borderRadius: '16px', padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Etkinlik Adı *</label>
-          <input
-            type="text"
-            value={form.title}
-            onChange={e => set('title', e.target.value)}
-            required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>
-          <textarea
-            value={form.description}
-            onChange={e => set('description', e.target.value)}
-            rows={3}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Konum</label>
-          <input
-            type="text"
-            value={form.location}
-            onChange={e => set('location', e.target.value)}
-            placeholder="ör. Alsancak, İzmir"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Başlangıç *</label>
+            <label style={labelStyle}>ETKİNLİK ADI *</label>
             <input
-              type="datetime-local"
-              value={form.starts_at}
-              onChange={e => set('starts_at', e.target.value)}
+              type="text"
+              value={form.title}
+              onChange={e => set('title', e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              style={inputStyle}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Bitiş</label>
-            <input
-              type="datetime-local"
-              value={form.ends_at}
-              onChange={e => set('ends_at', e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            <label style={labelStyle}>AÇIKLAMA</label>
+            <textarea
+              value={form.description}
+              onChange={e => set('description', e.target.value)}
+              rows={3}
+              style={{ ...inputStyle, resize: 'none', lineHeight: 1.6 }}
             />
           </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Kapasite *</label>
+            <label style={labelStyle}>KONUM</label>
             <input
-              type="number"
-              value={form.capacity}
-              onChange={e => set('capacity', e.target.value)}
-              min="1"
-              required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              type="text"
+              value={form.location}
+              onChange={e => set('location', e.target.value)}
+              placeholder="ör. Alsancak, İzmir"
+              style={inputStyle}
             />
           </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+            <div>
+              <label style={labelStyle}>BAŞLANGIÇ *</label>
+              <input
+                type="datetime-local"
+                value={form.starts_at}
+                onChange={e => set('starts_at', e.target.value)}
+                required
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label style={labelStyle}>BİTİŞ</label>
+              <input
+                type="datetime-local"
+                value={form.ends_at}
+                onChange={e => set('ends_at', e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+            <div>
+              <label style={labelStyle}>KAPASİTE *</label>
+              <input
+                type="number"
+                value={form.capacity}
+                onChange={e => set('capacity', e.target.value)}
+                min="1"
+                required
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label style={labelStyle}>BİLET FİYATI (TL) *</label>
+              <input
+                type="number"
+                value={form.ticket_price}
+                onChange={e => set('ticket_price', e.target.value)}
+                min="0"
+                step="0.01"
+                required
+                style={inputStyle}
+              />
+              <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginTop: '5px' }}>
+                Ücretsiz etkinlik için 0 gir.
+              </div>
+            </div>
+          </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Bilet Fiyatı (TL) *</label>
+            <label style={labelStyle}>SHOPİER ÖDEME LİNKİ</label>
             <input
-              type="number"
-              value={form.ticket_price}
-              onChange={e => set('ticket_price', e.target.value)}
-              min="0"
-              step="0.01"
-              required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              type="url"
+              value={form.shopier_link}
+              onChange={e => set('shopier_link', e.target.value)}
+              placeholder="https://www.shopier.com/..."
+              style={inputStyle}
             />
-            <p className="text-xs text-gray-400 mt-1">Ücretsiz etkinlik için 0 gir.</p>
+            <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginTop: '5px' }}>
+              Ücretsiz etkinlikte boş bırakabilirsin.
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Shopier Ödeme Linki</label>
-          <input
-            type="url"
-            value={form.shopier_link}
-            onChange={e => set('shopier_link', e.target.value)}
-            placeholder="https://www.shopier.com/..."
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <p className="text-xs text-gray-400 mt-1">Ücretsiz etkinlikte boş bırakabilirsin.</p>
-        </div>
+          {error && (
+            <div style={{
+              background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+              borderRadius: '8px', padding: '10px 13px',
+              fontSize: '13px', color: '#f87171',
+            }}>
+              {error}
+            </div>
+          )}
 
-        {error && (
-          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>
-        )}
-
-        <div className="flex gap-3 pt-2">
-          <Link
-            href={`/dashboard/events/${id}`}
-            className="flex-1 text-center border border-gray-300 text-gray-700 text-sm px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            İptal
-          </Link>
-          <button
-            type="submit"
-            disabled={loading}
-            className="flex-1 bg-indigo-600 text-white text-sm px-4 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50"
-          >
-            {loading ? 'Kaydediliyor...' : 'Kaydet'}
-          </button>
-        </div>
-      </form>
+          <div style={{ display: 'flex', gap: '10px', paddingTop: '4px' }}>
+            <Link
+              href={`/dashboard/events/${id}`}
+              style={{
+                flex: 1, padding: '12px', borderRadius: '10px', textAlign: 'center',
+                border: '1px solid rgba(255,255,255,0.12)', background: 'transparent',
+                color: 'rgba(255,255,255,0.6)', fontSize: '13px', fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              İptal
+            </Link>
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                flex: 1, padding: '12px', borderRadius: '10px',
+                border: 'none', background: '#4f46e5',
+                color: 'white', fontSize: '13px', fontWeight: 700,
+                fontFamily: 'Inter, -apple-system, sans-serif', cursor: 'pointer',
+                boxShadow: '0 4px 16px rgba(79,70,229,0.35)',
+                opacity: loading ? 0.6 : 1,
+              }}
+            >
+              {loading ? 'Kaydediliyor...' : 'Kaydet'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
